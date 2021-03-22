@@ -1,0 +1,8 @@
+short term
+improve mob walking, it sucks
+add settings for drops
+make mobs pushable maybe?
+
+long term
+implement traders
+refactor code
