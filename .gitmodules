@@ -1,0 +1,6 @@
+[submodule "mods/fl_others/mobkit"]
+	path = mods/fl_others/mobkit
+	url = https://github.com/TheTermos/mobkit.git
+[submodule "mods/fl_others/i3"]
+	path = mods/fl_others/i3
+	url = https://github.com/minetest-mods/i3.git
