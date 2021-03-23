@@ -2,7 +2,7 @@ fl_wildlife = {}
 fl_brains = {}
 
 fl_wildlife.details = {
-    version = 8,
+    version = 9,
     name = "fl_wildlife",
     author = "wsor",
     license = "MIT",
@@ -16,12 +16,14 @@ dofile(modpath .. "/api.lua")
 dofile(modpath .. "/node_items.lua")
 
 local mob_brains = {
-    "villager_brain"
+    "villager_brain",
+    "fish_brain",
 }
 
 local mob_list = {
     "villager",
     "trader",
+    "riverfish",
     --"mimic",
 }
 

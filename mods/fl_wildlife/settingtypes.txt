@@ -4,4 +4,4 @@ fl_wildlife.trader.enable (enable trader npc) bool true
 fl_wildlife.villager.drops (comma delmited item list) string
 fl_wildlife.trader.drops (comma delmited item list) string
 
-fl_wildlife.trader.valuable (trader currency) string fl_wildlife:mithite_ore
+#fl_wildlife.trader.valuable (trader currency) string fl_wildlife:mithite_ore

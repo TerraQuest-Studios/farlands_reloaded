@@ -25,3 +25,8 @@ made brains global
 v8
 made traders work with same functionality as villagers for now
 added valuable item setting for traders, defaults to mithite ore(mod provided)
+
+v9
+WIP trader formspec
+merge mod into farlands_reloaded
+move mithite ore to fl_terrain

@@ -2,5 +2,4 @@ fl_wildlife mod
 
 for nametags to be useful, a mod such as engrave or rename is needed
 
-default is a optional depends as to make sure mapgen_stone is loaded before it,
-you may need to add your games mod that loads mapgen_stone there
+textures from toby
