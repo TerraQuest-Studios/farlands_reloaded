@@ -26,3 +26,12 @@ tree_nodes("acacia")
 tree_nodes("apple")
 tree_nodes("aspen")
 tree_nodes("pine")
+tree_nodes("spruce")
+
+minetest.register_node("fl_trees:dead_aspen_leaves", {
+    description = "dead aspen leaves",
+    drawtype = "allfaces_optional",
+    paramtype = "light",
+    tiles = {"farlands_dead_aspen_leaves.png"},
+    groups = {oddly_breakable_by_hand = 3, tree = 1, leaf = 1},
+})
