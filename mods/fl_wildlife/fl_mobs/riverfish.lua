@@ -3,7 +3,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
     --mte object properties
     physical = true,
     stepheight = 1.1,
-    collide_with_objects = true,
+    collide_with_objects = false,
     collisionbox = {-0.2, -0.2, -0.2, 0.2, 0.2, 0.2}, --fix this
     visual = "mesh",
     mesh = "farlands_mob_fish.b3d",
@@ -21,7 +21,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
     --mobkit properties
     buoyancy = 0.99, --how it works in water
     max_speed = 2, --how fast it can go
-    jump_height = 1.1, --jumping height? not sure how this is different from mte stepheight
+    jump_height = 0, --jumping height? not sure how this is different from mte stepheight
     view_range = 24, --how far it can see
     lung_capacity = 10, --seconds till drowning
     max_hp = 5, --health, not sure how this measured? like player where 2hp = 1 heart?
@@ -61,3 +61,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
 
 --register eggs
 fl_wildlife.egg_it("fl_wildlife:riverfish", "riverfish", "#978166")
+
+--fish still jump out,
+--fish die in pen on in water on base?
+--this ^ is due to water_flowing
