@@ -19,7 +19,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
     get_staticdata = mobkit.statfunc, --who knows, no documentation (probably save entity data)
 
     --mobkit properties
-    buoyancy = 1.0, --how it works in water
+    buoyancy = 0.99, --how it works in water
     max_speed = 2, --how fast it can go
     jump_height = 1.1, --jumping height? not sure how this is different from mte stepheight
     view_range = 24, --how far it can see

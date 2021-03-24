@@ -15,7 +15,12 @@ function fl_brains.fish_brain(self)
     end
 
     if mobkit.timer(self,1) then
-        mobkit.animate(self,"walk")
-        mobkit.hq_aqua_roam(self,10,1)
+        if not self.isinliquid then
+            fl_wildlife.flash_color(self)
+            mobkit.hurt(self,1)
+        else
+            mobkit.animate(self,"walk")
+            mobkit.hq_aqua_roam(self,10,1)
+        end
     end
 end
