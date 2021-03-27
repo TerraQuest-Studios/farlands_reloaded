@@ -1,6 +1,7 @@
-local function tree_nodes(name, tgroup, lgroup)
-    local tgp = tgroup or {oddly_breakable_by_hand = 3, tree = 1, trunk = 1}
-    local lgp = lgroup or {oddly_breakable_by_hand = 3, tree = 1, leaf = 1}
+local function tree_nodes(name, tgroup, lgroup, pgroup)
+    local tgp = tgroup or {oddly_breakable_by_hand = 3, wood_related = 1, tree = 1, trunk = 1}
+    local lgp = lgroup or {oddly_breakable_by_hand = 3, wood_related = 1, tree = 1, leaf = 1}
+    local pgp = pgroup or {oddly_breakable_by_hand = 3, wood_related = 1, plank = 1}
 
     minetest.register_node("fl_trees:" .. name .. "_trunk", {
         description = name .. " tree trunk",
@@ -19,6 +20,14 @@ local function tree_nodes(name, tgroup, lgroup)
         paramtype = "light",
         tiles = {"farlands_" .. name .. "_leaves.png"},
         groups = lgp,
+    })
+    minetest.register_node("fl_trees:" .. name .. "_plank", {
+        description = name .. " plank",
+        paramtype2 = "facedir",
+        --place_param2 = 0,
+        tiles = {"farlands_" .. name .. "_planks.png"},
+        groups = pgp,
+        on_place = minetest.rotate_node
     })
 end
 
