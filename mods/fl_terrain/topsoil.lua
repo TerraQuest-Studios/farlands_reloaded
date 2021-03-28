@@ -15,8 +15,14 @@ minetest.register_node("fl_terrain:dirt_with_grass", {
 })
 
 minetest.register_node("fl_terrain:ice", {
-    description = "grass",
+    description = "ice",
     tiles = {"farlands_ice.png"},
+    groups = {oddly_breakable_by_hand = 3},
+})
+
+minetest.register_node("fl_terrain:condensed_ice", {
+    description = "condensed ice",
+    tiles = {"farlands_condensed_ice.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 

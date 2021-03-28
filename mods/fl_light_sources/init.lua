@@ -1,0 +1,30 @@
+minetest.register_node('fl_light_sources:torch', {
+	description = 'Torch',
+	drawtype = 'nodebox',
+	tiles = {
+		{name = 'more_fire_torch_top.png'},
+		{name = 'more_fire_torch_bottom.png'},
+		{name = 'more_fire_torch_side.png'},
+	},
+	inventory_image = 'more_fire_torch_inv.png',
+	wield_image = 'more_fire_torch_inv.png',
+	paramtype = 'light',
+	paramtype2 = 'wallmounted',
+	sunlight_propagates = true,
+	is_ground_content = false,
+	walkable = false,
+	light_source = 14,
+	node_box = {
+		type = 'wallmounted',
+		wall_top    = {-0.0625, -0.0625, -0.0625, 0.0625, 0.5   , 0.0625},
+		wall_bottom = {-0.0625, -0.5   , -0.0625, 0.0625, 0.0625, 0.0625},
+		wall_side   = {-0.5   , -0.5   , -0.0625, -0.375, 0.0625, 0.0625},
+	},
+	selection_box = {
+		type = 'wallmounted',
+		wall_top    = {-0.1, -0.05, -0.1, 0.1, 0.5   , 0.1},
+		wall_bottom = {-0.1, -0.5   , -0.1, 0.1, 0.0625, 0.1},
+		wall_side   = {-0.35, -0.5  , -0.1, -0.5, 0.0625, 0.1},
+	},
+	groups = {choppy = 2, dig_immediate = 3, flammable = 1, attached_node = 1, hot = 2, kindling=1},
+})
