@@ -11,6 +11,7 @@ minetest.register_node("fl_terrain:desert_stone", {
 local function create_stone_types(name, groups)
     local gp = groups or {oddly_breakable_by_hand = 3}
 
+    --node registration
     minetest.register_node("fl_terrain:" .. name .. "_rubble", {
         description = name .. " rubble",
         tiles = {"farlands_" .. name .. "_rubble.png"},
@@ -33,6 +34,23 @@ local function create_stone_types(name, groups)
         groups = gp,
     })
 
+    --craft registration
+    local coreN = "fl_terrain:" .. name
+    minetest.register_craft({
+        output = "fl_terrain:" .. name .. "_block",
+        recipe = {
+            {coreN, coreN, coreN},
+            {coreN, coreN, coreN},
+            {coreN, coreN, coreN},
+        }
+    })
+    minetest.register_craft({
+        output = "fl_terrain:" .. name .. "_brick",
+        recipe = {
+            {coreN, coreN},
+            {coreN, coreN},
+        }
+    })
 end
 
 create_stone_types("stone")

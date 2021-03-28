@@ -4,6 +4,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     local pgp = pgroup or {oddly_breakable_by_hand = 3, wood_related = 1, plank = 1}
 
     minetest.register_node("fl_trees:" .. name .. "_trunk", {
+        --nodes
         description = name .. " tree trunk",
         tiles = {
             "farlands_" .. name .. "_trunk_top.png",
@@ -28,6 +29,12 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
         tiles = {"farlands_" .. name .. "_planks.png"},
         groups = pgp,
         on_place = minetest.rotate_node
+    })
+
+    --crafts
+    minetest.register_craft({
+        output = "fl_trees:" .. name .. "_plank 4",
+        recipe = {{"fl_trees:" .. name .. "_trunk",}}
     })
 end
 
