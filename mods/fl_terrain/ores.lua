@@ -27,21 +27,6 @@ local function register_ore(name, block_groups)
     end
 end
 
---mithite
---[[
-minetest.register_craftitem("fl_terrain:mithite_ore", {
-    description = "mithite ore",
-    inventory_image = "farlands_mithite_ore.png"
-})
-
-local tiles = minetest.registered_nodes["fl_terrain:stone"]["tiles"]
-minetest.register_node("fl_terrain:mithite_in_stone", {
-    description = "mithite ore in stone",
-    tiles = {tiles[1] .. "^farlands_mithite_overlay.png"},
-    groups = {oddly_breakable_by_hand = 3},
-    drop = "fl_terrain:mithite_ore",
-})
---]]
 register_ore("mithite")
 register_ore("coal")
 register_ore("iron")
