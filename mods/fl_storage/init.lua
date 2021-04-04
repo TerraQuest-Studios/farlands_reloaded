@@ -80,7 +80,6 @@ minetest.register_node("fl_storage:wood_chest", {
         minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", chest_formspec)
     end,
     on_dig = function(pos, node, digger)
-        --minetest.chat_send_all("test")
         local inv = minetest.get_inventory({type="node", pos=pos})
         for _, item in ipairs(inv:get_list("main")) do
             local posi = {
@@ -88,7 +87,6 @@ minetest.register_node("fl_storage:wood_chest", {
                 y=pos.y + (math.random(0,2)/5),
                 z=pos.z + (math.random(-2,2)/5),
             }
-            minetest.chat_send_all(posi.x .. " " .. posi.z)
             minetest.add_item(posi, item)
         end
         minetest.node_dig(pos, node, digger)
