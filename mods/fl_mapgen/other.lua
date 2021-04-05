@@ -1,21 +1,33 @@
---generates at -284 for some reason
+--based off https://github.com/ShadowNinja/minetest_bedrock/blob/master/mapgen.lua license wtfpl
+--modify 299 layer tobe more scarce
+local bedrock_depth = -300
+local bedrock_height = 1
+
 minetest.register_on_generated(function(minp, maxp)
-    if maxp.y >= -300 and minp.y <= -300 then
-        local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
-        local data = vm:get_data()
-        local area = VoxelArea:new({MinEdge=emin, MaxEdge=emax})
-        local cid_br = minetest.get_content_id("fl_terrain:bedrock")
+	if minp.y > bedrock_depth + bedrock_height or maxp.y < bedrock_depth then
+		return
+	end
 
-        for x = minp.x, maxp.x do
-            for z = minp.z, maxp.z do
-                local p_pos = area:index(x, 500, z)
-                data[p_pos] = cid_br
-            end
-        end
+	local vm, mine, maxe = minetest.get_mapgen_object("voxelmanip")
+	local area = VoxelArea:new({MinEdge=mine, MaxEdge=maxe})
+	local data = vm:get_data()
 
-        vm:set_data(data)
-        vm:calc_lighting()
-        vm:update_liquids()
-        vm:write_to_map()
-    end
+	local random = math.random
+
+	local c_bedrock = minetest.get_content_id("fl_terrain:bedrock")
+
+	local highest = math.min(bedrock_depth + bedrock_height, maxe.y)
+	local lowest = math.max(bedrock_depth, mine.y)
+
+	for y = lowest, highest do
+	for x = mine.x, maxe.x do
+	for z = mine.z, maxe.z do
+		if random(0, y - bedrock_depth) == 0 then
+			data[area:index(x, y, z)] = c_bedrock
+		end
+	end
+	end
+	end
+	vm:set_data(data)
+	vm:write_to_map()
 end)
