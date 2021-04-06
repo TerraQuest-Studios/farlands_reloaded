@@ -92,3 +92,4 @@ minetest.register_node("fl_storage:wood_chest", {
         minetest.node_dig(pos, node, digger)
     end,
 })
+--bottom 3 rows of chest inv shouldnt be gradiented, needs to be fixed

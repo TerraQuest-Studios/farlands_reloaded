@@ -1,0 +1,14 @@
+#1 white #f3f3f3
+#2 violet #8821d6
+#3 red #e72e2e
+#4 pink #f2a9a9
+#5 orange #eb752b
+#6 magenta #ed57b3
+#7 grey #aaaaaa
+#8 green #79ef2b
+#9 dark grey #717171
+#10 dark green #44b811
+#11 cyan #13d4dc
+#12 brown #8c5510
+#13 blue #1382dd
+#14 black #4e4e4e
