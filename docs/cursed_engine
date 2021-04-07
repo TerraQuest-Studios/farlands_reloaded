@@ -1,0 +1,8 @@
+** alpha, so many issues is cursed **
+see liquids, need to use texture modifiers to get them right
+then inv and wield are messed up
+see tinted glass
+** hardware coloring is cursed **
+see i3 mechanics on not being able to show crafting properly
+** liquid source vs flowing mechanics are cursed **
+doesnt always properly make flowing nodes sources
