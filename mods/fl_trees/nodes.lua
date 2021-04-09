@@ -25,7 +25,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     minetest.register_node("fl_trees:" .. name .. "_plank", {
         description = name .. " plank",
         paramtype2 = "facedir",
-        --place_param2 = 0,
+        place_param2 = 0,
         tiles = {"farlands_" .. name .. "_planks.png"},
         groups = pgp,
         on_place = minetest.rotate_node
