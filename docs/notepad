@@ -17,3 +17,5 @@ mapgen granite, decoblocks refined granite
 
 submodules
 git pull --recurse-submodules
+
+cd into repo, checkout main

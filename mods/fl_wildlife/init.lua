@@ -2,7 +2,7 @@ fl_wildlife = {}
 fl_brains = {}
 
 fl_wildlife.details = {
-    version = 9,
+    version = 10,
     name = "fl_wildlife",
     author = "wsor",
     license = "MIT",

@@ -42,6 +42,7 @@ for _, dye in pairs(fl_dyes.dyes) do
     minetest.register_craftitem("fl_dyes:" .. dye[1] .. "_dye", {
         description = dye[2] .. " dye",
         inventory_image = "farlands_" .. dye[1] .. "_dye.png",
+        groups = {dye = 1},
     })
 end
 

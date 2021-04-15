@@ -1,14 +1,35 @@
+--need to make stuff add wear and take items, make sheep eat grass when that gets introduced
+function sheep_actfunc(self, staticdata, dtime_s)
+    fl_wildlife.actfunc(self, staticdata, dtime_s)
+    self.sheep_color = mobkit.recall(self, "sheep_color") or nil
+    self.sheep_time = mobkit.recall(self, "sheep_time") or nil
+    if self.sheep_color and self.sheep_time then
+        if tonumber(self.sheep_time) > dtime_s then
+            --minetest.chat_send_all("sheep_time: " .. tonumber(self.sheep_time) .. ", dtime_s: " .. dtime_s)
+            self.object:set_properties({textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_shaved.png"}})
+
+            minetest.after(tonumber(self.sheep_time), function()
+                if mobkit.is_alive(self) then
+                    self.object:set_properties(
+                        {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. self.sheep_color .. ".png"}}
+                    )
+                    mobkit.forget(self,"sheep_time")
+                    self.sheep_time = nil
+                end
+            end)
+        end
+    elseif self.sheep_color then
+        self.object:set_properties(
+            {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. self.sheep_color .. ".png"}}
+        )
+    end
+end
+
 function sheep_brain(self)
     if mobkit.timer(self,1) then fl_wildlife.node_dps_dmg(self) end --if in nodes with damage take damage
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
-        local item_drops = fl_wildlife.drops(self.drops)
-        if item_drops ~= nil then
-            for _, i in pairs(item_drops) do
-                minetest.add_item(mobkit.get_stand_pos(self), i)
-            end
-        end
 
         for counter, dyes in pairs(fl_dyes.dyes) do
             if dyes[1] == string.sub(self.object:get_properties().textures[1], 48, -5) then
@@ -45,7 +66,10 @@ end
 local sheep_textures = {}
 
 for counter, dyes in pairs(fl_dyes.dyes) do
-    table.insert(sheep_textures, "farlands_mob_sheep_base.png^farlands_mob_sheep_" .. fl_dyes.dyes[counter][1] .. ".png")
+    table.insert(
+        sheep_textures,
+        "farlands_mob_sheep_base.png^farlands_mob_sheep_" .. fl_dyes.dyes[counter][1] .. ".png"
+    )
 end
 
 minetest.register_entity("fl_wildlife:sheep", {
@@ -72,7 +96,7 @@ minetest.register_entity("fl_wildlife:sheep", {
     },
 
     on_step = mobkit.stepfunc, --this is required
-    on_activate = fl_wildlife.actfunc, --this is required as well(useing custom that calls mobkits and adds nametags)
+    on_activate = sheep_actfunc, --this is required as well(useing custom that calls mobkits and adds nametags)
     get_staticdata = mobkit.statfunc, --who knows, no documentation (probably save entity data)
 
     --mobkit properties
@@ -94,9 +118,6 @@ minetest.register_entity("fl_wildlife:sheep", {
         --punch = {range = {x=45,y=65}, speed = 10, loop = true},
     },
 
-    --custom to this mod
-    drops = "fl_wildlife.villager.drops",
-
     brainfunc = sheep_brain,--villager_brain, --function for the brain
 
     --more mte properties
@@ -113,7 +134,69 @@ minetest.register_entity("fl_wildlife:sheep", {
     end,
 
     on_rightclick = function(self, clicker)
-        fl_wildlife.rclick_name(self, clicker)
+        local itemstack = clicker:get_wielded_item()
+        if itemstack:get_name() == "fl_wildlife:nametag" then
+            local meta = itemstack:get_meta()
+            local mName
+            if meta:get_string("description") == "" then
+                mName = clicker:get_player_name() .. "'s mob"
+            else
+                mName = meta:get_string("description")
+            end
+
+            fl_wildlife.set_nametag(self, mName)
+
+            if not minetest.settings:get_bool("creative_mode") then
+                itemstack:take_item(1)
+                clicker:set_wielded_item(itemstack)
+            end
+        elseif itemstack:get_name() == "fl_tools:shears" then
+            --note that tools dont have animations pointed at objects for some reason
+            local shaved_sheep = "farlands_mob_sheep_base.png^farlands_mob_sheep_shaved.png"
+            if self.object:get_properties().textures[1] == shaved_sheep then return end
+
+            --drop wool, shave sheep
+            --add wear to the tool if survival
+            local sc = string.sub(self.object:get_properties().textures[1], 48, -5)
+            for counter, dyes in pairs(fl_dyes.dyes) do
+                if dyes[1] == sc then
+                    local item = ItemStack(minetest.itemstring_with_palette("fl_wool:wool", counter - 1))
+                    item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " wool")
+                    minetest.add_item(mobkit.get_stand_pos(self), item:to_string())
+                    self.object:set_properties({textures = {shaved_sheep}})
+                    mobkit.remember(self,"sheep_color",sc)
+                    self.sheep_color = sc
+                end
+            end
+
+            local after_time = math.random(15,45)
+            --minetest.chat_send_all(after_time)
+            mobkit.remember(self,"sheep_time",after_time)
+            minetest.after(after_time, function()
+                if mobkit.is_alive(self) then
+                    self.object:set_properties(
+                        {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. sc .. ".png"}}
+                    )
+                    mobkit.forget(self,"sheep_time")
+                    self.sheep_time = nil
+                end
+            end)
+        elseif string.sub(itemstack:get_name(), 1, 7) == "fl_dyes" then
+            local shaved_sheep = "farlands_mob_sheep_base.png^farlands_mob_sheep_shaved.png"
+            if self.object:get_properties().textures[1] == shaved_sheep then return end
+
+            --minetest.chat_send_all(string.sub(itemstack:get_name(), 9, -1))
+            if minetest.get_item_group(itemstack:get_name(), "dye") == 1 then
+                --minetest.chat_send_all("in group")
+                local sc = string.sub(itemstack:get_name(), 9, -5)
+
+                self.object:set_properties(
+                    {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. sc .. ".png"}}
+                )
+                mobkit.remember(self,"sheep_color",sc)
+                self.sheep_color = sc
+            end
+        end
     end,
 })
 

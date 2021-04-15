@@ -16,4 +16,5 @@ read_globals = {
     "dump", "DIR_DELIM", "VoxelArea", "Settings",
 
     --mod produced
+    "fl_dyes",
 }
