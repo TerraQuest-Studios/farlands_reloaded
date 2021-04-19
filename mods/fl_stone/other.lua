@@ -1,4 +1,4 @@
-minetest.register_node("fl_terrain:bedrock", {
+minetest.register_node(":fl_terrain:bedrock", {
     description = "bedrock",
     tiles = {"farlands_bedrock.png"},
     is_ground_content = false,

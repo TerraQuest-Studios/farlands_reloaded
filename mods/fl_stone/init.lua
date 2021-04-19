@@ -1,34 +1,27 @@
---[[
-minetest.register_node("fl_terrain:desert_stone", {
-    description = "Desert Stone",
-    tiles = {"farlands_desert_stone.png"},
-    groups = {oddly_breakable_by_hand = 3},
-})
---]]
-
---break
+local modpath = minetest.get_modpath("fl_stone")
+dofile(modpath .. "/other.lua")
 
 local function create_stone_types(name, groups)
     local gp = groups or {oddly_breakable_by_hand = 3}
 
     --node registration
-    minetest.register_node("fl_terrain:" .. name .. "_rubble", {
+    minetest.register_node(":fl_terrain:" .. name .. "_rubble", {
         description = name .. " rubble",
         tiles = {"farlands_" .. name .. "_rubble.png"},
         groups = gp,
     })
-    minetest.register_node("fl_terrain:" .. name, {
+    minetest.register_node(":fl_terrain:" .. name, {
         description = name,
         tiles = {"farlands_" .. name .. ".png"},
         drop = "fl_terrain:" .. name .. "_rubble",
         groups = gp,
     })
-    minetest.register_node("fl_terrain:" .. name .. "_block", {
+    minetest.register_node(":fl_terrain:" .. name .. "_block", {
         description = name .. " block",
         tiles = {"farlands_" .. name .. "_block.png"},
         groups = gp,
     })
-    minetest.register_node("fl_terrain:" .. name .. "_brick", {
+    minetest.register_node(":fl_terrain:" .. name .. "_brick", {
         description = name .. " brick",
         tiles = {"farlands_" .. name .. "_brick.png"},
         groups = gp,

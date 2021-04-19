@@ -1,10 +1,10 @@
-minetest.register_node("fl_terrain:dirt", {
+minetest.register_node(":fl_terrain:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_terrain:dirt_with_grass", {
+minetest.register_node(":fl_terrain:dirt_with_grass", {
     description = "grass",
     tiles = {
         "farlands_grass.png",
@@ -14,25 +14,25 @@ minetest.register_node("fl_terrain:dirt_with_grass", {
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_terrain:ice", {
+minetest.register_node(":fl_terrain:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_terrain:condensed_ice", {
+minetest.register_node(":fl_terrain:condensed_ice", {
     description = "condensed ice",
     tiles = {"farlands_condensed_ice.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_terrain:snow_block", {
+minetest.register_node(":fl_terrain:snow_block", {
     description = "snow block",
     tiles = {"farlands_snow_block.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_terrain:snow", {
+minetest.register_node(":fl_terrain:snow", {
     description = "snow",
     tiles = {"farlands_snow_block.png"},
     groups = {oddly_breakable_by_hand = 3, falling_node=1, float=1},

@@ -6,6 +6,7 @@ minetest.register_craft({
     }
 })
 
+--[[
 minetest.register_craft({
     output = "fl_terrain:coal_block",
     recipe = {
@@ -23,6 +24,7 @@ minetest.register_craft({
         {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
     }
 })
+--]]
 
 minetest.register_craft({
     output = "fl_terrain:snow_block",
