@@ -74,7 +74,7 @@ end
 
 minetest.register_entity("fl_wildlife:sheep", {
     --mte object properties
-        initial_properties = {
+    initial_properties = {
         physical = true,
         stepheight = 1.1,
         collide_with_objects = true,
@@ -200,4 +200,4 @@ minetest.register_entity("fl_wildlife:sheep", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:sheep", "sheep", "#654921")
+fl_wildlife.egg_it("fl_wildlife:sheep", "sheep", "#a49b95")

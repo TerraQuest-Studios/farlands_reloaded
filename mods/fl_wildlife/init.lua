@@ -2,7 +2,7 @@ fl_wildlife = {}
 fl_brains = {}
 
 fl_wildlife.details = {
-    version = 10,
+    version = 11,
     name = "fl_wildlife",
     author = "wsor",
     license = "MIT",
@@ -26,6 +26,7 @@ local mob_list = {
     "riverfish",
     --"mimic",
     "sheep",
+    "chicken",
 }
 
 for _, brain in pairs(mob_brains) do
