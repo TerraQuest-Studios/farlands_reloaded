@@ -87,4 +87,5 @@ minetest.register_entity("fl_wildlife:chicken", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:chicken", "chicken", "#745343")
+--adding egg currently overwrites custom egg
+--fl_wildlife.egg_it("fl_wildlife:chicken", "chicken", "#745343")
