@@ -19,3 +19,5 @@ submodules
 git pull --recurse-submodules
 
 cd into repo, checkout main
+
+https://minetest.gitlab.io/minetest/helper-functions/

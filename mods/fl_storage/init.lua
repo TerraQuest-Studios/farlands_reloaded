@@ -93,3 +93,36 @@ minetest.register_node("fl_storage:wood_chest", {
     end,
 })
 --bottom 3 rows of chest inv shouldnt be gradiented, needs to be fixed
+
+--add formspecs for each shelf type
+local function shelf_nodes(name)
+    local overlays = {"book", "empty", "multi", "vessel"}
+
+    for _, overlay in pairs(overlays) do
+        local group = table.copy(minetest.registered_nodes["fl_trees:" .. name .. "_plank"]["groups"])
+        group[overlay] = 1
+        group["plank"] = nil
+
+        minetest.register_node("fl_storage:" .. name .. "_" .. overlay .. "_shelf", {
+            description = name .. " " .. overlay .. " shelf",
+            tiles = {
+                "farlands_" .. name .. "_planks.png",
+                "farlands_" .. name .. "_planks.png",
+                "farlands_" .. name .. "_planks.png^farlands_" .. overlay .. "_shelf_overlay.png",
+            },
+            paramtype2 = "facedir",
+            place_param2 = 0,
+            on_place = minetest.rotate_node,
+            groups = group,
+        })
+    end
+end
+
+shelf_nodes("acacia")
+shelf_nodes("apple")
+shelf_nodes("aspen")
+shelf_nodes("pine")
+shelf_nodes("spruce")
+shelf_nodes("yellow_ipe")
+shelf_nodes("willow")
+shelf_nodes("baobab")
