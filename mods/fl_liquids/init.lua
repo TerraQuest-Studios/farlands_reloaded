@@ -51,6 +51,7 @@ minetest.register_node(":fl_terrain:water_source", {
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, cools_lava = 1},
+    _bottle_item = "fl_bottles:water",
 })
 
 minetest.register_node(":fl_terrain:water_flowing", {
@@ -144,6 +145,7 @@ minetest.register_node(":fl_terrain:river_water_source", {
 	liquid_range = 2,
 	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
 	groups = {water = 3, liquid = 3, cools_lava = 1},
+    _bottle_item = "fl_bottles:river_water",
 })
 
 minetest.register_node(":fl_terrain:river_water_flowing", {

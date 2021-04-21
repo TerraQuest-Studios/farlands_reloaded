@@ -95,8 +95,6 @@ minetest.register_node("fl_storage:wood_chest", {
     end,
 })
 
---add allow_metadata_inventory_put = function(pos, listname, index, stack, player)
--- to limit for vessels and books type shelfs
 local function shelf_nodes(name)
     local overlays = {"book", "empty", "multi", "vessel"}
 
@@ -183,6 +181,15 @@ local function shelf_nodes(name)
 
                 local shelf_formspec = table.concat(formspec, "")
                 minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", shelf_formspec)
+            end,
+            allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+                if overlay == "vessel" or overlay == "book" then
+                    if minetest.get_item_group(stack:get_name(), overlay) ~= 0 then
+                        return stack:get_count()
+                    end
+                    return 0
+                end
+                return stack:get_count()
             end,
             on_dig = function(pos, node, digger)
                 local inv = minetest.get_inventory({type="node", pos=pos})
