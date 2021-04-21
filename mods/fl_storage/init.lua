@@ -23,51 +23,53 @@ minetest.register_node("fl_storage:wood_chest", {
         local cInvSize = clicker:get_inventory():get_size("main")
         local rLength = (cInvSize-9)/3
         local slotSize
-        if rLength == 12 then slotSize = 0.725
-        elseif rLength == 11 then slotSize = 0.8
-        elseif rLength == 10 then slotSize = 0.89
-        else slotSize = 1 end
+        local formSize
+        if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
+        elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
+        elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
+        else slotSize, formSize = 1, "10.4,10.3" end
 
         --header of formspec
         local formspec = {
             "formspec_version[4]",
-            "size[10.2,11.1]",
+            "size[" .. formSize .. "]",
             "no_prepend[]",
             "style_type[box;colors=#77777710,#77777710,#777,#777]",
             "style_type[list;size=1;spacing=0.1]",
             "listcolors[#0000;#ffffff20]",
             "bgcolor[black;neither]",
-            "background9[0,0;10.2,11.1;i3_bg_full.png;false;10]",
+            "background9[0,0;" .. formSize .. ";i3_bg_full.png;false;10]",
         }
 
         --build chest inventory
         local chest_inv = {
-            "label[0.2,0.7;" .. chName .. "]",
+            "label[0.3,0.4;" .. chName .. "]",
         }
 
         for i=0, 3 do
             for j=0, 8 do
-                table.insert(chest_inv, "box[" .. 0.2+j+(j*0.1) .. "," .. i+1+(i*0.1) .. ";1,1;]")
+                table.insert(chest_inv, "box[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;]")
             end
         end
-        table.insert(chest_inv, "list[nodemeta:" .. iPos .. ";main;0.2,1;9,4;]")
+        table.insert(chest_inv, "list[nodemeta:" .. iPos .. ";main;0.3,0.7;9,4;]")
         table.insert(formspec, table.concat(chest_inv, ""))
 
 
         --build inventory part of formspec
-        table.insert(formspec, "label[0.2,6.3;Inventory]")
+        table.insert(formspec, "label[0.3,5.4;Inventory]")
         table.insert(formspec, "style_type[box;colors=#77777710,#77777710,#777,#777]")
         for i=0, 8 do
-            table.insert(formspec, "box[" .. 0.2+i+(i*0.1) ..",6.6;1,1;]")
+            table.insert(formspec, "box[" .. 0.3+i+(i*0.1) ..",5.7;1,1;]")
         end
-        table.insert(formspec, "list[current_player;main;0.2,6.6;9,1;]")
+        table.insert(formspec, "list[current_player;main;0.3,5.7;9,1;]")
         table.insert(formspec, "style_type[list;size=" .. slotSize .. ";spacing=0.1]")
+        table.insert(formspec, "style_type[box;colors=#666]") -- change bottom 3 rows color
         for i=0, 2 do
             for j=0, rLength-1 do
-                table.insert(formspec, "box[" .. 0.2+(j*0.1)+(j*slotSize) .."," .. 7.7+(i*0.1)+(i*slotSize) .. ";"
+                table.insert(formspec, "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
                 .. slotSize .. "," .. slotSize .. ";]")
             end
-            table.insert(formspec, "list[current_player;main;0.2," .. 7.7+(i*0.1)+(i*slotSize) .. ";"
+            table.insert(formspec, "list[current_player;main;0.3," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
             .. rLength .. ",1;" .. 9+(rLength*i) .. "]")
         end
 
@@ -92,15 +94,15 @@ minetest.register_node("fl_storage:wood_chest", {
         minetest.node_dig(pos, node, digger)
     end,
 })
---bottom 3 rows of chest inv shouldnt be gradiented, needs to be fixed
 
---add formspecs for each shelf type
+--add allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+-- to limit for vessels and books type shelfs
 local function shelf_nodes(name)
     local overlays = {"book", "empty", "multi", "vessel"}
 
     for _, overlay in pairs(overlays) do
         local group = table.copy(minetest.registered_nodes["fl_trees:" .. name .. "_plank"]["groups"])
-        group[overlay] = 1
+        group[overlay .. "_shelf"] = 1
         group["plank"] = nil
 
         minetest.register_node("fl_storage:" .. name .. "_" .. overlay .. "_shelf", {
@@ -112,6 +114,88 @@ local function shelf_nodes(name)
             },
             paramtype2 = "facedir",
             place_param2 = 0,
+            on_construct = function(pos)
+                local inv = minetest.get_meta(pos):get_inventory()
+                inv:set_size("main", 9*2)
+            end,
+            on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+                --vars
+                local iPos = pos.x .. "," .. pos.y .. "," .. pos.z
+                local cname = overlay .. " shelf"
+                local cInvSize = clicker:get_inventory():get_size("main")
+                local rLength = (cInvSize-9)/3
+                local slotSize
+                local formSize
+                if rLength == 12 then slotSize, formSize = 0.725, "10.4,7.275"
+                elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,7.5"
+                elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,7.77"
+                else slotSize, formSize = 1, "10.4,8.1" end
+
+                --header of formspec
+                local formspec = {
+                    "formspec_version[4]",
+                    "size[" .. formSize .. "]",
+                    "no_prepend[]",
+                    "style_type[box;colors=#77777710,#77777710,#777,#777]",
+                    "style_type[list;size=1;spacing=0.1]",
+                    "listcolors[#0000;#ffffff20]",
+                    "bgcolor[black;neither]",
+                    "background9[0,0;" .. formSize .. ";i3_bg_full.png;false;10]",
+                }
+
+                --build chest inventory
+                local chest_inv = {
+                    "label[0.3,0.4;" .. cname .. "]",
+                }
+
+                for i=0, 1 do
+                    for j=0, 8 do
+                        table.insert(chest_inv, "box[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;]")
+                        if overlay == "vessel" or overlay == "book" then
+                            table.insert(chest_inv, "image[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;farlands_" .. overlay .. "_shelf_slot.png^[colorize:#ffffff:75]")
+                        end
+                    end
+                end
+                table.insert(chest_inv, "list[nodemeta:" .. iPos .. ";main;0.3,0.7;9,2;]")
+                table.insert(formspec, table.concat(chest_inv, ""))
+
+                --build inventory part of formspec
+                table.insert(formspec, "label[0.3,3.2;Inventory]")
+                table.insert(formspec, "style_type[box;colors=#77777710,#77777710,#777,#777]")
+                for i=0, 8 do
+                    table.insert(formspec, "box[" .. 0.3+i+(i*0.1) ..",3.5;1,1;]")
+                end
+                table.insert(formspec, "list[current_player;main;0.3,3.5;9,1;]")
+                table.insert(formspec, "style_type[list;size=" .. slotSize .. ";spacing=0.1]")
+                table.insert(formspec, "style_type[box;colors=#666]") -- change bottom 3 rows color
+                for i=0, 2 do
+                    for j=0, rLength-1 do
+                        table.insert(formspec, "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 4.6+(i*0.1)+(i*slotSize) .. ";"
+                        .. slotSize .. "," .. slotSize .. ";]")
+                    end
+                    table.insert(formspec, "list[current_player;main;0.3," .. 4.6+(i*0.1)+(i*slotSize) .. ";"
+                    .. rLength .. ",1;" .. 9+(rLength*i) .. "]")
+                end
+
+                --enable shiftclicking?
+                table.insert(formspec, "listring[nodemeta:" .. iPos .. ";main]")
+                table.insert(formspec, "listring[current_player;main]")
+
+                local shelf_formspec = table.concat(formspec, "")
+                minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", shelf_formspec)
+            end,
+            on_dig = function(pos, node, digger)
+                local inv = minetest.get_inventory({type="node", pos=pos})
+                for _, item in ipairs(inv:get_list("main")) do
+                    local posi = {
+                        x=pos.x + (math.random(-2,2)/5),
+                        y=pos.y + (math.random(0,2)/5),
+                        z=pos.z + (math.random(-2,2)/5),
+                    }
+                    minetest.add_item(posi, item)
+                end
+                minetest.node_dig(pos, node, digger)
+            end,
             on_place = minetest.rotate_node,
             groups = group,
         })
