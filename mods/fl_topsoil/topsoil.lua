@@ -14,6 +14,12 @@ minetest.register_node(":fl_terrain:dirt_with_grass", {
     groups = {oddly_breakable_by_hand = 3},
 })
 
+minetest.register_node(":fl_terrain:sand", {
+    description = "sand",
+    tiles = {"farlands_sand.png"},
+    groups = {oddly_breakable_by_hand = 3, falling_node = 1},
+})
+
 minetest.register_node(":fl_terrain:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
