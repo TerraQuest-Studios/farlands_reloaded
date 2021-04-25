@@ -27,6 +27,7 @@ local mob_list = {
     --"mimic",
     "sheep",
     "chicken",
+    "cow",
 }
 
 for _, brain in pairs(mob_brains) do

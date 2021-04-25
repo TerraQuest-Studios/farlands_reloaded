@@ -87,3 +87,8 @@ minetest.register_craftitem("fl_wildlife:chicken_egg", {
         return itemstack
     end,
 })
+
+minetest.register_craftitem("fl_wildlife:leather", {
+    description = "leather",
+    inventory_image = "farlands_leather.png",
+})
