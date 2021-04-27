@@ -41,11 +41,11 @@ minetest.register_entity("fl_wildlife:villager", {
     physical = true,
     stepheight = 1.1,
     collide_with_objects = true,
-    collisionbox = {-0.35, 0, -0.35, 0.35, 1.99, 0.35}, --top y set to 1.99 to walk under 2 nodes
+    collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3}, --top y set to 1.99 to walk under 2 nodes
     visual = "mesh",
     mesh = "farlands_npc_villager.b3d",
     textures = {"farlands_npc_villager1.png", "farlands_npc_villager2.png"},
-    visual_size = {x = 1, y = 1, z = 1},
+    visual_size = {x = 0.9, y = 0.9, z = 0.9},
     static_save = true,
 
     --hp_max = 200,
