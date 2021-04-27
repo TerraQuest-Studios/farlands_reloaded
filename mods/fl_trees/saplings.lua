@@ -10,7 +10,13 @@ minetest.register_node("fl_trees:aspen_sapling", {
     groups = {oddly_breakable_by_hand = 3},
     on_timer = function(pos)
         minetest.remove_node(pos)
-        minetest.place_schematic({x=pos.x-2, y=pos.y, z=pos.z-2}, modpath .. "/schems/aspen_tree_" .. math.random(5) .. ".mts", 0, nil, false)
+        minetest.place_schematic(
+            {x=pos.x-2, y=pos.y, z=pos.z-2},
+            modpath .. "/schems/aspen_tree_" .. math.random(5) .. ".mts",
+            0,
+            nil,
+            false
+        )
     end,
     on_costruct = function(pos)
         minetest.remove_node(pos)
@@ -35,7 +41,13 @@ minetest.register_node("fl_trees:baobab_sapling", {
     groups = {oddly_breakable_by_hand = 3},
     on_timer = function(pos)
         minetest.remove_node(pos)
-        minetest.place_schematic({x=pos.x-3, y=pos.y, z=pos.z-3}, modpath .. "/schems/baobab_tree_" .. math.random(5) .. ".mts", 0, nil, false)
+        minetest.place_schematic(
+            {x=pos.x-3, y=pos.y, z=pos.z-3},
+            modpath .. "/schems/baobab_tree_" .. math.random(5) .. ".mts",
+            0,
+            nil,
+            false
+        )
     end,
     on_costruct = function(pos)
         minetest.remove_node(pos)

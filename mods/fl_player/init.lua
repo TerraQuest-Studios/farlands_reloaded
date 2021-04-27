@@ -40,7 +40,10 @@ minetest.register_globalstep(function(dtime)
     for _, player in pairs(minetest.get_connected_players()) do
         local pcontrols = player:get_player_control()
 
-        player:set_bone_position("Head", vector.new(0, 6.35, 0), vector.new(-math.deg(player:get_look_vertical()), 0, 0))
+        player:set_bone_position(
+            "Head",
+            vector.new(0, 6.35, 0), vector.new(-math.deg(player:get_look_vertical()), 0, 0)
+        )
 
         if pcontrols.up or pcontrols.down or pcontrols.left or pcontrols.right then
             if pcontrols.LMB or pcontrols.RMB then
@@ -62,7 +65,9 @@ minetest.register_chatcommand("set_anim", {
     params = "<animation>",
     description = "set player animation",
     func = function(name, param)
-        if not animations[param] then return minetest.chat_send_player(name, "'" .. param .. "' is not a valid animation") end
+        if not animations[param] then
+            return minetest.chat_send_player(name, "'" .. param .. "' is not a valid animation!")
+        end
 
         minetest.get_player_by_name(name):set_animation(animations[param], 30)
         minetest.chat_send_player(name, "animation " .. param .. " set")
