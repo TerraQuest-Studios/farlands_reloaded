@@ -1,4 +1,7 @@
 --todo: make hand get texture from skin
+--local modpath = minetest.get_modpath("fl_player")
+--local texture_list = minetest.get_dir_list(modpath .. "/textures")
+
 local animations = {
     stand =	{x=0, y=79},
     lay = {x=162, y=166},
@@ -18,9 +21,10 @@ local animations = {
 }
 
 minetest.register_on_joinplayer(function(player)
+    player:get_meta():set_int("vanish", 0)
     player:set_properties({
         mesh = "fl_character.b3d",
-        textures = {"fl_character.png", "fl_trans.png", "fl_trans.png"},
+        textures = {"fl_character_1.png", "fl_trans.png", "fl_trans.png"},
         visual = "mesh",
         visual_size = {x = 1, y = 1, z = 1},
         collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
@@ -29,7 +33,7 @@ minetest.register_on_joinplayer(function(player)
     })
     player:set_local_animation(
         animations["stand"],
-        animations["walk"],
+        {},
         animations["mine"],
         animations["walk_mine"],
         30
@@ -45,7 +49,66 @@ minetest.register_globalstep(function(dtime)
             vector.new(0, 6.35, 0), vector.new(-math.deg(player:get_look_vertical()), 0, 0)
         )
 
-        if pcontrols.up or pcontrols.down or pcontrols.left or pcontrols.right then
+        if math.floor(player:get_properties().eye_height * 100) ~= 147 and not pcontrols.sneak then
+            player:set_properties({
+                eye_height = 1.47,
+            })
+            --this allows mods to set this int so that this doesnt reset nametag on them
+            if player:get_meta():get_int("vanish") <= 0 then
+                player:set_properties({
+                    collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+                })
+                player:set_nametag_attributes({
+                    text = player:get_player_name(),
+                    color = {a = 255, r = 255, g = 255, b = 255},
+                })
+            end
+        end
+
+        if pcontrols.sneak then
+            if pcontrols.jump then
+                player:set_animation(animations["stand"], 15)
+                if player:get_meta():get_int("vanish") <= 0 then
+                    player:set_properties({
+                        collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+                    })
+                    player:set_nametag_attributes({
+                        text = player:get_player_name(),
+                        color = {a = 255, r = 255, g = 255, b = 255},
+                    })
+                end
+            elseif pcontrols.up or pcontrols.down or pcontrols.left or pcontrols.right then
+                player:set_animation(animations["duck"], 15)
+                player:set_properties({
+                    eye_height = 1.3,
+                    --collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.5, 0.3},
+                })
+                if player:get_meta():get_int("vanish") <= 0 then
+                    player:set_properties({
+                        collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+                    })
+                    player:set_nametag_attributes({
+                        text = " ",
+                        color = {a = 0, r = 255, g = 255, b = 255},
+                    })
+                end
+            else
+                player:set_animation(animations["duck_std"], 15)
+                player:set_properties({
+                    eye_height = 1.3,
+                    --collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.5, 0.3},
+                })
+                if player:get_meta():get_int("vanish") <= 0 then
+                    player:set_properties({
+                        collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+                    })
+                    player:set_nametag_attributes({
+                        text = " ",
+                        color = {a = 0, r = 255, g = 255, b = 255},
+                    })
+                end
+            end
+        elseif pcontrols.up or pcontrols.down or pcontrols.left or pcontrols.right then
             if pcontrols.LMB or pcontrols.RMB then
                 player:set_animation(animations["walk_mine"], 30)
             else

@@ -46,3 +46,43 @@ minetest.register_craftitem("fl_bottles:bottle", {
     end,
     groups = {bottle = 1, vessel = 1},
 })
+
+minetest.register_craftitem("fl_bottles:invisibility", {
+    description = "bottle of invisibilty",
+    inventory_image = "farlands_bottle_darkpurple.png",
+    --on_use throw, particles, anyone nearby gets invisibility
+    on_place = function(itemstack, placer, pointed_thing)
+        if placer:get_meta():get_int("in_vanish") > 0 then return itemstack end
+        local pname = placer:get_player_name()
+        placer:get_meta():set_int("vanish", 1)
+        placer:get_meta():set_int("in_vanish", 1)
+        placer:set_properties({
+            visual_size = {x = 0, y = 0, z = 0},
+            is_visible = false,
+            show_on_minimap = false,
+            selectionbox = {0, 0, 0, 0, 0, 0},
+        })
+        placer:set_nametag_attributes({color = {a = 0, r = 255, g = 255, b = 255}})
+
+        minetest.after(60,
+            function()
+                --minetest.chat_send_all("after")
+                if minetest.get_player_by_name(pname) then
+                    local player = minetest.get_player_by_name(pname)
+                    player:get_meta():set_int("vanish", 0)
+                    player:get_meta():set_int("in_vanish", 0)
+                    player:set_properties({
+                        visual_size = {x = 1, y = 1, z = 1},
+                        is_visible = true,
+                        show_on_minimap = true,
+                        selectionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+                    })
+                    player:set_nametag_attributes({color = {a = 255, r = 255, g = 255, b = 255}})
+                end
+            end
+        )
+
+        itemstack:take_item()
+        return itemstack
+    end,
+})
