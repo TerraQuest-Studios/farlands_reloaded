@@ -31,11 +31,12 @@ minetest.register_on_joinplayer(function(player)
         stepheight = 0.6,
         eye_height = 1.47,
     })
+    --patch this
     player:set_local_animation(
-        animations["stand"],
         {},
-        animations["mine"],
-        animations["walk_mine"],
+        {},
+        {},
+        {},
         30
     )
 end)
