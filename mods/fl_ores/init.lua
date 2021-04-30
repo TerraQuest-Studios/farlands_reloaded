@@ -1,15 +1,18 @@
 local function register_ore(name, block_groups)
     local gp = block_groups or {oddly_breakable_by_hand = 3}
 
-    minetest.register_craftitem(":fl_terrain:" .. name .. "_ore", {
+    minetest.register_craftitem("fl_ores:" .. name .. "_ore", {
         description = name .. " ore",
         inventory_image = "farlands_" .. name .. "_ore.png",
     })
-    minetest.register_node(":fl_terrain:" .. name .. "_block", {
+    minetest.register_node("fl_ores:" .. name .. "_block", {
         description = name .. " block",
         tiles = {"farlands_" .. name .. "_block.png"},
         groups = gp,
     })
+
+    minetest.register_alias("fl_terrain:" .. name .. "_ore", "fl_ores:" .. name .. "_ore")
+    minetest.register_alias("fl_terrain:" .. name .. "_block", "fl_ores:" .. name .. "_block")
 
     local base_material = {
         "stone",
@@ -18,12 +21,14 @@ local function register_ore(name, block_groups)
         "desert_stone"
     }
     for _, bm in pairs(base_material) do
-        minetest.register_node(":fl_terrain:" .. name .. "_in_" .. bm, {
+        minetest.register_node("fl_ores:" .. name .. "_in_" .. bm, {
             description = name .. " in " .. bm,
             tiles = {"farlands_" .. bm .. ".png^farlands_" .. name .. "_overlay.png"},
-            groups = minetest.registered_nodes["fl_terrain:" .. bm]["groups"],
-            drop = "fl_terrain:" .. name .. "_ore",
+            groups = minetest.registered_nodes["fl_stone:" .. bm]["groups"],
+            drop = "fl_ores:" .. name .. "_ore",
         })
+
+        minetest.register_alias("fl_terrain:" .. name .. "_in_" .. bm, "fl_ores:" .. name .. "_in_" .. bm)
     end
 end
 
@@ -41,19 +46,19 @@ register_ore("copper")
 
 --crafts
 minetest.register_craft({
-    output = "fl_terrain:coal_block",
+    output = "fl_ores:coal_block",
     recipe = {
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
+        {"fl_ores:coal_ore", "fl_ores:coal_ore", "fl_ores:coal_ore"},
+        {"fl_ores:coal_ore", "fl_ores:coal_ore", "fl_ores:coal_ore"},
+        {"fl_ores:coal_ore", "fl_ores:coal_ore", "fl_ores:coal_ore"},
     }
 })
 
 minetest.register_craft({
-    output = "fl_terrain:diamond_block",
+    output = "fl_ores:diamond_block",
     recipe = {
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
+        {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
+        {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
+        {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
     }
 })

@@ -1,8 +1,8 @@
 --layers (broken)
 minetest.register_biome({
     name = "ors",
-    node_filler = "fl_terrain:ors",
-    node_stone = "fl_terrain:ors",
+    node_filler = "fl_stone:ors",
+    node_stone = "fl_stone:ors",
     node_water = "air",
     node_river_water = "air",
     node_cave_liquid = "air",
@@ -15,8 +15,8 @@ minetest.register_biome({
 
 minetest.register_biome({
     name = "tuff",
-    node_filler = "fl_terrain:ors",
-    node_stone = "fl_terrain:tuff",
+    node_filler = "fl_stone:tuff",
+    node_stone = "fl_stone:tuff",
     node_water = "air",
     node_river_water = "air",
     node_cave_liquid = "air",

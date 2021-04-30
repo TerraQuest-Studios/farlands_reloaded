@@ -1,41 +1,21 @@
 minetest.register_craft({
-    output = "fl_terrain:condensed_ice",
+    output = "fl_topsoil:condensed_ice",
     recipe = {
-        {"fl_terrain:ice", "fl_terrain:ice"},
-        {"fl_terrain:ice", "fl_terrain:ice"},
-    }
-})
-
---[[
-minetest.register_craft({
-    output = "fl_terrain:coal_block",
-    recipe = {
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
-        {"fl_terrain:coal_ore", "fl_terrain:coal_ore", "fl_terrain:coal_ore"},
+        {"fl_topsoil:ice", "fl_topsoil:ice"},
+        {"fl_topsoil:ice", "fl_topsoil:ice"},
     }
 })
 
 minetest.register_craft({
-    output = "fl_terrain:diamond_block",
+    output = "fl_topsoil:snow_block",
     recipe = {
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
-        {"fl_terrain:diamond_ore", "fl_terrain:diamond_ore", "fl_terrain:diamond_ore"},
-    }
-})
---]]
-
-minetest.register_craft({
-    output = "fl_terrain:snow_block",
-    recipe = {
-        {"fl_terrain:snow", "fl_terrain:snow", "fl_terrain:snow"},
-        {"fl_terrain:snow", "", "fl_terrain:snow"},
-        {"fl_terrain:snow", "fl_terrain:snow", "fl_terrain:snow"},
+        {"fl_topsoil:snow", "fl_topsoil:snow", "fl_topsoil:snow"},
+        {"fl_topsoil:snow", "", "fl_topsoil:snow"},
+        {"fl_topsoil:snow", "fl_topsoil:snow", "fl_topsoil:snow"},
     }
 })
 
 minetest.register_craft({
-    output = "fl_terrain:snow 8",
-    recipe = {{"fl_terrain:snow_block",}}
+    output = "fl_topsoil:snow 8",
+    recipe = {{"fl_topsoil:snow_block",}}
 })

@@ -1,6 +1,6 @@
 minetest.register_ore({
     ore_type = "scatter",
-    ore = "fl_terrain:mithite_in_stone",
+    ore = "fl_ores:mithite_in_stone",
     wherein = "mapgen_stone",
     clust_scarcity = 30*30*30,
     clust_num_ores = 1,

@@ -1,10 +1,10 @@
-minetest.register_node(":fl_terrain:dirt", {
+minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node(":fl_terrain:dirt_with_grass", {
+minetest.register_node("fl_topsoil:dirt_with_grass", {
     description = "grass",
     tiles = {
         "farlands_grass.png",
@@ -14,31 +14,31 @@ minetest.register_node(":fl_terrain:dirt_with_grass", {
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node(":fl_terrain:sand", {
+minetest.register_node("fl_topsoil:sand", {
     description = "sand",
     tiles = {"farlands_sand.png"},
     groups = {oddly_breakable_by_hand = 3, falling_node = 1},
 })
 
-minetest.register_node(":fl_terrain:ice", {
+minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node(":fl_terrain:condensed_ice", {
+minetest.register_node("fl_topsoil:condensed_ice", {
     description = "condensed ice",
     tiles = {"farlands_condensed_ice.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node(":fl_terrain:snow_block", {
+minetest.register_node("fl_topsoil:snow_block", {
     description = "snow block",
     tiles = {"farlands_snow_block.png"},
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node(":fl_terrain:snow", {
+minetest.register_node("fl_topsoil:snow", {
     description = "snow",
     tiles = {"farlands_snow_block.png"},
     groups = {oddly_breakable_by_hand = 3, falling_node=1, float=1},
@@ -67,7 +67,7 @@ minetest.register_node(":fl_terrain:snow", {
         minetest.node_dig(pos, node, digger)
         local inv = digger:get_inventory()
         if not inv then return end
-        local inv_add = inv:add_item("main", "fl_terrain:snow "..tostring(level/8-1))
+        local inv_add = inv:add_item("main", "fl_topsoil:snow "..tostring(level/8-1))
         if not inv_add:is_empty() then
             minetest.add_item(pos, inv_add)
         end
@@ -76,10 +76,10 @@ minetest.register_node(":fl_terrain:snow", {
         local under_node = minetest.get_node_or_nil(pointed_thing.under)
         if not under_node then return itemstack, false end
 
-        if under_node.name == "fl_terrain:snow" then
+        if under_node.name == "fl_topsoil:snow" then
             local level = minetest.get_node_level(pointed_thing.under)
             if level >= 56 then
-                minetest.swap_node(pointed_thing.under, {name = "fl_terrain:snow_block"})
+                minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:snow_block"})
                 itemstack:take_item()
                 return itemstack, true
             else
@@ -93,3 +93,11 @@ minetest.register_node(":fl_terrain:snow", {
         end
     end,
 })
+
+minetest.register_alias("fl_terrain:dirt", "fl_topsoil:dirt")
+minetest.register_alias("fl_terrain:dirt_with_grass", "fl_topsoil:dirt_with_grass")
+minetest.register_alias("fl_terrain:sand", "fl_topsoil:sand")
+minetest.register_alias("fl_terrain:ice", "fl_topsoil:ice")
+minetest.register_alias("fl_terrain:condensed_ice", "fl_topsoil:condensed_ice")
+minetest.register_alias("fl_terrain:snow_block", "fl_topsoil:snow_block")
+minetest.register_alias("fl_terrain:snow", "fl_topsoil:snow")

@@ -7,7 +7,7 @@ local river_water_inventory_image =
 .. "{farlands_river_water_source_animated.png&[verticalframe:16:8"
 .. "{farlands_river_water_source_animated.png&[verticalframe:16:8"
 
-minetest.register_node(":fl_terrain:water_source", {
+minetest.register_node("fl_liquids:water_source", {
 	description = "Water Source",
 	drawtype = "liquid",
 	waving = 3,
@@ -46,15 +46,15 @@ minetest.register_node(":fl_terrain:water_source", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "source",
-	liquid_alternative_flowing = "fl_terrain:water_flowing",
-	liquid_alternative_source = "fl_terrain:water_source",
+	liquid_alternative_flowing = "fl_liquids:water_flowing",
+	liquid_alternative_source = "fl_liquids:water_source",
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, cools_lava = 1},
     _bottle_item = "fl_bottles:water",
 })
 
-minetest.register_node(":fl_terrain:water_flowing", {
+minetest.register_node("fl_liquids:water_flowing", {
 	description = "Flowing Water",
 	drawtype = "flowingliquid",
 	waving = 3,
@@ -92,15 +92,15 @@ minetest.register_node(":fl_terrain:water_flowing", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "flowing",
-	liquid_alternative_flowing = "fl_terrain:water_flowing",
-	liquid_alternative_source = "fl_terrain:water_source",
+	liquid_alternative_flowing = "fl_liquids:water_flowing",
+	liquid_alternative_source = "fl_liquids:water_source",
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1},
 })
 
 
-minetest.register_node(":fl_terrain:river_water_source", {
+minetest.register_node("fl_liquids:river_water_source", {
 	description = "River Water Source",
 	drawtype = "liquid",
 	tiles = {
@@ -138,8 +138,8 @@ minetest.register_node(":fl_terrain:river_water_source", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "source",
-	liquid_alternative_flowing = "fl_terrain:river_water_flowing",
-	liquid_alternative_source = "fl_terrain:river_water_source",
+	liquid_alternative_flowing = "fl_liquids:river_water_flowing",
+	liquid_alternative_source = "fl_liquids:river_water_source",
 	liquid_viscosity = 1,
 	liquid_renewable = false,
 	liquid_range = 2,
@@ -148,7 +148,7 @@ minetest.register_node(":fl_terrain:river_water_source", {
     _bottle_item = "fl_bottles:river_water",
 })
 
-minetest.register_node(":fl_terrain:river_water_flowing", {
+minetest.register_node("fl_liquids:river_water_flowing", {
 	description = "Flowing River Water",
 	drawtype = "flowingliquid",
 	tiles = {"farlands_river_water.png"},
@@ -185,8 +185,8 @@ minetest.register_node(":fl_terrain:river_water_flowing", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "flowing",
-	liquid_alternative_flowing = "fl_terrain:river_water_flowing",
-	liquid_alternative_source = "fl_terrain:river_water_source",
+	liquid_alternative_flowing = "fl_liquids:river_water_flowing",
+	liquid_alternative_source = "fl_liquids:river_water_source",
 	liquid_viscosity = 1,
 	liquid_renewable = false,
 	liquid_range = 2,
@@ -194,7 +194,7 @@ minetest.register_node(":fl_terrain:river_water_flowing", {
 	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1},
 })
 
-minetest.register_node(":fl_terrain:lava_source", {
+minetest.register_node("fl_liquids:lava_source", {
 	description = "Lava Source",
 	drawtype = "liquid",
 	tiles = {
@@ -229,8 +229,8 @@ minetest.register_node(":fl_terrain:lava_source", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "source",
-	liquid_alternative_flowing = "fl_terrain:lava_flowing",
-	liquid_alternative_source = "fl_terrain:lava_source",
+	liquid_alternative_flowing = "fl_liquids:lava_flowing",
+	liquid_alternative_source = "fl_liquids:lava_source",
 	liquid_viscosity = 7,
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
@@ -238,7 +238,7 @@ minetest.register_node(":fl_terrain:lava_source", {
 	groups = {lava = 3, liquid = 2, igniter = 1},
 })
 
-minetest.register_node(":fl_terrain:lava_flowing", {
+minetest.register_node("fl_liquids:lava_flowing", {
 	description = "Flowing Lava",
 	drawtype = "flowingliquid",
 	tiles = {"farlands_lava.png"},
@@ -275,11 +275,18 @@ minetest.register_node(":fl_terrain:lava_flowing", {
 	drop = "",
 	drowning = 1,
 	liquidtype = "flowing",
-	liquid_alternative_flowing = "fl_terrain:lava_flowing",
-	liquid_alternative_source = "fl_terrain:lava_source",
+	liquid_alternative_flowing = "fl_liquids:lava_flowing",
+	liquid_alternative_source = "fl_liquids:lava_source",
 	liquid_viscosity = 7,
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, igniter = 1, not_in_creative_inventory = 1},
 })
+
+minetest.register_alias("fl_terrain:water_source", "fl_liquids:water_source")
+minetest.register_alias("fl_terrain:water_flowing", "fl_liquids:water_flowing")
+minetest.register_alias("fl_terrain:river_water_source", "fl_liquids:river_water_source")
+minetest.register_alias("fl_terrain:river_water_flowing", "fl_liquids:river_water_flowing")
+minetest.register_alias("fl_terrain:lava_source", "fl_liquids:lava_source")
+minetest.register_alias("fl_terrain:lava_flowing", "fl_liquids:lava_flowing")

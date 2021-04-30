@@ -1,4 +1,4 @@
-minetest.register_node(":fl_terrain:bedrock", {
+minetest.register_node("fl_stone:bedrock", {
     description = "bedrock",
     tiles = {"farlands_bedrock.png"},
     is_ground_content = false,
@@ -9,3 +9,5 @@ minetest.register_node(":fl_terrain:bedrock", {
     drop = "",
     groups = {unbreakable = 1, not_in_creative_inventory = 1},
 })
+
+minetest.register_alias("fl_terrain:bedrock", "fl_stone:bedrock")

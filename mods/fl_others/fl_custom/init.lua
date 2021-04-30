@@ -7,13 +7,13 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 --temperary hacks around i3 bag crafts
-minetest.register_alias("farming:string", "fl_terrain:stone")
+minetest.register_alias("farming:string", "fl_stone:stone")
 minetest.clear_craft({output = "i3:bag_small"})
 minetest.register_craft({
     output = "i3:bag_small",
     recipe = {
-        {"", "fl_terrain:stone", ""},
-        {"fl_terrain:ors", "fl_terrain:ors", "fl_terrain:ors"},
-        {"fl_terrain:ors", "fl_terrain:ors", "fl_terrain:ors"},
+        {"", "fl_stone:stone", ""},
+        {"fl_stone:ors", "fl_stone:ors", "fl_stone:ors"},
+        {"fl_stone:ors", "fl_stone:ors", "fl_stone:ors"},
 	}
 })

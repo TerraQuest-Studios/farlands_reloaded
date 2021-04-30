@@ -14,7 +14,7 @@ minetest.register_on_generated(function(minp, maxp)
 
 	local random = math.random
 
-	local c_bedrock = minetest.get_content_id("fl_terrain:bedrock")
+	local c_bedrock = minetest.get_content_id("fl_stone:bedrock")
 
 	local highest = math.min(bedrock_depth + bedrock_height, maxe.y)
 	local lowest = math.max(bedrock_depth, mine.y)
