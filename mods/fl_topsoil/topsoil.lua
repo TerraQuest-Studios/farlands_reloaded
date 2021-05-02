@@ -23,7 +23,7 @@ minetest.register_node("fl_topsoil:sand", {
 minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, melts = 1},
 })
 
 minetest.register_node("fl_topsoil:condensed_ice", {
