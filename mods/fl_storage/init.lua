@@ -102,6 +102,8 @@ local function shelf_nodes(name)
         local group = table.copy(minetest.registered_nodes["fl_trees:" .. name .. "_plank"]["groups"])
         group[overlay .. "_shelf"] = 1
         group["plank"] = nil
+        group["stairable"] = nil
+        group["fenceable"] = nil
 
         minetest.register_node("fl_storage:" .. name .. "_" .. overlay .. "_shelf", {
             description = name .. " " .. overlay .. " shelf",

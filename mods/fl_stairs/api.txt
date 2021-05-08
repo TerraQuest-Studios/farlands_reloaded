@@ -1,0 +1,1 @@
+change drop items drops itself, or uses full node nodedef.drop.stairs.type
