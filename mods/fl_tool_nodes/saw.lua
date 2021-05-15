@@ -1,3 +1,7 @@
+--table containing players currently shown saw formspec
+viewing_saw = {}
+
+--for some reason saw requires double click
 local function updateformspec(pos, clicker)
 
     --vars for stuff
@@ -94,11 +98,47 @@ local function updateformspec(pos, clicker)
     --show formspec
     local saw_formspec = table.concat(formspec, "")
     --this breaks recieving fields
-    --minetest.show_formspec(clicker:get_player_name(), "fl_stairs:saw_formspec", saw_formspec)
+    minetest.show_formspec(clicker:get_player_name(), "fl_tool_nodes:saw_formspec", saw_formspec)
+    viewing_saw[clicker:get_player_name()] = pos
 
-    local meta = minetest.get_meta(pos)
-    meta:set_string("formspec", saw_formspec)
+    --local meta = minetest.get_meta(pos)
+    --meta:set_string("formspec", saw_formspec)
 end
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+    if formname ~= "fl_tool_nodes:saw_formspec" then return end
+    if fields.quit == "true" then
+        viewing_saw[player:get_player_name()] = nil
+        return
+    end
+
+    local function add_item(item, gcount, tcount)
+        local inv = player:get_inventory()
+        local saw_inv = minetest.get_inventory({type = "node", pos = viewing_saw[player:get_player_name()]})
+        local saw_stack = saw_inv:get_stack("main", 1)
+        local stack = ItemStack(saw_stack:get_name() .. item)
+        stack:set_count(gcount)
+        if inv:room_for_item("main", stack) then
+            inv:add_item("main", stack)
+            saw_stack:take_item(tcount)
+            saw_inv:set_stack("main", 1, saw_stack)
+            for sname, spos in pairs(viewing_saw) do
+                --if minetest.hash_node_position(spos) == minetest.hash_node_position(viewing_saw[player:get_player_name()]) then
+                if vector.equals(spos, viewing_saw[player:get_player_name()]) then
+                    updateformspec(spos, minetest.get_player_by_name(sname))
+                end
+            end
+        end
+    end
+    if fields.inner_stair then add_item("_inner_stair", 1, 1)
+    elseif fields.outer_stair then add_item("_outer_stair", 3, 1)
+    elseif fields.stair then add_item("_stair", 2, 1)
+    elseif fields.slab then add_item("_slab", 4, 1)
+    elseif fields.block then add_item("_block", 1, 6)
+    elseif fields.fence then add_item("_fence", 4, 1)
+    elseif fields.wall then add_item("_wall", 2, 1)
+    end
+end)
 
 --textures and nodebox are temperary and suck
 minetest.register_node(":fl_stairs:tablesaw", {
@@ -138,36 +178,21 @@ minetest.register_node(":fl_stairs:tablesaw", {
         end
         return 0
     end,
-    on_receive_fields = function(pos, formname, fields, sender)
-        --minetest.chat_send_all("triggered")
-        --minetest.chat_send_all(dump(fields))
-        local function add_item(item, gcount, tcount)
-            local inv = sender:get_inventory()
-            local saw_inv = minetest.get_inventory({type = "node", pos = pos})
-            local saw_stack = saw_inv:get_stack("main", 1)
-            local stack = ItemStack(saw_stack:get_name() .. item)
-            stack:set_count(gcount)
-            if inv:room_for_item("main", stack) then
-                inv:add_item("main", stack)
-                saw_stack:take_item(tcount)
-                saw_inv:set_stack("main", 1, saw_stack)
-                updateformspec(pos, sender)
+    on_metadata_inventory_put = function(pos, listname, index, stack, player)
+        for sname, spos in pairs(viewing_saw) do
+            --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
+            if vector.equals(spos, pos) then
+                updateformspec(pos, minetest.get_player_by_name(sname))
             end
         end
-        if fields.inner_stair then add_item("_inner_stair", 1, 1)
-        elseif fields.outer_stair then add_item("_outer_stair", 3, 1)
-        elseif fields.stair then add_item("_stair", 2, 1)
-        elseif fields.slab then add_item("_slab", 4, 1)
-        elseif fields.block then add_item("_block", 1, 6)
-        elseif fields.fence then add_item("_fence", 4, 1)
-        elseif fields.wall then add_item("_wall", 2, 1)
-        end
-    end,
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        updateformspec(pos, player)
     end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        updateformspec(pos, player)
+        for sname, spos in pairs(viewing_saw) do
+            --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
+            if vector.equals(spos, pos) then
+                updateformspec(pos, minetest.get_player_by_name(sname))
+            end
+        end
     end,
     on_dig = function(pos, node, digger)
         local inv = minetest.get_inventory({type="node", pos=pos})
