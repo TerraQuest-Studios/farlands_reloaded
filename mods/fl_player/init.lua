@@ -2,6 +2,8 @@
 --local modpath = minetest.get_modpath("fl_player")
 --local texture_list = minetest.get_dir_list(modpath .. "/textures")
 
+fl_player = {}
+
 local animations = {
     stand =	{x=0, y=79},
     lay = {x=162, y=166},
@@ -19,6 +21,9 @@ local animations = {
     duck = {x=381, y=399},
     climb = {x=410, y=429},
 }
+
+fl_player.animations = animations
+fl_player.ignore = {}
 
 minetest.register_on_joinplayer(function(player)
     player:get_meta():set_int("vanish", 0)
@@ -49,6 +54,8 @@ minetest.register_globalstep(function(dtime)
             "Head",
             vector.new(0, 6.35, 0), vector.new(-math.deg(player:get_look_vertical()), 0, 0)
         )
+
+        if fl_player.ignore[player:get_player_name()] then return end
 
         if math.floor(player:get_properties().eye_height * 100) ~= 147 and not pcontrols.sneak then
             player:set_properties({
