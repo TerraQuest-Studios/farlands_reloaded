@@ -31,6 +31,8 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
             },
             walls = rn .. "_wall"
         },
+        --this is to make tnt happy while this is used as a dummy flammable
+        on_construct = function(pos) end,
         groups = sgp,
     })
     minetest.register_node("fl_stone:" .. name .. "_block", {

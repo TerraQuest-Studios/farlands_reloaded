@@ -201,4 +201,13 @@ minetest.register_node(":fl_stairs:tablesaw", {
         end
         minetest.node_dig(pos, node, digger)
     end,
+    on_place = function(itemstack, placer, pointed_thing)
+        if itemstack:get_meta():get_string("description") == "wsaw" and pointed_thing.type == "node" and minetest.get_modpath("fl_tnt") then
+            fl_tnt.boom(pointed_thing.under, {radius = 3})
+            itemstack:take_item()
+            --placer:set_wielded_item(itemstack)
+            return itemstack
+        end
+        minetest.item_place(itemstack, placer, pointed_thing)
+    end
 })
