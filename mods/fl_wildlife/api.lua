@@ -24,7 +24,12 @@ function fl_wildlife.egg_it(t_name, d_name, color)
         inventory_image = "farlands_egg.png^(farlands_egg_overlay.png^[colorize:" .. color .. ")", --"404.png",
         stack_max = 99,
         on_place = function(itemstack, placer, pointed_thing)
-            minetest.add_entity(pointed_thing.above, t_name)
+            local ent = minetest.add_entity(pointed_thing.above, t_name)
+            if itemstack:get_meta():get_string("description") ~= "" then
+                local self = ent:get_luaentity()
+                self.object:set_properties({nametag = itemstack:get_meta():get_string("description"),})
+                mobkit.remember(self,"nametag",itemstack:get_meta():get_string("description"))
+            end
         end,
     })
 end

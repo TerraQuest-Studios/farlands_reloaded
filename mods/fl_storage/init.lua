@@ -29,6 +29,11 @@ minetest.register_node("fl_storage:wood_chest", {
         elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
         else slotSize, formSize = 1, "10.4,10.3" end
 
+        if minetest.get_meta(pos):get_string("description") ~= "" then
+            chName = minetest.get_meta(pos):get_string("description")
+            minetest.get_meta(pos):set_string("infotext", minetest.get_meta(pos):get_string("description"))
+        end
+
         --header of formspec
         local formspec = {
             "formspec_version[4]",
@@ -79,7 +84,7 @@ minetest.register_node("fl_storage:wood_chest", {
 
         --show formspec
         local chest_formspec = table.concat(formspec, "")
-        minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", chest_formspec)
+        minetest.show_formspec(clicker:get_player_name(), "fl_storage:chest_formspec", chest_formspec)
     end,
     on_dig = function(pos, node, digger)
         local inv = minetest.get_inventory({type="node", pos=pos})
@@ -92,6 +97,11 @@ minetest.register_node("fl_storage:wood_chest", {
             minetest.add_item(posi, item)
         end
         minetest.node_dig(pos, node, digger)
+    end,
+    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+        if minetest.get_meta(pos):get_string("description") ~= "" then
+            drops[1]:get_meta():set_string("description", minetest.get_meta(pos):get_string("description"))
+        end
     end,
 })
 
@@ -130,6 +140,11 @@ local function shelf_nodes(name)
                 elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,7.5"
                 elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,7.77"
                 else slotSize, formSize = 1, "10.4,8.1" end
+
+                if minetest.get_meta(pos):get_string("description") ~= "" then
+                    cname = minetest.get_meta(pos):get_string("description")
+                    minetest.get_meta(pos):set_string("infotext", minetest.get_meta(pos):get_string("description"))
+                end
 
                 --header of formspec
                 local formspec = {
@@ -182,7 +197,7 @@ local function shelf_nodes(name)
                 table.insert(formspec, "listring[current_player;main]")
 
                 local shelf_formspec = table.concat(formspec, "")
-                minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", shelf_formspec)
+                minetest.show_formspec(clicker:get_player_name(), "fl_storage:shelf_formspec", shelf_formspec)
             end,
             allow_metadata_inventory_put = function(pos, listname, index, stack, player)
                 if overlay == "vessel" or overlay == "book" then
@@ -204,6 +219,11 @@ local function shelf_nodes(name)
                     minetest.add_item(posi, item)
                 end
                 minetest.node_dig(pos, node, digger)
+            end,
+            preserve_metadata = function(pos, oldnode, oldmeta, drops)
+                if minetest.get_meta(pos):get_string("description") ~= "" then
+                    drops[1]:get_meta():set_string("description", minetest.get_meta(pos):get_string("description"))
+                end
             end,
             on_place = minetest.rotate_node,
             groups = group,
