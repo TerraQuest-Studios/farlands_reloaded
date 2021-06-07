@@ -163,6 +163,28 @@ minetest.register_node("fl_workshop:anvil", {
                 return
             end
         end
+        if minetest.get_item_group(inv:get_stack("input", 2):get_name(), "dye") ~= 0 and inv:get_stack("input", 1):get_name() ~= "" then
+            --minetest.chat_send_all("sucess")
+            local color
+            local spltstr = string.split(inv:get_stack("input", 2):get_name(), ":")
+            for _, drow in pairs(fl_dyes.dyes) do
+                if drow[1] == string.sub(spltstr[2], 1, -5) then
+                    color = drow[3]
+                end
+            end
+
+            if inv:get_stack("input", 1):get_meta():get_string("description") ~= "" then
+                local out_stack = ItemStack(inv:get_stack("input", 1):get_name())
+                out_stack:get_meta():set_string("description", minetest.colorize(color, minetest.strip_colors(inv:get_stack("input", 1):get_meta():get_string("description"))))
+                inv:set_stack("output", 1, out_stack)
+            else
+                if not minetest.registered_items[inv:get_stack("input", 1):get_name()] then return end
+                local desc = minetest.registered_items[inv:get_stack("input", 1):get_name()].description
+                local out_stack = ItemStack(inv:get_stack("input", 1):get_name())
+                out_stack:get_meta():set_string("description", minetest.colorize(color, desc))
+                inv:set_stack("output", 1, out_stack)
+            end
+        end
         if not inv:get_stack("input", 1):is_empty() and not inv:get_stack("input", 2):is_empty() then
             for _, craft_table in pairs(registered_anvil_crafts) do
                 if inv:get_stack("input", 1):get_name() == craft_table.recipe[1] and inv:get_stack("input", 2):get_name() == craft_table.recipe[2] then
@@ -210,9 +232,16 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
     local anvil_inv = minetest.get_inventory({type = "node", pos = viewing_anvil[player:get_player_name()]})
     if fields.description and not anvil_inv:get_stack("output", 1):is_empty() and fields.description ~= "" then
+        local desc = fields.description
+        local i, j = string.find(anvil_inv:get_stack("output", 1):get_meta():get_string("description"), "%(c@[^)]+%)")
+        if j then
+            local ccode = string.sub(anvil_inv:get_stack("output", 1):get_meta():get_string("description"), i, j)
+            desc = "\27" .. ccode .. fields.description .. "\27(c@#ffffff)"
+        end
+
         local stack = anvil_inv:get_stack("output", 1)
         stack:set_count(1)
-        stack:get_meta():set_string("description", fields.description)
+        stack:get_meta():set_string("description", desc)
         anvil_inv:set_stack("output", 1, stack)
     elseif anvil_inv:get_stack("output", 1):is_empty() and not anvil_inv:get_stack("input", 1):is_empty() and fields.description ~= "" then
         local stack = anvil_inv:get_stack("input", 1)
