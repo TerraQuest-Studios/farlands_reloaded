@@ -68,6 +68,20 @@ minetest.register_entity("fl_wildlife:cow", {
 
     brainfunc = cow_brain,
 
+    bucket = function(itemstack, user, self)
+        --very op, needs some time limit till can be milked again
+        local inv = user:get_inventory()
+        if inv:room_for_item("main", {name = "fl_bucket:milk"}) then
+            inv:add_item("main", "fl_bucket:milk")
+        else
+            minetest.add_item(mobkit.get_stand_pos(self), "fl_bucket:milk")
+        end
+
+        --needs creative check
+        itemstack:take_item()
+        return itemstack
+    end,
+
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)

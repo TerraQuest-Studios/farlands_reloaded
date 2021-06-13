@@ -105,6 +105,28 @@ function fl_wildlife.actfunc(self, staticdata, dtime_s)
     self.object:set_properties({nametag = self.nametag,})
 end
 
+function fl_wildlife.stepfunc(self, dtime, moveresult)
+    mobkit.stepfunc(self, dtime, moveresult)
+    --used from mobkit
+    if mobkit.exists(self) then
+        local surface = nil
+        local surfnodename = nil
+        local spos = mobkit.get_stand_pos(self)
+        spos.y = spos.y+0.01
+        -- get surface height
+        local snodepos = mobkit.get_node_pos(spos)
+        local surfnode = mobkit.nodeatpos(spos)
+        while surfnode and surfnode.drawtype == 'flowingliquid' do
+            surfnodename = surfnode.name
+            surface = snodepos.y+0.5
+            if surface > spos.y+self.height then break end
+            snodepos.y = snodepos.y+1
+            surfnode = mobkit.nodeatpos(snodepos)
+        end
+        self.isinflowingliquid = surfnodename
+    end
+end
+
 function fl_wildlife.set_nametag(self, name)
     self.object:set_properties({nametag = name,})
     mobkit.remember(self,"nametag",name)

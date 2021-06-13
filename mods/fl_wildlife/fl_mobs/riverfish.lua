@@ -1,3 +1,25 @@
+function fish_brain(self)
+    --stuff
+
+    if self.hp <= 0 then --kill self if 0 hp
+        minetest.add_item(mobkit.get_stand_pos(self), "fl_wildlife:raw_riverfish")
+
+        mobkit.clear_queue_high(self)
+        fl_wildlife.hq_die(self)
+        return
+    end
+
+    if mobkit.timer(self,1) then
+        if not self.isinliquid and not self.isinflowingliquid then
+            fl_wildlife.flash_color(self)
+            mobkit.hurt(self,1)
+        else
+            mobkit.animate(self,"walk")
+            mobkit.hq_aqua_roam(self,10,1)
+        end
+    end
+end
+
 --very broken fish
 minetest.register_entity("fl_wildlife:riverfish", {
     --mte object properties
@@ -14,7 +36,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
     --hp_max = 200,
 
     --mte entity properties
-    on_step = mobkit.stepfunc, --this is required
+    on_step = fl_wildlife.stepfunc, --this is required
     on_activate = fl_wildlife.actfunc, --this is required as well(useing custom that calls mobkits and adds nametags)
     get_staticdata = mobkit.statfunc, --who knows, no documentation (probably save entity data)
 
@@ -40,7 +62,22 @@ minetest.register_entity("fl_wildlife:riverfish", {
     --custom to this mod
     drops = "fl_wildlife.villager.drops",
 
-    brainfunc = fl_brains.fish_brain,
+    brainfunc = fish_brain,
+
+    bucket = function(itemstack, user, self)
+        --note this gives a bucket that can place water, but fish doesnt have to be in water
+        local inv = user:get_inventory()
+        if inv:room_for_item("main", {name = "fl_bucket:riverfish"}) then
+            inv:add_item("main", "fl_bucket:riverfish")
+        else
+            minetest.add_item(mobkit.get_stand_pos(self), "fl_bucket:riverfish")
+        end
+
+        --needs creative check
+        self.object:remove()
+        itemstack:take_item()
+        return itemstack
+    end,
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)

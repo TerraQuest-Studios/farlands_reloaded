@@ -92,3 +92,45 @@ minetest.register_craftitem("fl_wildlife:leather", {
     description = "leather",
     inventory_image = "farlands_leather.png",
 })
+
+minetest.register_craftitem(":fl_bucket:milk", {
+    description = "milk bucket",
+    stack_max = 1,
+    inventory_image = "farlands_bucket_milk.png",
+    groups = {bucket = 1},
+})
+
+minetest.register_craftitem("fl_wildlife:raw_riverfish", {
+    description = "riverfish item",
+    inventory_image = "farlands_raw_riverfish.png",
+})
+
+minetest.register_craftitem(":fl_bucket:riverfish", {
+    description = "bucket of riverfish",
+    inventory_image = "(farlands_bucket_water.png^[noalpha)^[brighten",
+    on_place = function(itemstack, user, pointed_thing)
+        local pos
+
+        if pointed_thing.type == "node" then
+            local node = minetest.get_node_or_nil(pointed_thing.under)
+            local def = node and minetest.registered_nodes[node.name]
+
+            if not user:get_player_control().sneak and def and def.on_rightclick then
+                return def.on_rightclick(pointed_thing.under, node, user, itemstack)
+            end
+
+            if def and def.buildable_to then pos = pointed_thing.under
+            else
+                pos = pointed_thing.above
+                local anode = minetest.get_node_or_nil(pos)
+                if not minetest.registered_nodes[anode.name] or not minetest.registered_nodes[anode.name].buildable_to then return itemstack end
+            end
+        elseif pointed_thing.type == "object" then
+            pos = pointed_thing.ref:get_pos()
+        else return end
+
+        minetest.add_entity(pos, "fl_wildlife:riverfish")
+        minetest.set_node(pos, {name = "fl_liquids:water_source"})
+        return ItemStack("fl_bucket:bucket")
+    end,
+})

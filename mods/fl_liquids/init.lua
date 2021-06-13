@@ -1,3 +1,4 @@
+local modpath = minetest.get_modpath("fl_liquids")
 local water_inventory_image =
 "[inventorycube{farlands_water_source_animated.png&[verticalframe:16:8"
 .. "{farlands_water_source_animated.png&[verticalframe:16:8"
@@ -6,6 +7,28 @@ local river_water_inventory_image =
 "[inventorycube{farlands_river_water_source_animated.png&[verticalframe:16:8"
 .. "{farlands_river_water_source_animated.png&[verticalframe:16:8"
 .. "{farlands_river_water_source_animated.png&[verticalframe:16:8"
+
+dofile(modpath .. "/buckets.lua")
+
+local function bucket_func(itemstack, user, pos, bucket, liquid)
+    if user:get_wielded_item():get_count() > 1 then
+        local inv = user:get_inventory()
+        if inv:room_for_item("main", {name=bucket}) then inv:add_item("main", bucket)
+        else
+            local ppos = user:get_pos()
+            ppos.y = math.floor(pos.y + 0.5)
+            minetest.add_item(ppos, bucket)
+        end
+        local renew = minetest.find_node_near(pos, 1, liquid)
+        if not renew then minetest.add_node(pos, {name = "air"}) end
+        itemstack:take_item()
+        return itemstack
+    end
+
+        local renew = minetest.find_node_near(pos, 1, liquid)
+        if not renew then minetest.add_node(pos, {name = "air"}) end
+        return ItemStack(bucket)
+end
 
 minetest.register_node("fl_liquids:water_source", {
 	description = "Water Source",
@@ -52,6 +75,9 @@ minetest.register_node("fl_liquids:water_source", {
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, cools_lava = 1},
     _bottle_item = "fl_bottles:water",
+    _bucket = function(itemstack, user, pos)
+        return bucket_func(itemstack, user, pos, "fl_bucket:bucket_water", "fl_liquids:water_source")
+    end,
 })
 
 minetest.register_node("fl_liquids:water_flowing", {
@@ -146,6 +172,9 @@ minetest.register_node("fl_liquids:river_water_source", {
 	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
 	groups = {water = 3, liquid = 3, cools_lava = 1},
     _bottle_item = "fl_bottles:river_water",
+    _bucket = function(itemstack, user, pos)
+        return bucket_func(itemstack, user, pos, "fl_bucket:bucket_river_water", "fl_liquids:river_water_source")
+    end,
 })
 
 minetest.register_node("fl_liquids:river_water_flowing", {
@@ -236,6 +265,9 @@ minetest.register_node("fl_liquids:lava_source", {
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, igniter = 1},
+    _bucket = function(itemstack, user, pos)
+        return bucket_func(itemstack, user, pos, "fl_bucket:bucket_lava", "fl_liquids:lava_source")
+    end,
 })
 
 minetest.register_node("fl_liquids:lava_flowing", {
