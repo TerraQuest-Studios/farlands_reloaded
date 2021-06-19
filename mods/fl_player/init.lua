@@ -25,11 +25,28 @@ local animations = {
 fl_player.animations = animations
 fl_player.ignore = {}
 
+local data_table = {}
+local key_table = {}
+
+for _, sn in pairs(minetest.get_dir_list(minetest.get_modpath("fl_player").."/textures")) do
+    if sn == "fl_trans.png" then break end
+    local nn = string.split(string.split(sn, "_")[2],".")
+    table.insert(data_table, {_texture = sn, name = nn[1]})
+    key_table[sn] = 1
+end
+
+local function get_player_skin(player)
+    if player:get_meta():get("skin") and key_table[player:get_meta():get("skin")] then
+        return player:get_meta():get("skin")
+    end
+    return "character_Jonathon.png"
+end
+
 minetest.register_on_joinplayer(function(player)
     player:get_meta():set_int("vanish", 0)
     player:set_properties({
         mesh = "fl_character.b3d",
-        textures = {"fl_character_1.png", "fl_trans.png", "fl_trans.png"},
+        textures = {get_player_skin(player), "fl_trans.png", "fl_trans.png"},
         visual = "mesh",
         visual_size = {x = 1, y = 1, z = 1},
         collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
@@ -145,3 +162,47 @@ minetest.register_chatcommand("set_anim", {
     end,
 })
 --]]
+
+--[[skins]]--
+
+--needs to fake support skinsdb for i3 support
+--[[
+data structure dump of skins.get_skinlist_for_player(name) seems to be
+{
+    license = "", --license
+    format = "", --1.0 or 1.8
+    _texture = "", --texture filename
+    _key = "", --texture name without .png
+    author = "" --author name
+    _sort_id = number, seems to be 5000?
+    name = "", --seems to be texture name with character_ and .png stripped from filename
+    __index = {
+        set_skin = function,
+        set_meta = function,
+        get_preview = function,
+        get_key = function,
+        set_preview = function,
+        is_applicable_for_player = function,
+        get_texture = function,
+        apply_skin_to_player = function,
+        get_meta = function,
+        get_meta_string = function,
+        set_texture = function,
+        __index = circlar reference,
+    }
+}
+--]]
+
+skins = {}
+
+function skins.get_skinlist_for_player(name)
+    return data_table
+end
+
+function skins.set_player_skin(player, skin_entry)
+    --minetest.chat_send_all(skin_entry._texture)
+    player:get_meta():set_string("skin", skin_entry._texture)
+    player:set_properties({
+        textures = {get_player_skin(player), "fl_trans.png", "fl_trans.png"},
+    })
+end
