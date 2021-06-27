@@ -1,3 +1,9 @@
+minetest.register_craftitem("fl_trees:stick", {
+    description = "stick",
+    inventory_image = "farlands_stick.png",
+    _dungeon_loot = {name = "fl_trees:stick", chance = 0.6, count = {3, 6}},
+})
+
 local function tree_nodes(name, tgroup, lgroup, pgroup)
     local tgp = tgroup or {oddly_breakable_by_hand = 3, wood_related = 1, tree = 1, trunk = 1}
     local lgp = lgroup or {oddly_breakable_by_hand = 3, wood_related = 1, tree = 1, leaf = 1}
@@ -53,6 +59,11 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     minetest.register_craft({
         output = "fl_trees:" .. name .. "_plank 4",
         recipe = {{"fl_trees:" .. name .. "_trunk",}}
+    })
+
+    minetest.register_craft({
+        output = "fl_trees:stick 4",
+        recipe = {{"fl_trees:" .. name .. "_plank"}},
     })
 end
 

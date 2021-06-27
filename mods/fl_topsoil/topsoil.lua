@@ -1,6 +1,7 @@
 minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
+    _dungeon_loot = {name = "fl_topsoil:dirt", chance = 0.6, count = {2, 16}, y = {-64, 32768}},
     groups = {oddly_breakable_by_hand = 3},
 })
 
