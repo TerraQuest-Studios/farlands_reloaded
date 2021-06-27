@@ -14,6 +14,7 @@ local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 dofile(modpath .. "/api.lua")
 dofile(modpath .. "/node_items.lua")
+dofile(modpath .. "/crafts.lua")
 
 local mob_brains = {
     "villager_brain",

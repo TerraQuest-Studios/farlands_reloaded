@@ -101,8 +101,13 @@ minetest.register_craftitem(":fl_bucket:milk", {
 })
 
 minetest.register_craftitem("fl_wildlife:raw_riverfish", {
-    description = "riverfish item",
+    description = "raw riverfish",
     inventory_image = "farlands_raw_riverfish.png",
+})
+
+minetest.register_craftitem("fl_wildlife:cooked_riverfish", {
+    description = "cooked riverfish",
+    inventory_image = "farlands_cooked_riverfish.png",
 })
 
 minetest.register_craftitem(":fl_bucket:riverfish", {

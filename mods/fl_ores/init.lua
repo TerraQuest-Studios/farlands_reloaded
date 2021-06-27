@@ -64,3 +64,15 @@ minetest.register_craft({
         {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
     }
 })
+
+minetest.register_craft({
+    type = "fuel",
+    recipe = "fl_ores:coal_ore",
+    burntime = 41,
+})
+
+minetest.register_craft({
+    type = "fuel",
+    recipe = "fl_ores:coal_block",
+    burntime = 370,
+})
