@@ -68,7 +68,12 @@ local function updateformspec(pos, clicker)
             local nm = ItemStack(node_table[i][1] .. "_" .. node_table[i][2])
             nm:set_count(node_table[i][3])
             nm = nm:to_string()
-            table.insert(formspec, "item_image_button[" .. 4+x+(x*0.1) .. "," .. 0.6+y+(y*0.1) .. ";1,1;" .. nm .. ";" .. node_table[i][2] .. ";]")
+            table.insert(
+                formspec,
+                "item_image_button[" .. 4+x+(x*0.1) .. "," .. 0.6+y+(y*0.1) .. ";1,1;"
+                .. nm .. ";"
+                .. node_table[i][2] .. ";]"
+            )
             x=x+1
         end
     end
@@ -123,7 +128,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             saw_stack:take_item(tcount)
             saw_inv:set_stack("main", 1, saw_stack)
             for sname, spos in pairs(viewing_saw) do
-                --if minetest.hash_node_position(spos) == minetest.hash_node_position(viewing_saw[player:get_player_name()]) then
                 if vector.equals(spos, viewing_saw[player:get_player_name()]) then
                     updateformspec(spos, minetest.get_player_by_name(sname))
                 end
@@ -202,7 +206,9 @@ minetest.register_node(":fl_stairs:tablesaw", {
         minetest.node_dig(pos, node, digger)
     end,
     on_place = function(itemstack, placer, pointed_thing)
-        if itemstack:get_meta():get_string("description") == "wsaw" and pointed_thing.type == "node" and minetest.get_modpath("fl_tnt") then
+        if itemstack:get_meta():get_string("description") == "wsaw"
+        and pointed_thing.type == "node"
+        and minetest.get_modpath("fl_tnt") then
             fl_tnt.boom(pointed_thing.under, {radius = 3})
             itemstack:take_item()
             --placer:set_wielded_item(itemstack)

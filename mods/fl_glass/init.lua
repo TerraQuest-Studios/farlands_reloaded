@@ -133,7 +133,10 @@ minetest.register_node("fl_glass:tinted_framed_glass_panes", {
     groups = {oddly_breakable_by_hand = 3, pane = 1, glass = 1},
     connects_to = {"group:pane", "group:glass", "group:wood_related"},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
-        drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted framed glass pane")
+        drops[1]:get_meta():set_string(
+            "description",
+            fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted framed glass pane"
+        )
     end,
 })
 

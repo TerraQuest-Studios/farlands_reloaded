@@ -55,6 +55,7 @@ function fl_wildlife.node_dps_dmg(self)
 	end
 end
 
+--[[
 function fl_wildlife.hq_npc_roam(self, prty)
     local func = function(self)
         local factor = math.random(20)
@@ -69,7 +70,7 @@ function fl_wildlife.hq_npc_roam(self, prty)
             tpos.x = tpos.x + 20
             tpos.y = tpos.y + 20
         end
-        --]]
+        --]
         --if tpos then minetest.chat_send_all(minetest.pos_to_string(tpos)) end
 		--if height and not liquidflag then mobkit.dumbstep(self,height,tpos,0.3,0) end
         if height and not liquidflag then mobkit.goto_next_waypoint(self, tpos) end
@@ -83,10 +84,11 @@ function fl_wildlife.hq_npc_roam(self, prty)
                 end
             end
         end
-        --]]
+        --]
     end
     mobkit.queue_high(self, func, prty)
 end
+--]]
 
 --color and duration are optional fields
 function fl_wildlife.flash_color(self, cvalue, duration)
@@ -109,7 +111,7 @@ function fl_wildlife.stepfunc(self, dtime, moveresult)
     mobkit.stepfunc(self, dtime, moveresult)
     --used from mobkit
     if mobkit.exists(self) then
-        local surface = nil
+        --local surface = nil
         local surfnodename = nil
         local spos = mobkit.get_stand_pos(self)
         spos.y = spos.y+0.01
@@ -118,7 +120,7 @@ function fl_wildlife.stepfunc(self, dtime, moveresult)
         local surfnode = mobkit.nodeatpos(spos)
         while surfnode and surfnode.drawtype == 'flowingliquid' do
             surfnodename = surfnode.name
-            surface = snodepos.y+0.5
+            local surface = snodepos.y+0.5
             if surface > spos.y+self.height then break end
             snodepos.y = snodepos.y+1
             surfnode = mobkit.nodeatpos(snodepos)
@@ -157,10 +159,10 @@ end
 function fl_wildlife.hq_die(self)
 	local timer = 1.5
 	local start = true
-	local func = function(self)
+	local func = function()
 		if start then
 			mobkit.lq_fallover(self)
-			self.logic = function(self) end	-- brain dead as well
+			self.logic = function() end	-- brain dead as well
 			start=false
 		end
 		timer = timer-self.dtime

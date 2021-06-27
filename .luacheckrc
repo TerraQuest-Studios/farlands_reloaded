@@ -4,7 +4,10 @@ allow_defined_top = true
 exclude_files = {".luacheckrc"}
 
 globals = {
-    "minetest", "dungeon_loot"
+    "minetest", "core", 
+    
+    --mod provided
+    "dungeon_loot", "fl_workshop",
 }
 
 read_globals = {
@@ -15,8 +18,8 @@ read_globals = {
     "math", "table",
 
     -- Builtin
-    "vector", "ItemStack", "dump", "DIR_DELIM", "VoxelArea", "Settings", "PcgRandom",
+    "vector", "ItemStack", "dump", "DIR_DELIM", "VoxelArea", "Settings", "PcgRandom", "VoxelManip", "PseudoRandom",
 
     --mod produced
-    "fl_dyes", "fl_hand", "fl_tools", "fl_workshop", "mobkit",
+    "fl_dyes", "fl_hand", "fl_tools", "mobkit", "fl_tnt",
 }

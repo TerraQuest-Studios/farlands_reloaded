@@ -40,7 +40,8 @@ local stairtable = {
 local function slab_onplace(itemstack, placer, pointed_thing)
     if pointed_thing.type ~= "node" then return itemstack end
 
-    if minetest.get_node(pointed_thing.under).name == itemstack:get_name() and not placer:get_player_control().sneak then
+    if minetest.get_node(pointed_thing.under).name == itemstack:get_name()
+    and not placer:get_player_control().sneak then
         minetest.set_node(pointed_thing.under, {name=string.sub(itemstack:get_name(), 1, -6)})
         if minetest.is_creative_enabled(placer:get_player_name()) == false then
             itemstack:take_item()

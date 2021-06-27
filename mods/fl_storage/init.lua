@@ -167,7 +167,11 @@ local function shelf_nodes(name)
                     for j=0, 8 do
                         table.insert(chest_inv, "box[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;]")
                         if overlay == "vessel" or overlay == "book" then
-                            table.insert(chest_inv, "image[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;farlands_" .. overlay .. "_shelf_slot.png^[colorize:#ffffff:75]")
+                            local img = "farlands_" .. overlay .. "_shelf_slot.png^[colorize:#ffffff:75"
+                            table.insert(
+                                chest_inv,
+                                "image[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;" ..img .. "]"
+                            )
                         end
                     end
                 end
@@ -185,8 +189,11 @@ local function shelf_nodes(name)
                 table.insert(formspec, "style_type[box;colors=#666]") -- change bottom 3 rows color
                 for i=0, 2 do
                     for j=0, rLength-1 do
-                        table.insert(formspec, "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 4.6+(i*0.1)+(i*slotSize) .. ";"
-                        .. slotSize .. "," .. slotSize .. ";]")
+                        table.insert(
+                            formspec,
+                            "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 4.6+(i*0.1)+(i*slotSize) .. ";"
+                            .. slotSize .. "," .. slotSize .. ";]"
+                        )
                     end
                     table.insert(formspec, "list[current_player;main;0.3," .. 4.6+(i*0.1)+(i*slotSize) .. ";"
                     .. rLength .. ",1;" .. 9+(rLength*i) .. "]")

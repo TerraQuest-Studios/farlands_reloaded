@@ -68,7 +68,7 @@ minetest.register_node("fl_workshop:anvil", {
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 
         --vars for stuff
-        local chName = "chest name"
+        --local chName = "chest name"
         local iPos = pos.x .. "," .. pos.y .. "," .. pos.z
         local cInvSize = clicker:get_inventory():get_size("main")
         local rLength = (cInvSize-9)/3
@@ -158,12 +158,14 @@ minetest.register_node("fl_workshop:anvil", {
         if listname == "input" and inv:get_stack(listname, 1):get_name() == inv:get_stack(listname, 2):get_name() then
             if minetest.get_item_group(inv:get_stack(listname, index):get_name(), "tool")  ~= 0 then
                 local out_stack = inv:get_stack(listname, 1)
-                out_stack:set_wear(65535 - ((65535 - inv:get_stack(listname, 1):get_wear()) + (65535 - inv:get_stack(listname, 2):get_wear())))
+                local out_wear = inv:get_stack(listname, 2):get_wear()
+                out_stack:set_wear(65535 - ((65535 - inv:get_stack(listname, 1):get_wear()) + (65535 - out_wear)))
                 inv:set_stack("output", 1, out_stack)
                 return
             end
         end
-        if minetest.get_item_group(inv:get_stack("input", 2):get_name(), "dye") ~= 0 and inv:get_stack("input", 1):get_name() ~= "" then
+        if minetest.get_item_group(inv:get_stack("input", 2):get_name(), "dye") ~= 0
+        and inv:get_stack("input", 1):get_name() ~= "" then
             --minetest.chat_send_all("sucess")
             local color
             local spltstr = string.split(inv:get_stack("input", 2):get_name(), ":")
@@ -175,7 +177,13 @@ minetest.register_node("fl_workshop:anvil", {
 
             if inv:get_stack("input", 1):get_meta():get_string("description") ~= "" then
                 local out_stack = ItemStack(inv:get_stack("input", 1):get_name())
-                out_stack:get_meta():set_string("description", minetest.colorize(color, minetest.strip_colors(inv:get_stack("input", 1):get_meta():get_string("description"))))
+                out_stack:get_meta():set_string(
+                    "description",
+                    minetest.colorize(
+                        color,
+                        minetest.strip_colors(inv:get_stack("input", 1):get_meta():get_string("description"))
+                    )
+                )
                 inv:set_stack("output", 1, out_stack)
             else
                 if not minetest.registered_items[inv:get_stack("input", 1):get_name()] then return end
@@ -187,7 +195,8 @@ minetest.register_node("fl_workshop:anvil", {
         end
         if not inv:get_stack("input", 1):is_empty() and not inv:get_stack("input", 2):is_empty() then
             for _, craft_table in pairs(registered_anvil_crafts) do
-                if inv:get_stack("input", 1):get_name() == craft_table.recipe[1] and inv:get_stack("input", 2):get_name() == craft_table.recipe[2] then
+                if inv:get_stack("input", 1):get_name() == craft_table.recipe[1]
+                and inv:get_stack("input", 2):get_name() == craft_table.recipe[2] then
                     inv:set_stack("output", 1, ItemStack(craft_table.output))
                 end
             end
@@ -243,7 +252,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         stack:set_count(1)
         stack:get_meta():set_string("description", desc)
         anvil_inv:set_stack("output", 1, stack)
-    elseif anvil_inv:get_stack("output", 1):is_empty() and not anvil_inv:get_stack("input", 1):is_empty() and fields.description ~= "" then
+    elseif anvil_inv:get_stack("output", 1):is_empty()
+    and not anvil_inv:get_stack("input", 1):is_empty()
+    and fields.description ~= "" then
         local stack = anvil_inv:get_stack("input", 1)
         stack:set_count(1)
         --testing colorization

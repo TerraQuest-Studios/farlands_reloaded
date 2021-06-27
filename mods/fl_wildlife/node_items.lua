@@ -128,7 +128,10 @@ minetest.register_craftitem(":fl_bucket:riverfish", {
             else
                 pos = pointed_thing.above
                 local anode = minetest.get_node_or_nil(pos)
-                if not minetest.registered_nodes[anode.name] or not minetest.registered_nodes[anode.name].buildable_to then return itemstack end
+                if not minetest.registered_nodes[anode.name]
+                or not minetest.registered_nodes[anode.name].buildable_to then
+                    return itemstack
+                end
             end
         elseif pointed_thing.type == "object" then
             pos = pointed_thing.ref:get_pos()

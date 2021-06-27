@@ -320,7 +320,7 @@ end
 local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owner, explode_center)
 	pos = vector.round(pos)
 	-- scan for adjacent TNT nodes first, and enlarge the explosion
-    
+
 	local vm1 = VoxelManip()
 	local p1 = vector.subtract(pos, 2)
 	local p2 = vector.add(pos, 2)
@@ -356,10 +356,10 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 
 	-- recalculate new radius
 	--radius = math.floor(radius * math.pow(count, 1/3))
-    
+
 
 	-- perform the explosion
-    local c_air = minetest.get_content_id("air")
+    --local c_air = minetest.get_content_id("air")
 	local vm = VoxelManip()
 	local pr = PseudoRandom(os.time())
 	p1 = vector.subtract(pos, radius)
@@ -469,7 +469,6 @@ minetest.register_entity("fl_tnt:tnt_entity", {
         visual = "cube",
         textures = {
             "farlands_tnt_top.png",
-            --{name = "farlands_tnt_top_burning_animated.png", animation = {type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 4}},
             "farlands_tnt_bottom.png",
             "farlands_tnt_side.png",
             "farlands_tnt_side.png",

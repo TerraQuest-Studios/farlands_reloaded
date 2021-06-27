@@ -80,13 +80,12 @@ end
 local function furnace_nt(pos, elapsed)
     --minetest.chat_send_all(elapsed)
     --return true
-    --[[
+
     if viewing_furnace[minetest.hash_node_position(pos)] then
         for _, pname in pairs(viewing_furnace[minetest.hash_node_position(pos)]) do
             update_active(pos, pname, 40, 70)
         end
     end
-    --]]
 
 	return false
 end

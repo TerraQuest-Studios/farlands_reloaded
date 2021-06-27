@@ -33,7 +33,10 @@ minetest.override_chatcommand("msg", {
         if not destination then return false, "Invalid Usage, see /help msg." end
         if not minetest.get_player_by_name(destination) then return false, destination .. " is not online" end
         if minetest.get_player_by_name(name)
-        and vector.distance(minetest.get_player_by_name(name):get_pos(), minetest.get_player_by_name(destination):get_pos()) <= dist then
+        and vector.distance(
+            minetest.get_player_by_name(name):get_pos(),
+            minetest.get_player_by_name(destination):get_pos()
+        ) <= dist then
             minetest.chat_send_player(destination, minetest.colorize("#00ff00", "DM from " .. name .. ": " .. msg))
         else
             return false, destination .. " is not in range"
