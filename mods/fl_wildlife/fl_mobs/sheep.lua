@@ -119,6 +119,7 @@ minetest.register_entity("fl_wildlife:sheep", {
     },
 
     brainfunc = sheep_brain,--villager_brain, --function for the brain
+    _spawner = {},
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
