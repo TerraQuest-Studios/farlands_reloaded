@@ -36,6 +36,7 @@ minetest.register_entity("fl_wildlife:trader", {
     drops = "fl_wildlife.trader.drops",
 
     brainfunc = fl_brains.villager_brain,--villager_brain, --function for the brain
+    _egg_it = {"trader", "#3c521d"},
 
     --experiments
     on_rightclick = function(self, clicker)
@@ -123,4 +124,4 @@ minetest.register_entity("fl_wildlife:trader", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:trader", "trader", "#3c521d")
+--fl_wildlife.egg_it("fl_wildlife:trader", "trader", "#3c521d")

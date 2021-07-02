@@ -67,6 +67,7 @@ minetest.register_entity("fl_wildlife:cow", {
     },
 
     brainfunc = cow_brain,
+    _egg_it = {"cow", "#100c0c"},
 
     bucket = function(itemstack, user, self)
         --very op, needs some time limit till can be milked again
@@ -100,4 +101,4 @@ minetest.register_entity("fl_wildlife:cow", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:cow", "cow", "#100c0c")
+--fl_wildlife.egg_it("fl_wildlife:cow", "cow", "#100c0c")

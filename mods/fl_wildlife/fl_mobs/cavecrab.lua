@@ -130,6 +130,7 @@ minetest.register_entity("fl_wildlife:cavecrab", {
     },
 
     brainfunc = cc_brain,
+    _egg_it = {"cavecrab", "#76716f"},
     _spawner = {},
 
     --more mte properties
@@ -150,4 +151,4 @@ minetest.register_entity("fl_wildlife:cavecrab", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:cavecrab", "cavecrab", "#76716f")
+--fl_wildlife.egg_it("fl_wildlife:cavecrab", "cavecrab", "#76716f")

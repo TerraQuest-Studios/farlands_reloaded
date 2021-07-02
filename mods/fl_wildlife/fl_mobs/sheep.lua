@@ -120,6 +120,7 @@ minetest.register_entity("fl_wildlife:sheep", {
 
     brainfunc = sheep_brain,--villager_brain, --function for the brain
     --_spawner = {},
+    _egg_it = {"sheep", "#a49b95"},
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
@@ -201,4 +202,4 @@ minetest.register_entity("fl_wildlife:sheep", {
     end,
 })
 
-fl_wildlife.egg_it("fl_wildlife:sheep", "sheep", "#a49b95")
+--fl_wildlife.egg_it("fl_wildlife:sheep", "sheep", "#a49b95")

@@ -63,6 +63,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
     drops = "fl_wildlife.villager.drops",
 
     brainfunc = fish_brain,
+    _egg_it = {"riverfish", "#978166"},
 
     bucket = function(itemstack, user, self)
         --note this gives a bucket that can place water, but fish doesnt have to be in water
@@ -97,7 +98,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
 })
 
 --register eggs
-fl_wildlife.egg_it("fl_wildlife:riverfish", "riverfish", "#978166")
+--fl_wildlife.egg_it("fl_wildlife:riverfish", "riverfish", "#978166")
 
 --fish still jump out,
 --fish die in pen on in water on base?

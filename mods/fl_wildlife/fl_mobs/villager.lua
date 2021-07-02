@@ -78,6 +78,7 @@ minetest.register_entity("fl_wildlife:villager", {
     drops = "fl_wildlife.villager.drops",
 
     brainfunc = fl_brains.villager_brain,--villager_brain, --function for the brain
+    _egg_it = {"villager", "#654321"},
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
@@ -97,4 +98,4 @@ minetest.register_entity("fl_wildlife:villager", {
 })
 
 --register eggs
-fl_wildlife.egg_it("fl_wildlife:villager", "villager", "#654321")
+--fl_wildlife.egg_it("fl_wildlife:villager", "villager", "#654321")

@@ -19,7 +19,7 @@ end
 
 --dirty dev egg registration
 function fl_wildlife.egg_it(t_name, d_name, color)
-    minetest.register_craftitem("fl_wildlife:" .. d_name .. "_egg", {
+    minetest.register_craftitem(":fl_wildlife:" .. d_name .. "_egg", {
         description = "spawn egg for " .. d_name,
         inventory_image = "farlands_egg.png^(farlands_egg_overlay.png^[colorize:" .. color .. ")", --"404.png",
         stack_max = 99,
@@ -33,6 +33,14 @@ function fl_wildlife.egg_it(t_name, d_name, color)
         end,
     })
 end
+
+minetest.register_on_mods_loaded(function()
+    for mob, def in pairs(minetest.registered_entities) do
+        if def._egg_it then
+            fl_wildlife.egg_it(mob, def._egg_it[1], def._egg_it[2])
+        end
+    end
+end)
 
 --used from wildlife demo
 function fl_wildlife.node_dps_dmg(self)
