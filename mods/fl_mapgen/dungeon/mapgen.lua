@@ -168,6 +168,7 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 			local facedir = minetest.dir_to_facedir(vector.multiply(wall.facing, -1))
 			minetest.add_node(chestpos, {name = "fl_storage:wood_chest", param2 = facedir})
 			populate_chest(chestpos, PcgRandom(noise3d_integer(noise, chestpos)), room.type)
+            --need to add in a way of placing spawners here
 		end
 	end
 end)

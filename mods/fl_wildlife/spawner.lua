@@ -57,7 +57,7 @@ local function timer(pos, elapsed)
         end
     end
 
-    minetest.chat_send_all(counter)
+    --minetest.chat_send_all(counter)
 
     local meta = minetest.get_meta(pos)
     local spawn_mob = meta:get("mob_spawn") or sm_keys[random(#sm_keys)]
@@ -68,13 +68,14 @@ local function timer(pos, elapsed)
     end
 
     if active and #obj_in_rad < max_obj then --(max_obj - 10) then
-        minetest.chat_send_all("trigger")
+        --minetest.chat_send_all("trigger")
         local j = 0
         while j < random(2,4) do
             local rand = random(spawner_mobs[spawn_mob].min_light or 1, spawner_mobs[spawn_mob].max_light or 15)
             if #light_table[rand] >= 1 then
+                --maybe spawned in entities have particles for 2 seconds?
                 minetest.add_entity(light_table[rand][random(#light_table[rand])], spawn_mob)
-                minetest.chat_send_all("light: " .. rand)
+                --minetest.chat_send_all("light: " .. rand)
                 j=j+1
             end
         end
@@ -96,8 +97,8 @@ local function timer(pos, elapsed)
             animation = {type="vertical_frames", aspect_w=32, aspect_h=32, frame_length=1},
             glow = 13,
         })
-    else
-        minetest.chat_send_all("to many mobs in area")
+    --else
+        --minetest.chat_send_all("to many mobs in area")
     end
 
     --minetest.chat_send_all(minetest.pos_to_string(pos))
