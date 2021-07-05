@@ -89,7 +89,11 @@ function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, poi
             hunger_data[user:get_player_name()]["hunger_value"] = change
         end
 
-        user:hud_change(hunger_data[user:get_player_name()]["id"], "number", hunger_data[user:get_player_name()]["hunger_value"])
+        user:hud_change(
+            hunger_data[user:get_player_name()]["id"],
+            "number",
+            hunger_data[user:get_player_name()]["hunger_value"]
+        )
 
         return old_eat(hpchange, replace_with_item, itemstack, user, pointed_thing)
     else
@@ -100,6 +104,7 @@ end
 local function node_hunger(_, _, player, test, _, _, _, _, _, val)
     if not player or not player:is_player() or player.is_fake_player == true then return end
     local interaction = hunger_data[player:get_player_name()]["node_interact"]
+    local pname = player:get_player_name()
 
     if test then
         --digging
@@ -113,15 +118,15 @@ local function node_hunger(_, _, player, test, _, _, _, _, _, val)
     end
 
     if interaction > 150 then
-        if tonumber(hunger_data[player:get_player_name()]["hunger_value"]) >= 1 then
-            hunger_data[player:get_player_name()]["hunger_value"] = hunger_data[player:get_player_name()]["hunger_value"] - 1
+        if tonumber(hunger_data[pname]["hunger_value"]) >= 1 then
+            hunger_data[pname]["hunger_value"] = hunger_data[pname]["hunger_value"] - 1
         else
             player:set_hp(player:get_hp()-1)
         end
-        player:hud_change(hunger_data[player:get_player_name()]["id"], "number", hunger_data[player:get_player_name()]["hunger_value"])
+        player:hud_change(hunger_data[pname]["id"], "number", hunger_data[pname]["hunger_value"])
         interaction = 0
     end
-    hunger_data[player:get_player_name()]["node_interact"] = interaction
+    hunger_data[pname]["node_interact"] = interaction
 end
 
 minetest.register_on_placenode(node_hunger)
@@ -150,5 +155,9 @@ fl_hunger = {}
 
 function fl_hunger.set_hunger(user, value)
     hunger_data[user:get_player_name()]["hunger_value"] = value
-    user:hud_change(hunger_data[user:get_player_name()]["id"], "number", hunger_data[user:get_player_name()]["hunger_value"])
+    user:hud_change(
+        hunger_data[user:get_player_name()]["id"],
+        "number",
+        hunger_data[user:get_player_name()]["hunger_value"]
+    )
 end
