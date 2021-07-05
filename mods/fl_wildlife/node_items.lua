@@ -108,6 +108,7 @@ minetest.register_craftitem("fl_wildlife:raw_riverfish", {
 minetest.register_craftitem("fl_wildlife:cooked_riverfish", {
     description = "cooked riverfish",
     inventory_image = "farlands_cooked_riverfish.png",
+    on_use = minetest.item_eat(5),
 })
 
 minetest.register_craftitem(":fl_bucket:riverfish", {
