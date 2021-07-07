@@ -206,3 +206,9 @@ function skins.set_player_skin(player, skin_entry)
         textures = {get_player_skin(player), "fl_trans.png", "fl_trans.png"},
     })
 end
+
+function skins.get_player_skin(player)
+    local skin = player:get_meta():get("skin") or "character_Jonathon.png"
+    local nn = string.split(string.split(skin, "_")[2],".")
+    return {name = nn[1], _texture = skin}
+end
