@@ -34,10 +34,24 @@ local breath_bar_def = {
     item = 20,
     direction = 0,
     size = {x = 24, y = 24},
-    offset = {y=-88+-16*2, x=25},
+    offset = {y=-88+-16*2, x=14},
 }
 
 core.hud_replace_builtin("breath", breath_bar_def)
+
+local health_bar_def = {
+    hud_elem_type = "statbar",
+    position = {x=0.5, y=1},
+    text = "heart.png",
+    text2 = "heart_gone.png",
+    number = 20,
+    item = 20,
+    direction = 0,
+    size = {x = 24, y = 24},
+    offset = {y=-88, x=-254},
+}
+core.hud_replace_builtin("health", health_bar_def)
+
 
 --init data
 minetest.register_on_joinplayer(function(player, last_login)
@@ -53,7 +67,7 @@ minetest.register_on_joinplayer(function(player, last_login)
         item = 20,
         direction = 0,
         size = {x = 24, y = 24},
-        offset = {y=-88, x=25},
+        offset = {y=-88, x=14},
     })
     hunger_data[player:get_player_name()]["id"] = id
 end)
@@ -78,7 +92,7 @@ minetest.after(600, write_data)
 local old_eat = minetest.do_item_eat
 function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
 
-    if hunger_data[user:get_player_name()]["hunger_value"] < 20 then
+    if tonumber(hunger_data[user:get_player_name()]["hunger_value"]) < 20 then
         local hpchange = 0
         local change = hunger_data[user:get_player_name()]["hunger_value"] + hp_change
 
