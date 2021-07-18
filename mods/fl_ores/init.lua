@@ -23,8 +23,9 @@ local function register_ore(name, block_groups)
     for _, bm in pairs(base_material) do
         local sgp = table.copy(minetest.registered_nodes["fl_stone:" .. bm]["groups"])
         sgp.stairable, sgp.wallable = nil, nil
+        local desc = string.gsub(bm, "_", " ")
         minetest.register_node("fl_ores:" .. name .. "_in_" .. bm, {
-            description = name .. " in " .. bm,
+            description = name .. " in " .. desc,
             tiles = {"farlands_" .. bm .. ".png^farlands_" .. name .. "_overlay.png"},
             groups = sgp,
             drop = "fl_ores:" .. name .. "_ore",
