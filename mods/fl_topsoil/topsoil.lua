@@ -15,12 +15,6 @@ minetest.register_node("fl_topsoil:dirt_with_grass", {
     groups = {oddly_breakable_by_hand = 3},
 })
 
-minetest.register_node("fl_topsoil:sand", {
-    description = "sand",
-    tiles = {"farlands_sand.png"},
-    groups = {oddly_breakable_by_hand = 3, falling_node = 1},
-})
-
 minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},

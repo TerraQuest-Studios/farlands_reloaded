@@ -1,36 +1,155 @@
---vertical blend (broken)
+--vertical blend (broken), also need to limit ocean depth to -25
+--main biomes
+--grassland
 minetest.register_biome({
     name = "grassland",
     node_top = "fl_topsoil:dirt_with_grass",
     depth_top = 1,
-    node_filler = "fl_topsoil:dirt",
+    node_filler = "fl_stone:dirt",
     depth_filler = 3,
-    node_riverbed = "fl_topsoil:sand",
+    node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
     node_dungeon = "fl_stone:stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
     node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    node_stone = "fl_stone:stone",
     y_max = 300,
     y_min = 4,
     heat_point = 50,
-    humidity_point = 50,
+    humidity_point = 35,
 })
 
 minetest.register_biome({
     name = "grassland_ocean",
-    node_top = "fl_topsoil:sand",
+    node_top = "fl_stone:sand",
     depth_top = 1,
-    node_filler = "fl_topsoil:sand",
+    node_filler = "fl_stone:sand",
     depth_filler = 3,
-    node_riverbed = "fl_topsoil:sand",
+    node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    node_stone = "fl_stone:stone",
     node_dungeon = "fl_stone:stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
     node_dungeon_stair = "fl_stone:stone_rubble_stair",
     y_max = 3,
     y_min = -31,
     heat_point = 50,
-    humidity_point = 50,
+    humidity_point = 35,
 })
 
+--sand
+minetest.register_biome({
+    name = "sand",
+    node_top = "fl_stone:sand",
+    depth_top = 3,
+    node_filler = "fl_stone:sandstone",
+    depth_filler = 5,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:sandstone_brick",
+    node_dungeon_alt = "fl_stone:sandstone_block",
+    node_dungeon_stair = "fl_stone:sandstone_stair",
+    node_stone = "fl_stone:desert_stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 60,
+    humidity_point = 0,
+})
+
+minetest.register_biome({
+    name = "sand_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:sandstone_brick",
+    node_dungeon_alt = "fl_stone:sandstone_block",
+    node_dungeon_stair = "fl_stone:sandstone_stair",
+    node_stone = "fl_stone:desert_stone",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 60,
+    humidity_point = 0,
+})
+
+--desert
+minetest.register_biome({
+    name = "desert",
+    node_top = "fl_stone:desert_sand",
+    depth_top = 3,
+    node_filler = "fl_stone:desert_sandstone",
+    depth_filler = 5,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:desert_sandstone_brick",
+    node_dungeon_alt = "fl_stone:desert_sandstone_block",
+    node_dungeon_stair = "fl_stone:desert_sandstone_stair",
+    node_stone = "fl_stone:desert_stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 92,
+    humidity_point = 16,
+})
+
+minetest.register_biome({
+    name = "desert_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:desert_sandstone_brick",
+    node_dungeon_alt = "fl_stone:desert_sandstone_block",
+    node_dungeon_stair = "fl_stone:desert_sandstone_stair",
+    node_stone = "fl_stone:desert_stone",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 92,
+    humidity_point = 16,
+})
+
+--silver sand
+minetest.register_biome({
+    name = "silver_sand",
+    node_top = "fl_stone:silver_sand",
+    depth_top = 3,
+    node_filler = "fl_stone:silver_sandstone",
+    depth_filler = 5,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:silver_sandstone_brick",
+    node_dungeon_alt = "fl_stone:silver_sandstone_block",
+    node_dungeon_stair = "fl_stone:silver_sandstone_stair",
+    node_stone = "fl_stone:desert_stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 40,
+    humidity_point = 0,
+})
+
+minetest.register_biome({
+    name = "silver_sand_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:silver_sandstone_brick",
+    node_dungeon_alt = "fl_stone:silver_sandstone_block",
+    node_dungeon_stair = "fl_stone:silver_sandstone_stair",
+    node_stone = "fl_stone:silver_stone",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 40,
+    humidity_point = 0,
+})
+
+
+--underground biome layers
 minetest.register_biome({
     name = "ors",
     node_filler = "fl_stone:ors",
