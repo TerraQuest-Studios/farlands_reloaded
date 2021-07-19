@@ -25,7 +25,7 @@ local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
         description = desc .. "stone brick",
         paramtype2 = "facedir",
         place_param2 = 0,
-        tiles = {"farlands_" .. name .. "stone_brick.png"},
+        tiles = {"farlands_" .. name .. "stone_brick.png^[transformR180"},
         groups = brgp,
     })
 

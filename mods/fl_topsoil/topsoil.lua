@@ -15,6 +15,32 @@ minetest.register_node("fl_topsoil:dirt_with_grass", {
     groups = {oddly_breakable_by_hand = 3},
 })
 
+minetest.register_node("fl_topsoil:savannah_dirt", {
+    description = "savannah dirt",
+    tiles = {"farlands_savannah_dirt.png"},
+    groups = {oddly_breakable_by_hand = 3},
+})
+
+minetest.register_node("fl_topsoil:savannah_dirt_with_grass", {
+    description = "savannah grass",
+    tiles = {
+        "farlands_savannah_grass.png",
+        "farlands_savannah_dirt.png",
+        "farlands_savannah_dirt.png^farlands_savannah_grass_side.png",
+    },
+    groups = {oddly_breakable_by_hand = 3},
+})
+
+minetest.register_node("fl_topsoil:dirt_with_snow", {
+    description = "dirt wth snow",
+    tiles = {
+        "farlands_snow_block.png",
+        "farlands_dirt.png",
+        "farlands_dirt.png^farlands_snow_block_side.png",
+    },
+    groups = {oddly_breakable_by_hand = 3},
+})
+
 minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},

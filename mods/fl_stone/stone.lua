@@ -71,7 +71,7 @@ end
 
 create_stone_types("stone")
 create_stone_types("mossy_stone")
---create_stone_types("savannah")
+create_stone_types("savannah")
 create_stone_types("ors")
 create_stone_types("tuff")
 create_stone_types("basalt")

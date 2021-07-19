@@ -129,8 +129,9 @@ function fl_stairs.register_wall(itemstring)
     })
 end
 
+--registered_nodes should work, however it was not finding fl_stone:stone for some reason
 minetest.register_on_mods_loaded(function()
-    for _, node in pairs(minetest.registered_nodes) do
+    for _, node in pairs(minetest.registered_items) do
         if node.groups.stairable == 1 then
             fl_stairs.register_stairslab(node.name)
         end

@@ -148,6 +148,43 @@ minetest.register_biome({
     humidity_point = 0,
 })
 
+--savannah
+minetest.register_biome({
+    name = "savannah",
+    node_top = "fl_topsoil:savannah_dirt_with_grass",
+    depth_top = 1,
+    node_filler = "fl_topsoil:savannah_dirt",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:savannah_rubble",
+    --node_dungeon_alt = "fl_stone:silver_sandstone_block",
+    node_dungeon_stair = "fl_stone:savannah_rubble_stair",
+    node_stone = "fl_stone:savannah",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 89,
+    humidity_point = 42,
+})
+
+minetest.register_biome({
+    name = "savannah_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:savannah_rubble",
+    --node_dungeon_alt = "fl_stone:silver_sandstone_block",
+    node_dungeon_stair = "fl_stone:savannah_rubble_stair",
+    node_stone = "fl_stone:savannah",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 89,
+    humidity_point = 42,
+})
+
 
 --underground biome layers
 minetest.register_biome({
