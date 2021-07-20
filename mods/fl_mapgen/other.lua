@@ -31,3 +31,27 @@ minetest.register_on_generated(function(minp, maxp)
 	vm:set_data(data)
 	vm:write_to_map()
 end)
+
+minetest.register_on_generated(function(minp, maxp)
+    local vm, mine, maxe = minetest.get_mapgen_object("voxelmanip")
+	local area = VoxelArea:new({MinEdge=mine, MaxEdge=maxe})
+	local data = vm:get_data()
+    local p2_data = vm:get_param2_data()
+    local random = math.random
+    local c_snow = minetest.get_content_id("fl_topsoil:snow")
+
+    for z = mine.z, maxe.z do
+        for y = mine.y, maxe.y do
+            for x = mine.z, maxe.z do
+                -- vi, voxel index, is a common variable name here
+                local vi = area:index(x, y, z)
+                if data[vi] == c_snow then
+                    p2_data[vi] = random(2,4)*8
+                end
+            end
+        end
+    end
+
+    vm:set_param2_data(p2_data)
+    vm:write_to_map()
+end)
