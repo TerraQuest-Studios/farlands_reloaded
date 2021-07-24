@@ -133,6 +133,22 @@ minetest.register_node("fl_topsoil:gravel", {
     groups = {oddly_breakable_by_hand = 3, falling_node = 1},
 })
 
+minetest.register_node("fl_topsoil:permafrost", {
+    description = "permafrost",
+    tiles = {"farlands_permafrost.png"},
+    groups = {oddly_breakable_by_hand = 3},
+})
+
+minetest.register_node("fl_topsoil:permafrost_with_stones", {
+    description = "permafrost",
+    tiles = {
+        "farlands_permafrost.png^farlands_stones.png",
+        "farlands_permafrost.png",
+        "farlands_permafrost.png^([combine:16x4:0,1=(farlands_stones.png\\^[transformR180))"
+    },
+    groups = {oddly_breakable_by_hand = 3},
+})
+
 minetest.register_alias("fl_terrain:dirt", "fl_topsoil:dirt")
 minetest.register_alias("fl_terrain:dirt_with_grass", "fl_topsoil:dirt_with_grass")
 minetest.register_alias("fl_terrain:sand", "fl_topsoil:sand")

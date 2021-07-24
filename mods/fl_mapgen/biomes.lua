@@ -292,7 +292,7 @@ minetest.register_biome({
     node_dust = "fl_topsoil:snow_block",
     node_top = "fl_topsoil:ice",
     depth_top = 11,
-    node_filler = "fl_topsoil:condensed_ice",
+    node_filler = "fl_topsoil:permafrost",
     depth_filler = 2,
     node_stone = "fl_stone:stone",
     node_water_top = "fl_topsoil:ice",
