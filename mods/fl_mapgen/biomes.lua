@@ -165,6 +165,15 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 89,
     humidity_point = 42,
+    _sky_data = {
+        sky = {
+            sky_color={
+                day_sky = "#01C7EC",
+                night_sky = "#00FFFF",
+                dawn_sky = "#00AAFF",
+            },
+        },
+    }
 })
 
 minetest.register_biome({
@@ -183,6 +192,15 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 89,
     humidity_point = 42,
+    _sky_data = {
+        sky = {
+            sky_color={
+                day_sky = "#01C7EC",
+                night_sky = "#00FFFF",
+                dawn_sky = "#00AAFF",
+            },
+        },
+    }
 })
 
 --taiga
@@ -203,6 +221,9 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 25,
     humidity_point = 70,
+    _sky_data = {
+        sky = {sky_color = {day_sky = "#5555FF"}},
+    }
 })
 
 minetest.register_biome({
@@ -222,6 +243,9 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 25,
     humidity_point = 70,
+    _sky_data = {
+        sky = {sky_color = {day_sky = "#5555FF"}},
+    }
 })
 
 --snowy grasland
@@ -263,6 +287,8 @@ minetest.register_biome({
     humidity_point = 35,
 })
 
+--rainforest, deciduous, coniferous, icesheet
+
 --underground biome layers
 minetest.register_biome({
     name = "ors",
@@ -283,6 +309,31 @@ minetest.register_biome({
     vertical_blend = 8,
     heat_point = 50,
     humidity_point = 50,
+    _sky_data = {
+        sky = {
+            clouds = false,
+            sky_color = {
+                day_sky = "#000000",
+                day_horizon = "#000000",
+                dawn_sky = "#000000",
+                dawn_horizon = "#000000",
+                night_sky = "#000000",
+                night_horizon = "#000000",
+                indoors = "#000000",
+            }
+        },
+        sun = {
+            visible = false,
+            sunrise_visible = false,
+        },
+        moon = {
+            visible = false,
+        },
+        stars = {
+            visible = false,
+        },
+        clouds = {},
+    }
 })
 
 minetest.register_biome({
@@ -299,4 +350,29 @@ minetest.register_biome({
     vertical_blend = 8,
     heat_point = 50,
     humidity_point = 50,
+    _sky_data = {
+        sky = {
+            clouds = false,
+            sky_color = {
+                day_sky = "#000000",
+                day_horizon = "#000000",
+                dawn_sky = "#000000",
+                dawn_horizon = "#000000",
+                night_sky = "#000000",
+                night_horizon = "#000000",
+                indoors = "#000000",
+            }
+        },
+        sun = {
+            visible = false,
+            sunrise_visible = false,
+        },
+        moon = {
+            visible = false,
+        },
+        stars = {
+            visible = false,
+        },
+        clouds = {},
+    }
 })
