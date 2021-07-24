@@ -287,7 +287,51 @@ minetest.register_biome({
     humidity_point = 35,
 })
 
---rainforest, deciduous, coniferous, icesheet
+minetest.register_biome({
+    name = "icy",
+    node_dust = "fl_topsoil:snow_block",
+    node_top = "fl_topsoil:ice",
+    depth_top = 11,
+    node_filler = "fl_topsoil:condensed_ice",
+    depth_filler = 2,
+    node_stone = "fl_stone:stone",
+    node_water_top = "fl_topsoil:ice",
+    depth_water_top = 1,
+    node_river_water = "fl_topsoil:ice",
+    node_riverbed = "fl_topsoil:gravel",
+    depth_riverbed = 2,
+    node_dungeon = "fl_topsoil:ice",
+    node_dungeon_alt = "fl_topsoil:condensed_ice",
+    node_dungeon_stair = "fl_topsoil:condensed_ice_stair",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 0,
+    humidity_point = 73,
+})
+
+minetest.register_biome({
+    name = "icy_ocean",
+    node_dust = "fl_topsoil:snow_block",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_topsoil:gravel",
+    depth_filler = 3,
+    node_stone = "fl_stone:stone",
+    node_water_top = "fl_topsoil:ice",
+    depth_water_top = 1,
+    node_river_water = "fl_topsoil:ice",
+    node_riverbed = "fl_topsoil:gravel",
+    depth_riverbed = 2,
+    node_dungeon = "fl_topsoil:ice",
+    node_dungeon_alt = "fl_topsoil:condensed_ice",
+    node_dungeon_stair = "fl_topsoil:condensed_ice_stair",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 0,
+    humidity_point = 73,
+})
+
+--rainforest, deciduous, coniferous, tundra
 
 --underground biome layers
 minetest.register_biome({

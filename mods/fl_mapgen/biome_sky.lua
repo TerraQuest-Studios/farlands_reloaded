@@ -71,11 +71,11 @@ local function logic()
 
         if bs.players[pname] and bs.players[pname].id == bdata.biome then break end
 
-        for k, _ in pairs(bs.defaults) do
-            if bdef._sky_data[k] == nil then bdef._sky_data[k] = {} end
-        end
-
         if bdef._sky_data then
+            for k, _ in pairs(bs.defaults) do
+                if bdef._sky_data[k] == nil then bdef._sky_data[k] = {} end
+            end
+
             player:set_sky(fill_data(bs.defaults.sky, bdef._sky_data.sky))
             player:set_sun(fill_data(bs.defaults.sun, bdef._sky_data.sun))
             player:set_moon(fill_data(bs.defaults.moon, bdef._sky_data.moon))

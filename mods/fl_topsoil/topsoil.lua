@@ -50,7 +50,7 @@ minetest.register_node("fl_topsoil:ice", {
 minetest.register_node("fl_topsoil:condensed_ice", {
     description = "condensed ice",
     tiles = {"farlands_condensed_ice.png"},
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, stairable = 1},
 })
 
 minetest.register_node("fl_topsoil:snow_block", {
@@ -113,6 +113,24 @@ minetest.register_node("fl_topsoil:snow", {
             return minetest.item_place_node(itemstack, player, pointed_thing)
         end
     end,
+})
+
+minetest.register_craftitem("fl_topsoil:flint", {
+    descripion = "flint",
+    inventory_image = "farlands_flint.png",
+})
+
+minetest.register_node("fl_topsoil:gravel", {
+    description = "gravel",
+    tiles = {"farlands_gravel.png"},
+    drop = {
+        max_items = 1,
+        items = {
+            {items = {"fl_topsoil:flint"}, rarity = 14},
+            {items = {"fl_topsoil:gravel"}}
+        }
+    },
+    groups = {oddly_breakable_by_hand = 3, falling_node = 1},
 })
 
 minetest.register_alias("fl_terrain:dirt", "fl_topsoil:dirt")
