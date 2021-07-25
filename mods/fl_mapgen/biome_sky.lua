@@ -36,7 +36,7 @@ bs.defaults = {
         scale = 1,
     },
     clouds = {
-        density = 0.4,
+        density = 0.3, -- default 0.4,
         color = "#fff0f0e5",
         ambient = "#000000",
         height = 120,

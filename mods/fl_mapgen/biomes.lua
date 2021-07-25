@@ -17,6 +17,15 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 50,
     humidity_point = 35,
+    _sky_data = {
+        sky = {
+            sky_color={
+                day_sky = "#01C7EC",
+                night_sky = "#00FFFF",
+                dawn_sky = "#00AAFF",
+            },
+        },
+    }
 })
 
 minetest.register_biome({
@@ -27,6 +36,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_stone = "fl_stone:stone",
     node_dungeon = "fl_stone:stone_rubble",
     node_dungeon_alt = "fl_stone:mossy_stone_rubble",
@@ -35,6 +45,15 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 50,
     humidity_point = 35,
+    _sky_data = {
+        sky = {
+            sky_color={
+                day_sky = "#01C7EC",
+                night_sky = "#00FFFF",
+                dawn_sky = "#00AAFF",
+            },
+        },
+    }
 })
 
 --sand
@@ -54,6 +73,18 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 60,
     humidity_point = 0,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 minetest.register_biome({
@@ -64,6 +95,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:sandstone_brick",
     node_dungeon_alt = "fl_stone:sandstone_block",
     node_dungeon_stair = "fl_stone:sandstone_stair",
@@ -72,6 +104,18 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 60,
     humidity_point = 0,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 --desert
@@ -91,6 +135,18 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 92,
     humidity_point = 16,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 minetest.register_biome({
@@ -101,6 +157,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:desert_sandstone_brick",
     node_dungeon_alt = "fl_stone:desert_sandstone_block",
     node_dungeon_stair = "fl_stone:desert_sandstone_stair",
@@ -109,6 +166,18 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 92,
     humidity_point = 16,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 --silver sand
@@ -128,6 +197,18 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 40,
     humidity_point = 0,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 minetest.register_biome({
@@ -138,6 +219,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:silver_sandstone_brick",
     node_dungeon_alt = "fl_stone:silver_sandstone_block",
     node_dungeon_stair = "fl_stone:silver_sandstone_stair",
@@ -146,6 +228,18 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 40,
     humidity_point = 0,
+    _sky_data = {
+        sky = {
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
+        },
+    }
 })
 
 --savannah
@@ -167,11 +261,14 @@ minetest.register_biome({
     humidity_point = 42,
     _sky_data = {
         sky = {
-            sky_color={
-                day_sky = "#01C7EC",
-                night_sky = "#00FFFF",
-                dawn_sky = "#00AAFF",
-            },
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
         },
     }
 })
@@ -184,6 +281,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:savannah_rubble",
     --node_dungeon_alt = "fl_stone:silver_sandstone_block",
     node_dungeon_stair = "fl_stone:savannah_rubble_stair",
@@ -194,11 +292,14 @@ minetest.register_biome({
     humidity_point = 42,
     _sky_data = {
         sky = {
-            sky_color={
-                day_sky = "#01C7EC",
-                night_sky = "#00FFFF",
-                dawn_sky = "#00AAFF",
-            },
+            clouds = true,
+            sky_color = {
+                day_sky = "#AF8957",
+                day_horizon = "#C4A883",
+                dawn_sky = "#AF8957",
+                dawn_horizon = "#C4A883",
+                night_sky = "#00013F",
+            }
         },
     }
 })
@@ -235,6 +336,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:stone_brick",
     node_dungeon_alt = "fl_stone:stone_block",
     node_dungeon_stair = "fl_stone:stone_stair",
@@ -277,6 +379,7 @@ minetest.register_biome({
     depth_filler = 3,
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_stone:stone_rubble",
     node_dungeon_alt = "fl_stone:mosy_stone_rubble",
     node_dungeon_stair = "fl_stone:stone_rubble_stair",
@@ -294,7 +397,7 @@ minetest.register_biome({
     depth_top = 11,
     node_filler = "fl_topsoil:permafrost",
     depth_filler = 2,
-    node_stone = "fl_stone:stone",
+    node_stone = "fl_topsoil:permafrost",
     node_water_top = "fl_topsoil:ice",
     depth_water_top = 1,
     node_river_water = "fl_topsoil:ice",
@@ -316,12 +419,13 @@ minetest.register_biome({
     depth_top = 1,
     node_filler = "fl_topsoil:gravel",
     depth_filler = 3,
-    node_stone = "fl_stone:stone",
+    node_stone = "fl_topsoil:permafrost",
     node_water_top = "fl_topsoil:ice",
     depth_water_top = 1,
     node_river_water = "fl_topsoil:ice",
     node_riverbed = "fl_topsoil:gravel",
     depth_riverbed = 2,
+    vertical_blend = 3,
     node_dungeon = "fl_topsoil:ice",
     node_dungeon_alt = "fl_topsoil:condensed_ice",
     node_dungeon_stair = "fl_topsoil:condensed_ice_stair",
@@ -329,6 +433,49 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 0,
     humidity_point = 73,
+})
+
+minetest.register_biome({
+    name = "tundra",
+    node_top = "fl_topsoil:permafrost_with_stones",
+    depth_top = 1,
+    node_filler = "fl_topsoil:permafrost",
+    depth_filler = 11,
+    node_river_water = "fl_topsoil:ice",
+    node_riverbed = "fl_topsoil:gravel",
+    depth_riverbed = 2,
+    node_water_top = "fl_topsoil:ice",
+    depth_water_top = 1,
+    node_stone = "fl_stone:stone",
+    node_dungeon = "fl_topsoil:permafrost",
+    node_dungeon_alt = "fl_stone:basalt",
+    node_dungeon_stair = "fl_stone:basalt_rubble_stair",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 0,
+    humidity_point = 40,
+})
+
+minetest.register_biome({
+    name = "tundra_ocean",
+    node_top = "fl_topsoil:sand",
+    depth_top = 1,
+    node_filler = "fl_topsoil:gravel",
+    depth_filler = 3,
+    node_river_water = "fl_topsoil:ice",
+    node_riverbed = "fl_topsoil:gravel",
+    depth_riverbed = 2,
+    node_water_top = "fl_topsoil:ice",
+    depth_water_top = 1,
+    vertical_blend = 3,
+    node_stone = "fl_stone:stone",
+    node_dungeon = "fl_topsoil:permafrost",
+    node_dungeon_alt = "fl_stone:basalt",
+    node_dungeon_stair = "fl_stone:basalt_rubble_stair",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 0,
+    humidity_point = 40,
 })
 
 --rainforest, deciduous, coniferous, tundra
