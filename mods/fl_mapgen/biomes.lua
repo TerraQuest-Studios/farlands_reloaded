@@ -37,8 +37,8 @@ minetest.register_biome({
     node_riverbed = "fl_stone:sand",
     depth_riverbed = 2,
     vertical_blend = 3,
-    node_stone = "fl_stone:stone",
-    node_dungeon = "fl_stone:stone_rubble",
+    node_stone = "fl_stone:stone_rubble",
+    node_dungeon = "fl_stone:mossy_stone_rubble",
     node_dungeon_alt = "fl_stone:mossy_stone_rubble",
     node_dungeon_stair = "fl_stone:stone_rubble_stair",
     y_max = 3,
@@ -478,7 +478,117 @@ minetest.register_biome({
     humidity_point = 40,
 })
 
---rainforest, deciduous, coniferous, tundra
+minetest.register_biome({
+    name = "rainforest",
+    node_top = "fl_topsoil:dirt_with_grass",
+    depth_top = 1,
+    node_filler = "fl_stone:dirt",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    node_stone = "fl_stone:stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 86,
+    humidity_point = 65,
+})
+
+minetest.register_biome({
+    name = "rainforest_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    vertical_blend = 3,
+    node_stone = "fl_stone:stone_rubble",
+    node_dungeon = "fl_stone:mossy_stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 86,
+    humidity_point = 65,
+})
+
+minetest.register_biome({
+    name = "deciduousforest",
+    node_top = "fl_topsoil:dirt_with_grass",
+    depth_top = 1,
+    node_filler = "fl_stone:dirt",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    node_stone = "fl_stone:stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 60,
+    humidity_point = 68,
+})
+
+minetest.register_biome({
+    name = "deciduousforest_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    vertical_blend = 3,
+    node_stone = "fl_stone:stone_rubble",
+    node_dungeon = "fl_stone:mossy_stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 60,
+    humidity_point = 68,
+})
+
+minetest.register_biome({
+    name = "coniferousforest",
+    node_top = "fl_topsoil:dirt_with_grass",
+    depth_top = 1,
+    node_filler = "fl_stone:dirt",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    node_dungeon = "fl_stone:stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    node_stone = "fl_stone:stone",
+    y_max = 300,
+    y_min = 4,
+    heat_point = 45,
+    humidity_point = 70,
+})
+
+minetest.register_biome({
+    name = "coniferousforest_ocean",
+    node_top = "fl_stone:sand",
+    depth_top = 1,
+    node_filler = "fl_stone:sand",
+    depth_filler = 3,
+    node_riverbed = "fl_stone:sand",
+    depth_riverbed = 2,
+    vertical_blend = 3,
+    node_stone = "fl_stone:stone_rubble",
+    node_dungeon = "fl_stone:mossy_stone_rubble",
+    node_dungeon_alt = "fl_stone:mossy_stone_rubble",
+    node_dungeon_stair = "fl_stone:stone_rubble_stair",
+    y_max = 3,
+    y_min = -31,
+    heat_point = 45,
+    humidity_point = 70,
+})
+--rainforest, deciduous, coniferous
 
 --underground biome layers
 minetest.register_biome({
