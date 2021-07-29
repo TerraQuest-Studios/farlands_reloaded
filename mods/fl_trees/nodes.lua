@@ -75,6 +75,8 @@ tree_nodes("spruce")
 tree_nodes("yellow_ipe")
 tree_nodes("willow")
 tree_nodes("baobab")
+tree_nodes("palm")
+tree_nodes("jungletree")
 
 minetest.register_node("fl_trees:dead_aspen_leaves", {
     description = "dead aspen leaves",

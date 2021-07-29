@@ -410,6 +410,16 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 0,
     humidity_point = 73,
+    _sky_data = {
+        sky_color = {
+            day_sky = "#c5b7ea",
+            day_horizon = "#f0ecff",
+            dawn_sky = "#bf9bb4",
+            dawn_horizon = "#dec6d7",
+            night_sky = "#5400ff",
+            night_horizon = "#4f2a9b",
+        }
+    }
 })
 
 minetest.register_biome({
@@ -433,6 +443,16 @@ minetest.register_biome({
     y_min = -31,
     heat_point = 0,
     humidity_point = 73,
+    _sky_data = {
+        sky_color = {
+            day_sky = "#c5b7ea",
+            day_horizon = "#f0ecff",
+            dawn_sky = "#bf9bb4",
+            dawn_horizon = "#dec6d7",
+            night_sky = "#5400ff",
+            night_horizon = "#4f2a9b",
+        }
+    }
 })
 
 minetest.register_biome({
@@ -454,6 +474,16 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 0,
     humidity_point = 40,
+    _sky_data = {
+        sky_color = {
+            day_sky = "#c5b7ea",
+            day_horizon = "#f0ecff",
+            dawn_sky = "#bf9bb4",
+            dawn_horizon = "#dec6d7",
+            night_sky = "#5400ff",
+            night_horizon = "#4f2a9b",
+        }
+    }
 })
 
 minetest.register_biome({
@@ -476,6 +506,16 @@ minetest.register_biome({
     y_min = 4,
     heat_point = 0,
     humidity_point = 40,
+    _sky_data = {
+        sky_color = {
+            day_sky = "#c5b7ea",
+            day_horizon = "#f0ecff",
+            dawn_sky = "#bf9bb4",
+            dawn_horizon = "#dec6d7",
+            night_sky = "#5400ff",
+            night_horizon = "#4f2a9b",
+        }
+    }
 })
 
 minetest.register_biome({

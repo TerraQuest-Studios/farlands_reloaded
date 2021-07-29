@@ -1,3 +1,9 @@
+minetest.register_node("fl_topsoil:coarse_dirt", {
+    description = "coarse dirt",
+    tiles = {"farlands_coarse_dirt.png"},
+    groups = {oddly_breakable_by_hand = 3},
+})
+
 minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
