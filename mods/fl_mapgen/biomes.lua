@@ -182,7 +182,7 @@ minetest.register_biome({
 
 --silver sand
 minetest.register_biome({
-    name = "silver_sand",
+    name = "silversand",
     node_top = "fl_stone:silver_sand",
     depth_top = 3,
     node_filler = "fl_stone:silver_sandstone",
@@ -212,7 +212,7 @@ minetest.register_biome({
 })
 
 minetest.register_biome({
-    name = "silver_sand_ocean",
+    name = "silversand_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
     node_filler = "fl_stone:sand",
