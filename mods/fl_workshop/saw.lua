@@ -154,6 +154,7 @@ minetest.register_node(":fl_stairs:tablesaw", {
     },
     groups = {oddly_breakable_by_hand = 3},
     drawtype = "nodebox",
+    paramtype = "light",
     node_box = {
         type = "fixed",
         fixed = {

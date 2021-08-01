@@ -30,6 +30,7 @@ for i = 1, 4 do
         }
     end
     minetest.register_node("fl_agriculture:carrot_" .. i, {
+        description = "carrot plant",
         drawtype = "plantlike",
         paramtype = "light",
         paramtype2 = "meshoptions",
@@ -68,6 +69,6 @@ for i = 1, 4 do
             end
         end,
         drop = drop,
-        groups = {oddly_breakable_by_hand = 3},
+        groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1},
     })
 end

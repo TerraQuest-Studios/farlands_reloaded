@@ -108,7 +108,7 @@ end
 function fl_stairs.register_wall(itemstring)
     local nodedef = minetest.registered_nodes[itemstring]
     local groups = table.copy(nodedef.groups)
-    groups. stairable, groups.wallable, groups.wall, groups.not_in_creative_inventory = nil, nil, 1, 1
+    groups.stairable, groups.wallable, groups.wall, groups.not_in_creative_inventory = nil, nil, 1, 1
 
     minetest.register_node(":" .. itemstring .. "_wall", {
         description = nodedef.description .. " wall",
@@ -144,7 +144,7 @@ end)
 --]]
 
 minetest.register_on_mods_loaded(function()
-    minetest.after(0, function()
+    --minetest.after(0, function()
         for _, node in pairs(minetest.registered_items) do
             if node.groups.stairable == 1 then
                 fl_stairs.register_stairslab(node.name)
@@ -153,5 +153,5 @@ minetest.register_on_mods_loaded(function()
                 fl_stairs.register_wall(node.name)
             end
         end
-    end)
+    --end)
 end)
