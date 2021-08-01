@@ -55,6 +55,14 @@ local function make_tool_set(name)
                 cracky={times={[1]=4.00, [2]=1.50, [3]=1.00}, uses=70, maxlevel=1}
             }
         },
+        on_use = function(itemstack, user, pointed_thing)
+            if pointed_thing.type ~= "node" then return end
+            local node = minetest.get_node_or_nil(pointed_thing.under)
+            if not node then return end
+            if minetest.get_node_group(node.name, "farm_convert") == 1 then
+                minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:dry_farmland"})
+            end
+        end,
         groups = {tool = 1},
     })
 end

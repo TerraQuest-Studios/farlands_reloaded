@@ -1,14 +1,36 @@
 minetest.register_node("fl_topsoil:coarse_dirt", {
     description = "coarse dirt",
     tiles = {"farlands_coarse_dirt.png"},
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
 minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
     _dungeon_loot = {name = "fl_topsoil:dirt", chance = 0.6, count = {2, 16}, y = {-64, 32768}},
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
+})
+
+minetest.register_node("fl_topsoil:dry_farmland", {
+    description = "dirt",
+    tiles = {
+        "farlands_dirt.png^farlands_farmland_dry.png",
+        "farlands_dirt.png",
+        "farlands_dirt.png",
+    },
+    drop = "fl_topsoil:dirt",
+    groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1, farmland = 1},
+})
+
+minetest.register_node("fl_topsoil:wet_farmland", {
+    description = "dirt",
+    tiles = {
+        "farlands_dirt.png^farlands_farmland_wet.png",
+        "farlands_dirt.png",
+        "farlands_dirt.png^farlands_farmland_wet_side.png",
+    },
+    drop = "fl_topsoil:dirt",
+    groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1, farmland = 1, plantable = 1},
 })
 
 minetest.register_node("fl_topsoil:dirt_with_grass", {
@@ -18,7 +40,7 @@ minetest.register_node("fl_topsoil:dirt_with_grass", {
         "farlands_dirt.png",
         "farlands_dirt.png^farlands_grass_side.png",
     },
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
 minetest.register_node("fl_topsoil:savannah_dirt", {
@@ -44,7 +66,7 @@ minetest.register_node("fl_topsoil:dirt_with_snow", {
         "farlands_dirt.png",
         "farlands_dirt.png^farlands_snow_block_side.png",
     },
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
 minetest.register_node("fl_topsoil:ice", {
