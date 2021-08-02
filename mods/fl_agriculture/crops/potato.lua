@@ -69,6 +69,6 @@ for i = 1, 4 do
             end
         end,
         drop = drop,
-        groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1},
+        groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1, plant = 1},
     })
 end
