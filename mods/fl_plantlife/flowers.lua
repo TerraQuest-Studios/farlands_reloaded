@@ -43,7 +43,7 @@ for _, name in ipairs(dir) do
                 type = "fixed",
                 fixed = {-0.2, -0.5, -0.2, 0.2, 0, 0.2}
             },
-            groups = {oddly_breakable_by_hand = 3, plant = 1, flower = 1}
+            groups = {oddly_breakable_by_hand = 3, plant = 1, flower = 1, potable = 1}
         })
     end
 end
