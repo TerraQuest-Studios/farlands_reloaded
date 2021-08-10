@@ -3,6 +3,7 @@
 local bedrock_depth = -300
 local bedrock_height = 1
 
+--create bedrock layers
 minetest.register_on_generated(function(minp, maxp)
 	if minp.y > bedrock_depth + bedrock_height or maxp.y < bedrock_depth then
 		return
@@ -32,6 +33,7 @@ minetest.register_on_generated(function(minp, maxp)
 	vm:write_to_map()
 end)
 
+--vary snow layers
 minetest.register_on_generated(function(minp, maxp)
     local vm, mine, maxe = minetest.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new({MinEdge=mine, MaxEdge=maxe})
@@ -54,4 +56,24 @@ minetest.register_on_generated(function(minp, maxp)
 
     vm:set_param2_data(p2_data)
     vm:write_to_map()
+end)
+
+--start cactus timers
+local cactus_did = minetest.get_decoration_id("fl_plantlife:cactus")
+minetest.set_gen_notify("decoration", {cactus_did})
+
+minetest.register_on_generated(function(minp, maxp, blockseed)
+    local g = minetest.get_mapgen_object("gennotify")
+    local locations = g["decoration#" .. cactus_did] or {}
+    if #locations == 0 then return end
+    for _, pos in ipairs(locations) do
+        for i=1, 3 do
+            local node = minetest.get_node_or_nil({x=pos.x, y=pos.y+i, z=pos.z})
+            if not node then return end
+            if node.name == "fl_plantlife:cactus" then
+                local timer = minetest.get_node_timer({x=pos.x, y=pos.y+i, z=pos.z})
+                timer:start(math.random(600, 1200))
+            end
+        end
+    end
 end)
