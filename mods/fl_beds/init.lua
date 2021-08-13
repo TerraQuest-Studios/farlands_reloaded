@@ -1,3 +1,7 @@
+local fl_beds = {}
+fl_beds.data = {}
+fl_beds.active_beds = {}
+
 for counter, dye in pairs(fl_dyes.dyes) do
     local cwool = "farlands_wool.png\\^[multiply\\:" .. fl_dyes.dyes[counter][3]
     minetest.register_node("fl_beds:bed_" .. fl_dyes.dyes[counter][1], {
@@ -34,13 +38,54 @@ for counter, dye in pairs(fl_dyes.dyes) do
             minetest.set_node(pos, {name = base.name, param2 = base.param2})
             return false
         end,
-        --[[ non complete bed sleep function that needs to be completed
+        -- non complete bed sleep function that needs to be completed
         on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+            local cname = clicker:get_player_name()
             local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
             local mpos = {x = pos.x + dir.x/2, y = pos.y+.07, z = pos.z+dir.z/2}
+            local pos_hash = minetest.hash_node_position(pos)
+            local time = minetest.get_timeofday()
+
+            if fl_beds.active_beds[pos_hash] and not fl_beds.data[cname] then
+                minetest.chat_send_player(cname, "bed already in use")
+                return
+            elseif time > 0.2 and time < 0.805 then
+                minetest.chat_send_player(cname, "its not night you fool")
+                return
+            end
+            fl_beds.data[cname] = {}
+            fl_beds.data[cname].spawn_pos = clicker:get_pos()
+            fl_beds.data[cname].bed_hash = pos_hash
             clicker:set_pos(mpos)
-            fl_player.ignore[clicker:get_player_name()] = true
+            fl_beds.active_beds[pos_hash] = true
+            fl_player.ignore[cname] = true
             clicker:set_animation(fl_player.animations["lay"], 0)
+            fl_beds.data[clicker:get_player_name()].physics = clicker:get_physics_override()
+            clicker:set_physics_override({speed = 0, jump = 0, gravity = 0})
+            fl_beds.data[cname].eye_offset = clicker:get_eye_offset()
+            clicker:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
+            fl_beds.active = true
+
+            minetest.after(5, function()
+                if not fl_beds.active then return end
+                minetest.set_timeofday(0.23)
+                for name, pdata in pairs(fl_beds.data) do
+                    local player = minetest.get_player_by_name(name)
+                    player:set_pos(pdata.spawn_pos)
+                    fl_player.ignore[name] = nil
+                    player:set_physics_override({
+                        speed = pdata.physics.speed,
+                        jump = pdata.physics.jump,
+                        gravity = pdata.physics.gravity,
+                    })
+                    clicker:set_eye_offset(pdata.eye_offset)
+
+                    --clear stuff
+                    fl_beds.active_beds[pdata.bed_hash] = nil
+                    fl_beds.data[name] = nil
+                    fl_beds.active = nil
+                end
+            end)
         end,
         --]]
         groups = {oddly_breakable_by_hand = 3, bed = 1},

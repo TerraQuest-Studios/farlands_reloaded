@@ -7,7 +7,7 @@ globals = {
     "minetest", "core", 
     
     --mod provided
-    "dungeon_loot", "fl_workshop",
+    "dungeon_loot", "fl_workshop", "fl_player",
 }
 
 read_globals = {
