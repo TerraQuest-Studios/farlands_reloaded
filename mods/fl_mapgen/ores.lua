@@ -1,5 +1,5 @@
 --this code is a mess
--- -150 to -190 seems no ores other than mithite???
+-- -150 to -190 seems no ores other than mithite?
 
 biomes = {
     savannah = {"savannah"},
