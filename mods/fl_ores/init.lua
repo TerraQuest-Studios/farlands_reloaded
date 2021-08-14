@@ -1,10 +1,16 @@
-local function register_ore(name, block_groups)
+local function register_ore(name, ingot_toggle, block_groups)
     local gp = block_groups or {oddly_breakable_by_hand = 3}
 
     minetest.register_craftitem("fl_ores:" .. name .. "_ore", {
         description = name .. " ore",
         inventory_image = "farlands_" .. name .. "_ore.png",
     })
+    if ingot_toggle ~= false then
+        minetest.register_craftitem("fl_ores:" .. name .. "_ingot", {
+            description = name .. " ingot",
+            inventory_image = "farlands_" .. name .. "_ingot.png",
+        })
+    end
     minetest.register_node("fl_ores:" .. name .. "_block", {
         description = name .. " block",
         tiles = {"farlands_" .. name .. "_block.png"},
@@ -18,7 +24,8 @@ local function register_ore(name, block_groups)
         "stone",
         "ors",
         "tuff",
-        "desert_stone"
+        "desert_stone",
+        "savannah"
     }
     for _, bm in pairs(base_material) do
         local sgp = table.copy(minetest.registered_nodes["fl_stone:" .. bm]["groups"])
@@ -35,17 +42,25 @@ local function register_ore(name, block_groups)
     end
 end
 
-register_ore("mithite")
-register_ore("coal")
-register_ore("iron")
-register_ore("gold")
-register_ore("diamond")
-register_ore("copper")
 
---replace gold, dia? block textures
---what to do with oher ore blocks?
---deal with iron being on stone background
---change mithire ore overlay
+register_ore("coal", false)
+register_ore("iron")
+register_ore("copper")
+register_ore("tin")
+register_ore("gold")
+register_ore("diamond", false)
+register_ore("mithite", false)
+
+--bronze block+ingot
+minetest.register_craftitem("fl_ores:bronze_ingot", {
+    description = "bronze ingot",
+    inventory_image = "farlands_bronze_ingot.png"
+})
+minetest.register_node("fl_ores:bronze_block", {
+    description = "bronze block",
+    tiles = {"farlands_bronze_block.png"},
+    groups = {oddly_breakable_by_hand = 3},
+})
 
 --crafts
 minetest.register_craft({

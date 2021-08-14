@@ -352,7 +352,7 @@ minetest.register_biome({
 
 --snowy grasland
 minetest.register_biome({
-    name = "snowy_grassland",
+    name = "snowygrassland",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_topsoil:dirt_with_snow",
     depth_top = 1,
@@ -371,7 +371,7 @@ minetest.register_biome({
 })
 
 minetest.register_biome({
-    name = "snowy_grassland_ocean",
+    name = "snowygrassland_ocean",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_stone:sand",
     depth_top = 1,
