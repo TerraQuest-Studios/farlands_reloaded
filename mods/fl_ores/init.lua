@@ -34,6 +34,7 @@ local function register_ore(name, ingot_toggle, block_groups)
         minetest.register_node("fl_ores:" .. name .. "_in_" .. bm, {
             description = name .. " in " .. desc,
             tiles = {"farlands_" .. bm .. ".png^farlands_" .. name .. "_overlay.png"},
+            sounds = fl_stone.sounds.stone(),
             groups = sgp,
             drop = "fl_ores:" .. name .. "_ore",
         })

@@ -9,6 +9,7 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
     minetest.register_node("fl_stone:" .. name .. "_rubble", {
         description = name .. " rubble",
         tiles = {"farlands_" .. name .. "_rubble.png"},
+        sounds = fl_stone.sounds.stone(),
         groups = rgp,
     })
     minetest.register_node("fl_stone:" .. name, {
@@ -30,11 +31,13 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         },
         --this is to make tnt happy while this is used as a dummy flammable
         on_construct = function(pos) end,
+        sounds = fl_stone.sounds.stone(),
         groups = sgp,
     })
     minetest.register_node("fl_stone:" .. name .. "_block", {
         description = name .. " block",
         tiles = {"farlands_" .. name .. "_block.png"},
+        sounds = fl_stone.sounds.stone(),
         groups = blgp,
     })
     minetest.register_node("fl_stone:" .. name .. "_brick", {
@@ -42,6 +45,7 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         paramtype2 = "facedir",
         place_param2 = 0,
         tiles = {"farlands_" .. name .. "_brick.png"},
+        sounds = fl_stone.sounds.stone(),
         groups = brgp,
     })
 

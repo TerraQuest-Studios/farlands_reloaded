@@ -20,6 +20,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
             "farlands_" .. name .. "_trunk.png"
         },
         paramtype2 = "facedir",
+        sounds = fl_trees.sounds.wood(),
         groups = tgp,
         on_place = minetest.rotate_node
     })
@@ -35,6 +36,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
         paramtype2 = "facedir",
         place_param2 = 0,
         tiles = {"farlands_" .. name .. "_planks.png"},
+        sounds = fl_trees.sounds.wood(),
         groups = pgp,
         on_place = minetest.rotate_node
     })
@@ -52,6 +54,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
         },
         connects_to = {"group:fence", "group:wood_related"},
         tiles = {"farlands_" .. name .. "_planks.png"},
+        sounds = fl_trees.sounds.wood(),
         groups = fgp,
     })
 

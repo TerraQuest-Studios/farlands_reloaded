@@ -1,5 +1,8 @@
+fl_topsoil = {}
+
 local modpath = minetest.get_modpath("fl_topsoil")
 
+dofile(modpath .. "/sounds.lua")
 --dofile(modpath .. "/stones.lua")
 --dofile(modpath .. "/ores.lua")
 --dofile(modpath .. "/liquids.lua")
@@ -22,3 +25,5 @@ minetest.register_abm({
         end
     end,
 })
+
+fl_topsoil.init = true

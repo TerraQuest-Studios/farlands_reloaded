@@ -9,16 +9,19 @@ local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
     minetest.register_node("fl_stone:" .. name, {
         description = desc,
         tiles = {"farlands_" .. name .. ".png"},
+        sounds = fl_stone.sounds.sand(),
         groups = rgp,
     })
     minetest.register_node("fl_stone:" .. name .. "stone", {
         description = desc .. "stone",
         tiles = {"farlands_" .. name .. "stone.png"},
+        sounds = fl_stone.sounds.stone(),
         groups = sgp,
     })
     minetest.register_node("fl_stone:" .. name .. "stone_block", {
         description = desc .. " stone block",
         tiles = {"farlands_" .. name .. "stone_block.png"},
+        sounds = fl_stone.sounds.stone(),
         groups = blgp,
     })
     minetest.register_node("fl_stone:" .. name .. "stone_brick", {
@@ -26,6 +29,7 @@ local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
         paramtype2 = "facedir",
         place_param2 = 0,
         tiles = {"farlands_" .. name .. "stone_brick.png^[transformR180"},
+        sounds = fl_stone.sounds.stone(),
         groups = brgp,
     })
 

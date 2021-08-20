@@ -1,6 +1,7 @@
 minetest.register_node("fl_topsoil:coarse_dirt", {
     description = "coarse dirt",
     tiles = {"farlands_coarse_dirt.png"},
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
@@ -8,6 +9,7 @@ minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
     _dungeon_loot = {name = "fl_topsoil:dirt", chance = 0.6, count = {2, 16}, y = {-64, 32768}},
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
@@ -19,6 +21,7 @@ minetest.register_node("fl_topsoil:dry_farmland", {
         "farlands_dirt.png",
     },
     drop = "fl_topsoil:dirt",
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1, farmland = 1},
 })
 
@@ -30,6 +33,7 @@ minetest.register_node("fl_topsoil:wet_farmland", {
         "farlands_dirt.png^farlands_farmland_wet_side.png",
     },
     drop = "fl_topsoil:dirt",
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1, farmland = 1, plantable = 1},
 })
 
@@ -40,12 +44,14 @@ minetest.register_node("fl_topsoil:dirt_with_grass", {
         "farlands_dirt.png",
         "farlands_dirt.png^farlands_grass_side.png",
     },
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
 minetest.register_node("fl_topsoil:savannah_dirt", {
     description = "savannah dirt",
     tiles = {"farlands_savannah_dirt.png"},
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3},
 })
 
@@ -56,6 +62,7 @@ minetest.register_node("fl_topsoil:savannah_dirt_with_grass", {
         "farlands_savannah_dirt.png",
         "farlands_savannah_dirt.png^farlands_savannah_grass_side.png",
     },
+    sounds = fl_topsoil.sounds.grass(),
     groups = {oddly_breakable_by_hand = 3},
 })
 
@@ -66,30 +73,35 @@ minetest.register_node("fl_topsoil:dirt_with_snow", {
         "farlands_dirt.png",
         "farlands_dirt.png^farlands_snow_block_side.png",
     },
+    sounds = fl_topsoil.sounds.snow(),
     groups = {oddly_breakable_by_hand = 3, farm_convert = 1},
 })
 
 minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
+    sounds = fl_topsoil.sounds.snow(),
     groups = {oddly_breakable_by_hand = 3, melts = 1},
 })
 
 minetest.register_node("fl_topsoil:condensed_ice", {
     description = "condensed ice",
     tiles = {"farlands_condensed_ice.png"},
+    sounds = fl_topsoil.sounds.snow(),
     groups = {oddly_breakable_by_hand = 3, stairable = 1},
 })
 
 minetest.register_node("fl_topsoil:snow_block", {
     description = "snow block",
     tiles = {"farlands_snow_block.png"},
+    sounds = fl_topsoil.sounds.snow(),
     groups = {oddly_breakable_by_hand = 3},
 })
 
 minetest.register_node("fl_topsoil:snow", {
     description = "snow",
     tiles = {"farlands_snow_block.png"},
+    sounds = fl_topsoil.sounds.snow(),
     groups = {oddly_breakable_by_hand = 3, falling_node=1, float=1},
     inventory_image = "farlands_snow.png",
     wield_image = "farlands_snow.png",
@@ -158,6 +170,7 @@ minetest.register_node("fl_topsoil:gravel", {
             {items = {"fl_topsoil:gravel"}}
         }
     },
+    sounds = fl_topsoil.sounds.gravel(),
     groups = {oddly_breakable_by_hand = 3, falling_node = 1},
 })
 
