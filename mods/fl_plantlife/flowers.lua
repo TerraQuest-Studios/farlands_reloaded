@@ -1,3 +1,4 @@
+fl_plantlife.decoration_flowers = {}
 local modpath = minetest.get_modpath("fl_plantlife")
 local dir = minetest.get_dir_list(modpath .. "/textures", false)
 
@@ -45,6 +46,7 @@ for _, name in ipairs(dir) do
             },
             groups = {oddly_breakable_by_hand = 3, plant = 1, flower = 1, potable = 1}
         })
+        table.insert(fl_plantlife.decoration_flowers, "fl_plantlife:" .. fname)
     end
 end
 

@@ -76,12 +76,42 @@ minetest.register_decoration({
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
     sidelen = 16,
-    fill_ratio = 0.00001,
+    fill_ratio = 0.0001,
     biomes = {"grassland", "snowy_grassland"},
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
     schematic = minetest.get_modpath("fl_trees") .. "/schems/aspen_tree_" .. math.random(5) .. ".mts",
+    flags = "place_center_x, place_center_z",
+    rotation = "random",
+})
+
+minetest.register_decoration({
+    name = "fl_trees:pine_tree_tiaga",
+    deco_type = "schematic",
+    place_on = "fl_topsoil:dirt_with_snow",
+    sidelen = 16,
+    fill_ratio = 0.1,
+    biomes = {"taiga"},
+    y_max = 300,
+    y_min = 4,
+    place_offset_y = 1,
+    schematic = minetest.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
+    flags = "place_center_x, place_center_z",
+    rotation = "random",
+})
+
+minetest.register_decoration({
+    name = "fl_trees:pine_tree_coniferousforest",
+    deco_type = "schematic",
+    place_on = "fl_topsoil:dirt_with_grass",
+    sidelen = 16,
+    fill_ratio = 0.01,
+    biomes = {"coniferousforest"},
+    y_max = 300,
+    y_min = 4,
+    place_offset_y = 1,
+    schematic = minetest.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })

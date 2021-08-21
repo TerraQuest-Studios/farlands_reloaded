@@ -31,6 +31,35 @@ for i = 1, 5 do
     })
 end
 
+for _, flower in pairs(fl_plantlife.decoration_flowers) do
+    minetest.register_decoration({
+        name = flower .. "_coniferousforest",
+        deco_type = "simple",
+        place_on = {"fl_topsoil:dirt_with_grass"},
+        sidelen = 16,
+        fill_ratio = 0.001,
+        biomes = {"coniferousforest"},
+        y_max = 300,
+        y_min = 4,
+        param2 = 1,
+        param2_max = 255,
+        decoration = flower,
+    })
+    minetest.register_decoration({
+        name = flower .. "_rare",
+        deco_type = "simple",
+        place_on = {"fl_topsoil:dirt_with_grass"},
+        sidelen = 16,
+        fill_ratio = 0.0001,
+        biomes = {"grassland", "deciduousforest"},
+        y_max = 300,
+        y_min = 4,
+        param2 = 1,
+        param2_max = 255,
+        decoration = flower,
+    })
+end
+
 minetest.register_decoration({
     name = "fl_plantlife:cactus",
     deco_type = "schematic",
