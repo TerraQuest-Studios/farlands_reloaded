@@ -115,3 +115,19 @@ minetest.register_decoration({
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
+
+minetest.register_decoration({
+    name = "fl_trees:palm_tree",
+    deco_type = "schematic",
+    place_on = "fl_stone:sand",
+    spawn_by = "fl_liquids:water_source",
+    sidelen = 16,
+    fill_ratio = 0.001,
+    biomes = {"savannah_ocean", "sand_ocean", "desert_ocean"},
+    y_max = 1,
+    y_min = 1,
+    place_offset_y = 1,
+    schematic = minetest.get_modpath("fl_trees") .. "/schems/palm_tree_" .. math.random(5) .. ".mts",
+    flags = "place_center_x, place_center_z",
+    rotation = "random",
+})
