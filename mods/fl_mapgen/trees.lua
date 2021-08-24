@@ -131,3 +131,34 @@ minetest.register_decoration({
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
+
+minetest.register_decoration({
+    name = "fl_trees:jungletree_tree_1",
+    deco_type = "schematic",
+    place_on = "fl_topsoil:dirt_with_grass",
+    sidelen = 80,
+    fill_ratio = 0.06,
+    biomes = {"rainforest"},
+    y_max = 300,
+    y_min = 4,
+    place_offset_y = 1,
+    schematic = minetest.get_modpath("fl_trees") .. "/schems/jungletree_tree_1.mts",
+    flags = "place_center_x, place_center_z",
+    rotation = "random",
+})
+
+--41, 36, -170
+minetest.register_decoration({
+    name = "fl_trees:jungletree_tree_4",
+    deco_type = "schematic",
+    place_on = "fl_topsoil:dirt_with_grass",
+    sidelen = 80,
+    fill_ratio = 0.002,
+    biomes = {"rainforest"},
+    y_max = 300,
+    y_min = 4,
+    place_offset_y = 1,
+    schematic = minetest.get_modpath("fl_trees") .. "/schems/jungletree_tree_5.mts",
+    flags = "place_center_x, place_center_z",
+    rotation = "random",
+})
