@@ -2,6 +2,7 @@
 
 --quick and dirty to get them in game, this needs to be fine tuned later
 local function make_tool_set(name)
+    --[[
     minetest.register_tool("fl_tools:" .. name .. "_pick", {
         description = name .. " pick",
         inventory_image = "farlands_" .. name .. "_pick.png",
@@ -13,6 +14,7 @@ local function make_tool_set(name)
         },
         groups = {tool = 1},
     })
+    --]]
     minetest.register_tool("fl_tools:" .. name .. "_axe", {
         description = name .. " axe",
         inventory_image = "farlands_" .. name .. "_axe.png",
@@ -73,6 +75,40 @@ make_tool_set("gold")
 make_tool_set("steel")
 make_tool_set("stone")
 make_tool_set("wood")
+
+local function make_pickaxe(name, factor)
+    if not factor then factor = {} end
+    minetest.register_tool("fl_tools:" .. name .. "_pick", {
+        description = name .. " pick",
+        inventory_image = "farlands_" .. name .. "_pick.png",
+        tool_capabilities = {
+            full_punch_interval = 1.2,
+            max_drop_level = 0,
+            groupcaps = {
+                dig_sand = {
+                    --1:sandstone brick/block 2:sandstone 3:sand
+                    times={[1] = 6/(factor[1] or 1), [2] = 4/(factor[1] or 1)},
+                    uses=70,
+                    maxlevel=3
+                },
+                dig_stone = {
+                    --1:stone brick/block 2:stone 3:rubble
+                    times = {[1] = 8/(factor[2] or 1), [2] = 6/(factor[2] or 1), [3] = 4/(factor[2] or 1)},
+                    uses = 0,
+                },
+            },
+            damage_groups = {fleshy=2},
+        },
+        groups = {tool = 1},
+    })
+end
+
+make_pickaxe("wood", {1.5, nil})
+make_pickaxe("stone", {2, 2.3})
+make_pickaxe("steel", {2.5, 3.6})
+make_pickaxe("bronze", {3, 4.9})
+make_pickaxe("gold", {3.5, 6.2})
+make_pickaxe("diamond", {4, 7.5})
 
 --very, very crappy way to add anvil recipes
 local tool_upgrades = {

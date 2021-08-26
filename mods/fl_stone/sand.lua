@@ -1,8 +1,8 @@
 local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
-    local rgp = rgroups or {oddly_breakable_by_hand = 3, falling_node = 1, sand = 1}
-    local sgp = sgroups or {oddly_breakable_by_hand = 3, stairable = 1, sandlike = 1}
-    local blgp = blgroups or {oddly_breakable_by_hand = 3, stairable = 1, sandlike = 1}
-    local brgp = brgroups or {oddly_breakable_by_hand = 3, stairable = 1, sandlike = 1}
+    local rgp = rgroups or {dig_sand = 3, falling_node = 1, sand = 1}
+    local sgp = sgroups or {dig_sand = 2, stairable = 1, sandlike = 1}
+    local blgp = blgroups or {dig_sand = 1, stairable = 1, sandlike = 1}
+    local brgp = brgroups or {dig_sand = 1, stairable = 1, sandlike = 1}
     local desc = string.gsub(name, "_", " ")
 
     --node registration

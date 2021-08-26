@@ -6,3 +6,5 @@ see tinted glass
 see i3 mechanics on not being able to show crafting properly
 ** liquid source vs flowing mechanics are cursed **
 doesnt always properly make flowing nodes sources
+** dig time calculations with custom hand **
+https://github.com/minetest/minetest/pull/11344 may fix this

@@ -1,8 +1,8 @@
 local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
-    local rgp = rgroups or {oddly_breakable_by_hand = 3, stairable = 1, wallable = 1, stonelike = 1}
-    local sgp = sgroups or {oddly_breakable_by_hand = 3, stairable = 1, wallable = 1, stonelike = 1, stone = 1}
-    local blgp = blgroups or {oddly_breakable_by_hand = 3, stairable = 1, stonelike = 1}
-    local brgp = brgroups or {oddly_breakable_by_hand = 3, stairable = 1, wallable = 1, stonelike = 1}
+    local rgp = rgroups or {dig_stone = 3, stairable = 1, wallable = 1, stonelike = 1}
+    local sgp = sgroups or {dig_stone = 2, stairable = 1, wallable = 1, stonelike = 1, stone = 1}
+    local blgp = blgroups or {dig_stone = 1, stairable = 1, stonelike = 1}
+    local brgp = brgroups or {dig_stone = 1, stairable = 1, wallable = 1, stonelike = 1}
     local rn = "fl_stone:" .. name .. "_rubble"
 
     --node registration
