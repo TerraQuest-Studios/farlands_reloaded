@@ -88,7 +88,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
             end)
         end,
         --]]
-        groups = {oddly_breakable_by_hand = 3, bed = 1},
+        groups = {dig_generic = 4, bed = 1},
     })
 
     --note that this does not work properly in the engine, only exists for i3, see craft_hacks

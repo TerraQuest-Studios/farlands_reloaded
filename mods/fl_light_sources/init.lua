@@ -26,7 +26,7 @@ minetest.register_node('fl_light_sources:torch', {
 		wall_bottom = {-0.1, -0.5   , -0.1, 0.1, 0.0625, 0.1},
 		wall_side   = {-0.35, -0.5  , -0.1, -0.5, 0.0625, 0.1},
 	},
-	groups = {choppy = 2, dig_immediate = 3, flammable = 1, attached_node = 1, hot = 2, kindling=1},
+	groups = {dig_generic = 4, flammable = 1, attached_node = 1},
 })
 
 minetest.register_node("fl_light_sources:lantern_c", {
@@ -49,7 +49,7 @@ minetest.register_node("fl_light_sources:lantern_c", {
     },
     drop = "fl_light_sources:lantern",
     light_source = 14,
-    groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1}
+    groups = {dig_stone = 2, lantern = 1, not_in_creative_inventory = 1}
 })
 
 minetest.register_node("fl_light_sources:lantern", {
@@ -84,7 +84,7 @@ minetest.register_node("fl_light_sources:lantern", {
         itemstack:take_item()
         return itemstack
     end,
-    groups = {oddly_breakable_by_hand = 3}
+    groups = {dig_stone = 2, lantern = 1}
 })
 
 minetest.register_node("fl_light_sources:chain", {
@@ -107,5 +107,5 @@ minetest.register_node("fl_light_sources:chain", {
             {-1/16, -0.5, -1/16, 1/16, 0.5, 1/16},
         },
     },
-    groups = {oddly_breakable_by_hand = 3}
+    groups = {dig_stone = 1}
 })

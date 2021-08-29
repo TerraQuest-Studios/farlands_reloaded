@@ -25,6 +25,8 @@ fl_dyes.dyes = {
     {"yellow", "Yellow", "#f3f01f"},
 }
 
+--this exists for legacy reasons
+--maybe should be aliased to terracotta?
 minetest.register_node("fl_dyes:demo_node", {
     description = "dye test node",
     tiles = {"farlands_demo.png"},
@@ -32,7 +34,7 @@ minetest.register_node("fl_dyes:demo_node", {
     paramtype2 = "color",
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {dig_generic = 4, not_in_creative_inventory = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " test_node")
     end,

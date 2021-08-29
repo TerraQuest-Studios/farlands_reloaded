@@ -9,7 +9,7 @@ minetest.register_node("fl_bricks:brick", {
     paramtype2 = "color",
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {dig_stone = 2},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " brick")
         if fl_dyes.dyes[oldnode.param2 + 1][2] == "White" then
@@ -27,7 +27,7 @@ minetest.register_node("fl_bricks:clay_block", {
     description = "clay block",
     tiles = {"farlands_clay_block.png"},
     drop = "fl_bricks:clay 4",
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {dig_sand = 3},
 })
 
 minetest.register_craftitem("fl_bricks:raw_brick", {
@@ -42,7 +42,7 @@ minetest.register_node("fl_bricks:terracotta", {
     paramtype2 = "color",
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {dig_sand = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " terracotta")
     end,

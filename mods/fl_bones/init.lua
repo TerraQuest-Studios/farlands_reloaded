@@ -24,3 +24,18 @@ minetest.register_craftitem("fl_bones:bonemeal", {
         return
     end
 })
+
+minetest.register_craftitem("fl_bones:bone", {
+    description = "bone",
+    inventory_image = "farlands_bone.png"
+})
+
+minetest.register_node("fl_bones:bone_block", {
+    description = "bone block",
+    tiles = {
+        "farlands_bone_block_top.png",
+        "farlands_bone_block_top.png",
+        "farlands_bone_block.png"
+    },
+    groups = {dig_stone = 3},
+})

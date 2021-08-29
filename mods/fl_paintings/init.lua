@@ -55,6 +55,6 @@ for _, img in pairs(minetest.get_dir_list(minetest.get_modpath("fl_paintings")..
             type = "fixed",
             fixed = data[1],
         },
-        groups = {oddly_breakable_by_hand = 3},
+        groups = {dig_generic = 3},
     })
 end

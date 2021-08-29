@@ -14,7 +14,7 @@ minetest.register_node("fl_storage:wood_chest", {
 		"farlands_chest_side.png",
 		"farlands_chest_front.png",
     },
-    groups = {oddly_breakable_by_hand = 3},
+    groups = {dig_tree = 1},
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 
         --vars for stuff

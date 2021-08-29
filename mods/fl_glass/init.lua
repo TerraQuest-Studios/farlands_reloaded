@@ -6,7 +6,7 @@ minetest.register_node("fl_glass:connected_glass", {
     paramtype = "light",
     paramtype2 = "glasslikeliquidlevel",
     sunlight_propagates = true,
-    groups = {oddly_breakable_by_hand = 3, glass = 1},
+    groups = {dig_glass = 1, glass = 1},
 })
 
 minetest.register_node("fl_glass:framed_glass", {
@@ -16,7 +16,7 @@ minetest.register_node("fl_glass:framed_glass", {
     paramtype = "light",
     paramtype2 = "glasslikeliquidlevel",
     sunlight_propagates = true,
-    groups = {oddly_breakable_by_hand = 3, glass = 1},
+    groups = {dig_glass = 1, glass = 1},
 })
 
 minetest.register_alias("fl_glass:glass_connected", "fl_glass:connected_glass")
@@ -32,7 +32,7 @@ minetest.register_node("fl_glass:tinted_connected_glass", {
     sunlight_propagates = true,
     use_texture_alpha = "blend",
     palette = "farlands_palette.png",
-    groups = {oddly_breakable_by_hand = 3, glass = 1},
+    groups = {dig_glass = 1, glass = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted connected glass")
     end,
@@ -47,7 +47,7 @@ minetest.register_node("fl_glass:tinted_framed_glass", {
     sunlight_propagates = true,
     use_texture_alpha = "blend",
     palette = "farlands_palette.png",
-    groups = {oddly_breakable_by_hand = 3, glass = 1},
+    groups = {dig_glass = 1, glass = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted framed glass")
     end,
@@ -102,7 +102,7 @@ minetest.register_node("fl_glass:framed_glass_panes", {
         connect_back = {{-1/32, -1/2, 1/32, 1/32, 1/2, 1/2}},
         connect_right = {{1/32, -1/2, -1/32, 1/2, 1/2, 1/32}},
     },
-    groups = {oddly_breakable_by_hand = 3, pane = 1, glass = 1},
+    groups = {dig_glass = 2, pane = 1, glass = 1},
     connects_to = {"group:pane", "group:glass", "group:wood_related"},
 })
 
@@ -130,7 +130,7 @@ minetest.register_node("fl_glass:tinted_framed_glass_panes", {
         connect_back = {{-1/32, -1/2, 1/32, 1/32, 1/2, 1/2}},
         connect_right = {{1/32, -1/2, -1/32, 1/2, 1/2, 1/32}},
     },
-    groups = {oddly_breakable_by_hand = 3, pane = 1, glass = 1},
+    groups = {dig_glass = 2, pane = 1, glass = 1},
     connects_to = {"group:pane", "group:glass", "group:wood_related"},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string(
