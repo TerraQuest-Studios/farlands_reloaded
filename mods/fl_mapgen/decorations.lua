@@ -83,3 +83,21 @@ minetest.register_decoration({
         }
     }
 })
+
+for i = 1, 3 do
+    minetest.register_decoration({
+        name = "fl_topsoil:sea_grass_" .. i,
+        deco_type = "simple",
+        place_on = {"fl_stone:sand"},
+        sidelen = 16,
+        fill_ratio = 0.06,
+        --biomes = {"grassland", "deciduousforest"},
+        place_offset_y = -1,
+        y_max = 0,
+        y_min = -16,
+        param2 = 0,
+        param2_max = 4,
+        flags = "force_placement",
+        decoration = "fl_topsoil:sea_grass_" .. i
+    })
+end
