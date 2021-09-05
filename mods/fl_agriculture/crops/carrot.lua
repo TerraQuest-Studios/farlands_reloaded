@@ -16,6 +16,7 @@ minetest.register_craftitem("fl_agriculture:carrot", {
         itemstack:take_item()
         return itemstack
     end,
+    _dungeon_loot = {name = "fl_agriculture:carrot", chance = 0.6, count = {3, 6}},
     on_use = minetest.item_eat(4)
 })
 

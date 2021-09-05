@@ -32,9 +32,13 @@ performance, low media, low dependancies
 
 sounds from https://opengameart.org/content/snowsong-sound-and-music-pack cc-by-sa 4.0
 
-shovel dig:
-clay
-
+digging
+-------
 how to handle fl_plantlife, fl_ores, fl_workshop?
 
 how to handle mob damage in fl_wildlife
+
+crafts
+------
+start at fl_plantlife and keep working down
+furnace needs to get done

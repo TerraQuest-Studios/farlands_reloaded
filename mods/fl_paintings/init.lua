@@ -1,4 +1,5 @@
 --todo implement painting mechanics
+--currently not avaible for survival
 
 --function from https://github.com/GreenXenith/entity_anim Greenxenith MIT
 local function get_file_dimensions(path)

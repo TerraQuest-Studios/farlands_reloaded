@@ -27,7 +27,8 @@ minetest.register_craftitem("fl_bones:bonemeal", {
 
 minetest.register_craftitem("fl_bones:bone", {
     description = "bone",
-    inventory_image = "farlands_bone.png"
+    inventory_image = "farlands_bone.png",
+    _dungeon_loot = {name = "fl_bones:bone", chance = 0.02},
 })
 
 minetest.register_node("fl_bones:bone_block", {
@@ -38,4 +39,23 @@ minetest.register_node("fl_bones:bone_block", {
         "farlands_bone_block.png"
     },
     groups = {dig_stone = 3},
+})
+
+--crafts
+minetest.register_craft({
+    output = "fl_bones:bone_block",
+    type = "shapeless",
+    recipe = {"fl_bones:bone", "fl_bones:bone", "fl_bones:bone"},
+})
+
+minetest.register_craft({
+    output = "fl_bones:bonemeal 3",
+    type = "shapeless",
+    recipe = {"fl_bones:bone"},
+})
+
+minetest.register_craft({
+    output = "fl_bones:bonemeal 9",
+    type = "shapeless",
+    recipe = {"fl_bones:bone_block"},
 })

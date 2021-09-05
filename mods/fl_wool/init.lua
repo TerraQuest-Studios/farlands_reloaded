@@ -5,7 +5,7 @@ minetest.register_node("fl_wool:wool", {
     paramtype2 = "color",
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
-    groups = {dig_generic = 3},
+    groups = {dig_generic = 3, wool = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " wool")
     end,

@@ -47,6 +47,18 @@ minetest.register_craftitem("fl_bottles:bottle", {
     groups = {bottle = 1, vessel = 1},
 })
 
+minetest.register_craft({
+    type = "shapeless",
+    output = "fl_bottles:bottle 16",
+    recipe = {"group:glass_block"}
+})
+
+minetest.register_craft({
+    type = "shapeless",
+    output = "fl_bottles:bottle",
+    recipe = {"group:glass_pane"}
+})
+
 minetest.register_craftitem("fl_bottles:invisibility", {
     description = "bottle of invisibilty",
     inventory_image = "farlands_bottle_darkpurple.png",

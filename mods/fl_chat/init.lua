@@ -1,5 +1,6 @@
 local dist = tonumber(minetest.settings:get("player_transfer_distance")) or 32
-
+--disable chat mod for now
+if dist then return end
 -----------------
 --chat distance--
 -----------------

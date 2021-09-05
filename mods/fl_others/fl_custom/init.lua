@@ -9,11 +9,13 @@ end)
 --temperary hacks around i3 bag crafts
 minetest.register_alias("farming:string", "fl_stone:stone")
 minetest.clear_craft({output = "i3:bag_small"})
+
 minetest.register_craft({
     output = "i3:bag_small",
     recipe = {
-        {"", "fl_stone:stone", ""},
-        {"fl_stone:ors", "fl_stone:ors", "fl_stone:ors"},
-        {"fl_stone:ors", "fl_stone:ors", "fl_stone:ors"},
+        {"", "farming:string", ""},
+        {"group:wool", "group:wool", "group:wool",},
+        {"group:wool", "group:wool", "group:wool",},
 	}
 })
+

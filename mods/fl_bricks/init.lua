@@ -48,6 +48,20 @@ minetest.register_node("fl_bricks:terracotta", {
     end,
 })
 
+minetest.register_craft({
+    type = "cooking",
+    output = "fl_bricks:terracotta",
+    recipe = "fl_bricks:clay_block",
+    cooktime = 3,
+})
+
+minetest.register_craft({
+    type = "cooking",
+    output = "fl_bricks:brick",
+    recipe = "fl_bricks:clay",
+    cooktime = 3,
+})
+
 --crafts
 for counter, dye in pairs(fl_dyes.dyes) do
     local brick_item = ItemStack(minetest.itemstring_with_palette("fl_bricks:brick", counter - 1))

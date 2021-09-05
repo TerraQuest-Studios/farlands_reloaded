@@ -23,17 +23,20 @@ minetest.register_craftitem("fl_books:book_raw", {
             "image_button[7,12;3,1;i3_btn9.png;write_btn;write]",
         }
         minetest.show_formspec(user:get_player_name(), "fl_books:book_raw", table.concat(formspec, ""))
-    end
+    end,
+    groups = {not_in_creative_inventory = 1}
 })
 
 minetest.register_craftitem("fl_books:book_written", {
     description = "written book",
     stack_max = 1,
-    inventory_image = "farlands_book_written.png"
+    inventory_image = "farlands_book_written.png",
+    groups = {not_in_creative_inventory = 1}
 })
 
 minetest.register_craftitem("fl_books:book_signed", {
     description = "signed book",
     stack_max = 1,
-    inventory_image = "farlands_book_signed.png"
+    inventory_image = "farlands_book_signed.png",
+    groups = {not_in_creative_inventory = 1}
 })

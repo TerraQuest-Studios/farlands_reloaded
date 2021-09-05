@@ -29,6 +29,12 @@ minetest.register_node('fl_light_sources:torch', {
 	groups = {dig_generic = 4, flammable = 1, attached_node = 1},
 })
 
+minetest.register_craft({
+    output = "fl_light_sources:torch",
+    type = "shapeless",
+    recipe = {"fl_trees:stick", "fl_ores:coal_ore"}
+})
+
 minetest.register_node("fl_light_sources:lantern_c", {
     description = "lantern",
     drawtype = "mesh",
@@ -87,6 +93,15 @@ minetest.register_node("fl_light_sources:lantern", {
     groups = {dig_stone = 2, lantern = 1}
 })
 
+minetest.register_craft({
+    output = "fl_light_sources:lantern",
+    recipe = {
+        {"fl_ores:iron_ingot", "fl_ores:iron_ingot", "fl_ores:iron_ingot"},
+        {"fl_ores:iron_ingot", "fl_light_sources:torch", "fl_ores:iron_ingot"},
+        {"fl_ores:iron_ingot", "fl_ores:iron_ingot", "fl_ores:iron_ingot"},
+    }
+})
+
 minetest.register_node("fl_light_sources:chain", {
     description = "chain",
     drawtype = "mesh",
@@ -108,4 +123,13 @@ minetest.register_node("fl_light_sources:chain", {
         },
     },
     groups = {dig_stone = 1}
+})
+
+minetest.register_craft({
+    output = "fl_light_sources:chain",
+    recipe = {
+        {"", "fl_ores:iron_ingot", ""},
+        {"", "fl_ores:iron_ingot", ""},
+        {"", "fl_ores:iron_ingot", ""},
+    }
 })
