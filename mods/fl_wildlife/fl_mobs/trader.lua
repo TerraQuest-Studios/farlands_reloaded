@@ -38,6 +38,9 @@ minetest.register_entity("fl_wildlife:trader", {
     brainfunc = fl_brains.villager_brain,--villager_brain, --function for the brain
     _egg_it = {"trader", "#3c521d"},
 
+    --ignore in spawning as this mob is not finished
+    _spawn_ignore = true,
+
     --experiments
     on_rightclick = function(self, clicker)
         --fl_wildlife.rclick_name(self, clicker)

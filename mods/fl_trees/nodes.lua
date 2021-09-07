@@ -28,6 +28,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
         description = name .. " leaves",
         drawtype = "allfaces_optional",
         paramtype = "light",
+        is_ground_content = false,
         tiles = {"farlands_" .. name .. "_leaves.png"},
         groups = lgp,
     })

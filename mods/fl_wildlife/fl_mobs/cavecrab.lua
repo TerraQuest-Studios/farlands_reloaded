@@ -133,6 +133,9 @@ minetest.register_entity("fl_wildlife:cavecrab", {
     _egg_it = {"cavecrab", "#76716f"},
     _spawner = {},
 
+    --ignore in spawning as not well suited by current spawning
+    _spawn_ignore = true,
+
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)

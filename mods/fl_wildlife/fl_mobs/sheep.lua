@@ -122,6 +122,13 @@ minetest.register_entity("fl_wildlife:sheep", {
     --_spawner = {},
     _egg_it = {"sheep", "#a49b95"},
 
+    _on_spawn = function(ent_ref)
+        if math.random() < 0.4 then return end
+        ent_ref:get_luaentity().object:set_properties(
+            {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_white.png"}}
+        )
+    end,
+
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)

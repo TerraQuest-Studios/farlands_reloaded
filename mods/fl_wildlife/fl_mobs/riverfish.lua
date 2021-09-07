@@ -61,6 +61,8 @@ minetest.register_entity("fl_wildlife:riverfish", {
 
     --custom to this mod
     drops = "fl_wildlife.villager.drops",
+    --ignore in spawning for now as water spawning not supported
+    _spawn_ignore = true,
 
     brainfunc = fish_brain,
     _egg_it = {"riverfish", "#978166"},
