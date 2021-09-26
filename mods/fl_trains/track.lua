@@ -5,7 +5,7 @@ minetest.register_node("fl_trains:straight_track", {
     drawtype = "mesh",
     mesh = "farlands_straight.obj",
     tiles = {"farlands_rail.png", "farlands_ties.png"},
-    groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1},
+    groups = {oddly_breakable_by_hand = 3},--, not_in_creative_inventory = 1},
     selection_box = {
         type = "fixed",
         fixed = {-0.5,-0.5,-0.5,0.5,-0.475,0.5},
