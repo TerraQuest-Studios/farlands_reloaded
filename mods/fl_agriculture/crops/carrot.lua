@@ -12,7 +12,7 @@ minetest.register_craftitem("fl_agriculture:carrot", {
         if not minetest.registered_nodes[anode.name] then return end
         if minetest.get_item_group(node.name, "plantable") ~= 1 then return end
         if minetest.registered_nodes[anode.name].drawtype ~= "airlike" then return end
-        minetest.place_node({x=pos.x, y=pos.y+1,z=pos.z}, {name = "fl_agriculture:carrot_1"})
+        minetest.set_node({x=pos.x, y=pos.y+1,z=pos.z}, {name = "fl_agriculture:carrot_1", param2 = 3})
         itemstack:take_item()
         return itemstack
     end,
