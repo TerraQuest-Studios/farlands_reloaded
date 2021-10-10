@@ -59,6 +59,9 @@ minetest.register_entity("fl_trains:train_engine", {
         if not player then return end
         if player:get_player_control().up and speed_check(vel, 5) then
             self.object:add_velocity(vector.multiply(dir, 0.2))
+        elseif player:get_player_control().down and speed_check(vel, 5) then
+            --track always looks engine forwards, fix me
+            self.object:add_velocity(vector.multiply(dir, -0.2))
         end
 
     end,
@@ -104,5 +107,5 @@ minetest.register_craftitem("fl_trains:train_engine", {
             end
         end
     end,
-    --groups = {not_in_creative_inventory = 1}
+    groups = {not_in_creative_inventory = 1}
 })

@@ -69,9 +69,10 @@ local function logic()
         local bdata = minetest.get_biome_data(player:get_pos())
         local bdef = minetest.registered_biomes[minetest.get_biome_name(bdata.biome)] or {}
 
-        if bs.players[pname] and bs.players[pname].id == bdata.biome then break end
-
-        if bdef._sky_data then
+        if bs.players[pname] and bs.players[pname].id == bdata.biome then
+            --do nothing
+            bs.players[pname].id = bdata.biome
+        elseif bdef._sky_data then
             for k, _ in pairs(bs.defaults) do
                 if bdef._sky_data[k] == nil then bdef._sky_data[k] = {} end
             end
