@@ -120,7 +120,7 @@ minetest.register_node("fl_signs:sign_wood", {
             "bgcolor[black;neither]",
             "background9[0,0;10.4,5.25;i3_bg_full.png;false;10]",
             "textarea[0.5,0.5;9.4,3;" .. "Pos: " .. minetest.pos_to_string(pos, 2) .. ";;" .. text .. "]",
-            "field_close_on_enter[test;false]",
+            "field_close_on_enter[" .. "Pos: " .. minetest.pos_to_string(pos, 2) .. ";false]",
             "button[4.2,4;2,0.75;enter;Write]",
         }
         minetest.show_formspec(clicker:get_player_name(), "fl_signs:sign_wood", table.concat(formspec, ""))
@@ -135,6 +135,7 @@ minetest.register_node("fl_signs:sign_wood", {
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
     if formname ~= "fl_signs:sign_wood" then return end
+    local pname = player:get_player_name()
     --minetest.chat_send_all(dump(fields))
     local text = {}
     if fields.enter then
@@ -145,8 +146,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         end
     end
     if fields.enter and text then
+        minetest.close_formspec(pname, "fl_signs:sign_wood")
         local split = text[1]:split(" ")
         local pos = minetest.string_to_pos(split[2])
+        if minetest.is_protected(pos, pname) then return end
         local node = minetest.get_node_or_nil(pos)
         if not node then return end
         if not offsets[node.param2] then return end
