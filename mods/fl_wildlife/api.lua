@@ -24,7 +24,11 @@ function fl_wildlife.egg_it(t_name, d_name, color)
         inventory_image = "farlands_egg.png^(farlands_egg_overlay.png^[colorize:" .. color .. ")", --"404.png",
         stack_max = 99,
         on_place = function(itemstack, placer, pointed_thing)
-            local ent = minetest.add_entity(pointed_thing.above, t_name)
+            if pointed_thing.type ~= "node" then return itemstack end
+            if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then return itemstack end
+            local pos = pointed_thing.under
+            pos.y = pos.y+1
+            local ent = minetest.add_entity(pos, t_name)
             if itemstack:get_meta():get_string("description") ~= "" then
                 local self = ent:get_luaentity()
                 self.object:set_properties({nametag = itemstack:get_meta():get_string("description"),})
