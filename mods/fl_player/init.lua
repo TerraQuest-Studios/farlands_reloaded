@@ -29,7 +29,6 @@ local data_table = {}
 local key_table = {}
 
 for _, sn in pairs(minetest.get_dir_list(minetest.get_modpath("fl_player").."/textures")) do
-    if sn == "fl_trans.png" then break end
     local nn = string.split(string.split(sn, "_")[2],".")
     table.insert(data_table, {_texture = sn, name = nn[1]})
     key_table[sn] = 1
@@ -46,7 +45,7 @@ minetest.register_on_joinplayer(function(player)
     player:get_meta():set_int("vanish", 0)
     player:set_properties({
         mesh = "fl_character.b3d",
-        textures = {get_player_skin(player), "fl_trans.png", "fl_trans.png"},
+        textures = {get_player_skin(player), "[combine:16x16", "[combine:16x16"},
         visual = "mesh",
         visual_size = {x = 1, y = 1, z = 1},
         collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
