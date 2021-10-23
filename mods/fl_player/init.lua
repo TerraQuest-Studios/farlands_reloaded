@@ -202,7 +202,7 @@ function skins.set_player_skin(player, skin_entry)
     --minetest.chat_send_all(skin_entry._texture)
     player:get_meta():set_string("skin", skin_entry._texture)
     player:set_properties({
-        textures = {get_player_skin(player), "fl_trans.png", "fl_trans.png"},
+        textures = {get_player_skin(player), "[combine:16x16", "[combine:16x16]"},
     })
 end
 
