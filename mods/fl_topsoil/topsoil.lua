@@ -111,6 +111,7 @@ minetest.register_node("fl_topsoil:snow", {
     sunlight_propagates = true,
     drawtype = "nodebox",
     node_placement_prediction = "",
+    buildable_to = true,
     node_box = {
         type = "leveled",
         fixed = {-0.5, -0.5, -0.5, 0.5, -0.5, 0.5},
