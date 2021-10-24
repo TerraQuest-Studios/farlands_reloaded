@@ -1,0 +1,1 @@
+minetest.register_chatcommand("tp", minetest.chatcommands["teleport"])
