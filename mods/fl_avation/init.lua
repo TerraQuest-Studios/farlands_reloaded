@@ -45,6 +45,26 @@ minetest.register_entity("fl_avation:airballoon", {
         elseif abs(vel.y) ~= 0 and abs(vel.y) ~= vel.y then
             vel.y = vel.y + .1
         end
+        --[[
+        --left
+        if controls.left then
+            local val = vector.divide(vector.new(vel.x,0,vel.z), minetest.yaw_to_dir(self.object:get_yaw()))
+            local nyaw = self.object:get_yaw()+0.19
+            self.object:set_yaw(nyaw)
+            val = vector.multiply(minetest.yaw_to_dir(nyaw), val)
+            vel = vector.new(val.x, vel.y, val.z)
+        end
+        --right
+        if controls.right then self.object:set_yaw(self.object:get_yaw()-0.19) end
+        --up
+        if controls.up and abs(vel.z) < speed_limit and abs(vel.x) < speed_limit then
+            local vyaw = minetest.yaw_to_dir(self.object:get_yaw())
+            vel = vector.add(vector.add(vyaw, vector.new(0.5,0,0.5)), vel)
+        elseif abs(vel.x) ~= 0 and abs(vel.x) ~= vel.x and abs(vel.z) ~= 0 and abs(vel.z) ~= vel.z then
+            local vyaw = minetest.yaw_to_dir(self.object:get_yaw())
+            vel = vector.add(vector.subtract(vyaw, vector.new(0.5,0,0.5)), vel)
+        end
+        --]]
 
         --minetest.chat_send_all(dump(self.object:get_velocity()))
 
