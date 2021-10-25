@@ -133,3 +133,15 @@ end
 
 minetest.register_craft_predict(craft_hacks)
 minetest.register_on_craft(craft_hacks)
+
+if minetest.get_modpath("i3") then
+    local colors = {}
+    for counter, dye in pairs(fl_dyes.dyes) do
+        if dye[1] ~= "red" then table.insert(colors, dye[1]) end
+    end
+
+    i3.compress("fl_beds:bed_red", {
+        replace = "red",
+        by = colors
+    })
+end

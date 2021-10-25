@@ -62,7 +62,20 @@ local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
     minetest.register_alias("fl_topsoil:" .. name, "fl_stone:" .. name)
 end
 
-create_sand_types("sand")
-create_sand_types("silver_sand")
-create_sand_types("desert_sand")
+local sand_types = {"sand", "silver_sand", "desert_sand"}
+
+for _, type in pairs(sand_types) do
+    create_sand_types(type)
+end
+
+if minetest.get_modpath("i3") then
+    local types = {"", "stone", "stone_block", "stone_brick"}
+    sand_types[#sand_types] = nil
+    for _, type in pairs(types) do
+        i3.compress("fl_stone:desert_sand" .. type, {
+            replace = "desert_sand",
+            by = sand_types
+        })
+    end
+end
 

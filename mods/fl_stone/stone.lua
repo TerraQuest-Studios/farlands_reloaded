@@ -73,13 +73,21 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
     minetest.register_alias("fl_terrain:" .. name .. "_brick", "fl_stone:" .. name .. "_brick")
 end
 
-create_stone_types("stone")
-create_stone_types("mossy_stone")
-create_stone_types("savannah")
-create_stone_types("ors")
-create_stone_types("tuff")
-create_stone_types("basalt")
-create_stone_types("gneiss")
-create_stone_types("desert_stone")
+local stone_types = {"stone", "mossy_stone", "savannah", "ors", "tuff", "basalt", "gneiss", "desert_stone"}
+
+for _, type in pairs(stone_types) do
+    create_stone_types(type)
+end
 
 --granite, brown granite,
+
+if minetest.get_modpath("i3") then
+    local types = {"", "_rubble", "_block", "_brick"}
+    stone_types[#stone_types] = nil
+    for _, type in pairs(types) do
+        i3.compress("fl_stone:desert_stone" .. type, {
+            replace = "desert_stone",
+            by = stone_types
+        })
+    end
+end

@@ -60,3 +60,15 @@ for counter, dye in pairs(fl_dyes.dyes) do
         },
     })
 end
+
+if minetest.get_modpath("i3") then
+    local colors = {}
+    for _, dye in pairs(fl_dyes.dyes) do
+        if dye[1] ~= "red" then table.insert(colors, dye[1]) end
+    end
+
+    i3.compress("fl_dyes:red_dye", {
+        replace = "red",
+        by = colors
+    })
+end

@@ -70,17 +70,6 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     })
 end
 
-tree_nodes("acacia")
-tree_nodes("apple")
-tree_nodes("aspen")
-tree_nodes("pine")
-tree_nodes("spruce")
-tree_nodes("yellow_ipe")
-tree_nodes("willow")
-tree_nodes("baobab")
-tree_nodes("palm")
-tree_nodes("jungletree")
-
 minetest.register_node("fl_trees:dead_aspen_leaves", {
     description = "dead aspen leaves",
     drawtype = "allfaces_optional",
@@ -88,3 +77,20 @@ minetest.register_node("fl_trees:dead_aspen_leaves", {
     tiles = {"farlands_dead_aspen_leaves.png"},
     groups = {dig_tree = 3, tree = 1, leaf = 1},
 })
+
+local wtypes = {"acacia", "aspen", "pine", "spruce", "yellow_ipe", "willow", "baobab", "palm", "jungletree", "apple"}
+
+for _, wood in pairs(wtypes) do
+    tree_nodes(wood)
+end
+
+if minetest.get_modpath("i3") then
+    local types = {"plank", "trunk", "leaves"}
+    wtypes[#wtypes] = nil
+    for _, type in pairs(types) do
+        i3.compress("fl_trees:apple_" .. type, {
+            replace = "apple",
+            by = wtypes
+        })
+    end
+end

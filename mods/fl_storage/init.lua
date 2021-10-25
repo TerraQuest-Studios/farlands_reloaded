@@ -238,11 +238,19 @@ local function shelf_nodes(name)
     end
 end
 
-shelf_nodes("acacia")
-shelf_nodes("apple")
-shelf_nodes("aspen")
-shelf_nodes("pine")
-shelf_nodes("spruce")
-shelf_nodes("yellow_ipe")
-shelf_nodes("willow")
-shelf_nodes("baobab")
+local wood_types = {"acacia", "aspen", "pine", "spruce", "yellow_ipe", "willow", "baobab", "apple"}
+local shelf_types = {"book", "empty", "multi", "vessel"}
+
+for _, wood in pairs(wood_types) do
+    shelf_nodes(wood)
+end
+
+if minetest.get_modpath("i3") then
+    wood_types[#wood_types] = nil
+    for _, shelf in pairs(shelf_types) do
+        i3.compress("fl_storage:apple_" .. shelf .. "_shelf", {
+            replace = "apple",
+            by = wood_types
+        })
+    end
+end

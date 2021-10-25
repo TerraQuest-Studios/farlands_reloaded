@@ -93,3 +93,20 @@ minetest.register_craft({
     recipe = "fl_ores:coal_block",
     burntime = 370,
 })
+
+if minetest.get_modpath("i3") then
+    local base_material = {"stone", "ors", "tuff", "desert_stone", "savannah"}
+    local ore = {"iron", "copper", "tin", "gold", "diamond", "mithite"}
+    for _, mat in pairs(base_material) do
+        i3.compress("fl_ores:coal_in_" .. mat, {
+            replace = "coal",
+            by = ore
+        })
+    end
+
+    ore[#ore] = nil
+    i3.compress("fl_ores:mithite_block", {
+        replace = "mithite",
+        by = ore
+    })
+end

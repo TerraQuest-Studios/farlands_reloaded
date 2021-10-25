@@ -215,3 +215,12 @@ make_anvil_crafts("gold")
 make_anvil_crafts("steel")
 make_anvil_crafts("stone")
 make_anvil_crafts("wood")
+
+if minetest.get_modpath("i3") then
+    for _, type in pairs(types) do
+        i3.compress("fl_tools:diamond" .. type, {
+            replace = "diamond",
+            by = {"wood", "stone", "steel", "gold", "bronze"}
+        })
+    end
+end
