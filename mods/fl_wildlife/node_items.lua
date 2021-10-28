@@ -6,11 +6,11 @@ minetest.register_craftitem("fl_wildlife:nametag", {
 
 minetest.register_entity("fl_wildlife:chicken_egg_entity", {
     initial_properties = {
-        physical = false,
+        physical = true,
         --stepheight = 0.4,
         collide_with_objects = true,
         pointable = false,
-        collisionbox = {0, 0, 0, 0, 0, 0},
+        collisionbox = {-0.01, -0.01, -0.01, 0.01, 0.01, 0.01},
         visual = "wielditem",
         textures = {"fl_wildlife:chicken_egg"},
         visual_size = {x=0.2, y=0.2},
@@ -23,33 +23,23 @@ minetest.register_entity("fl_wildlife:chicken_egg_entity", {
         local test = 1
     end,
     --]]
-    on_step = function(self, dtime)
+    on_step = function(self, dtime, moveresult)
         if not self.active_time then self.active_time = 0 end
         self.active_time = self.active_time + dtime
         if self.active_time >= 10 then
             self.object:remove() --edge case prevention
         end
 
-        local pos = vector.round(self.object:getpos())
-        if minetest.get_node(pos).name ~= "air" then
-            --minetest.chat_send_all("chicken")
-            local vel = self.object:get_velocity()
-
-            local factor = vel.x
-            for _, i in pairs(vel) do
-                if i < factor and i ~= 0 then factor = i end
+        if moveresult.collides then
+            local pos = vector.new(0,0,0)
+            if moveresult.collisions[1].type == "node" then
+                pos = moveresult.collisions[1].node_pos
+            elseif moveresult.collisions[1].type == "object" then
+                pos = moveresult.collisions[1].object:get_pos()
             end
-            factor = math.abs(factor)
-            if factor < 1 then factor = 1/factor end
-            local spos = vector.subtract(pos, vector.divide(vel, factor))
-
-            --minetest.add_entity(vector.add(spos, vector.multiply(vel, 0.5)), "fl_wildlife:chicken")
-            minetest.add_entity(spos, "fl_wildlife:chicken")
+            local vec = vector.normalize(moveresult.collisions[1].old_velocity)
+            minetest.add_entity(vector.add(pos, vector.multiply(vec, -1)), "fl_wildlife:chicken")
             self.object:remove()
-
-            --minetest.chat_send_all("obj_pos: " .. minetest.pos_to_string(pos, 1))
-            --minetest.chat_send_all("vel: " .. minetest.pos_to_string(vel, 1))
-            --minetest.chat_send_all("spos: " .. minetest.pos_to_string(spos, 1))
         end
     end,
 
