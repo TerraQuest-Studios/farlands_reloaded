@@ -1,17 +1,6 @@
 --one glass block is 16 panes
---connected glass exists for legacy reasons but is not supported at this time
 
 --glass nodes
-minetest.register_node("fl_glass:connected_glass", {
-    description = "connected glass",
-    drawtype = "glasslike_framed",
-    tiles = {"farlands_glass.png", "farlands_glass_detail.png"},
-    paramtype = "light",
-    paramtype2 = "glasslikeliquidlevel",
-    sunlight_propagates = true,
-    groups = {dig_glass = 1, glass = 1, not_in_creative_inventory = 1},
-})
-
 minetest.register_node("fl_glass:framed_glass", {
     description = "framed glass",
     drawtype = "glasslike",
@@ -22,20 +11,17 @@ minetest.register_node("fl_glass:framed_glass", {
     groups = {dig_glass = 1, glass = 1, glass_block = 1},
 })
 
-minetest.register_alias("fl_glass:glass_connected", "fl_glass:connected_glass")
-minetest.register_alias("fl_glass:glass_framed", "fl_glass:framed_glass")
-
 --tinted colorable glass nodes
 minetest.register_node("fl_glass:tinted_connected_glass", {
     description = "tinted connected glass",
-    drawtype = "glasslike_framed",
-    tiles = {"farlands_glass.png", "farlands_glass_sheet.png^farlands_glass_detail.png"},
+    drawtype = "glasslike",
+    tiles = {"farlands_glass_sheet.png^farlands_glass_detail.png"},
     paramtype = "light",
     paramtype2 = "color",
     sunlight_propagates = true,
     use_texture_alpha = "blend",
     palette = "farlands_palette.png",
-    groups = {dig_glass = 1, glass = 1, glass_block = 1, not_in_creative_inventory = 1},
+    groups = {dig_glass = 1, glass = 1, glass_block = 1},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted connected glass")
     end,

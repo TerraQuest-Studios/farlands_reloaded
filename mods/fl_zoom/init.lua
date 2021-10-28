@@ -6,7 +6,7 @@ minetest.register_on_joinplayer(function(player, last_login)
 end)
 
 minetest.register_craftitem("fl_zoom:binoculars", {
-    inventory_image = "[combine:16x16",
+    inventory_image = "farlands_zoom.png",
     description = "binoculars",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)

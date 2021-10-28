@@ -52,3 +52,20 @@ end
 
 --foxglove_pink/purple
 --flower to dyes need to be done
+
+if minetest.get_modpath("i3") then
+    local flowers = table.copy(fl_plantlife.decoration_flowers)
+    local mainf = flowers[#flowers]
+    flowers[#flowers] = nil
+    local replace = mainf:split(":")[2]
+
+    for index, flower in pairs(flowers) do
+        local split = flower:split(":")
+        flowers[index] = split[2]
+    end
+
+    i3.compress(mainf, {
+        replace = replace,
+        by = flowers
+    })
+end

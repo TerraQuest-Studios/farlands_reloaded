@@ -32,7 +32,7 @@ minetest.register_entity("fl_wildlife:chicken_egg_entity", {
 
         local pos = vector.round(self.object:getpos())
         if minetest.get_node(pos).name ~= "air" then
-            minetest.chat_send_all("chicken")
+            --minetest.chat_send_all("chicken")
             local vel = self.object:get_velocity()
 
             local factor = vel.x
@@ -47,9 +47,9 @@ minetest.register_entity("fl_wildlife:chicken_egg_entity", {
             minetest.add_entity(spos, "fl_wildlife:chicken")
             self.object:remove()
 
-            minetest.chat_send_all("obj_pos: " .. minetest.pos_to_string(pos, 1))
-            minetest.chat_send_all("vel: " .. minetest.pos_to_string(vel, 1))
-            minetest.chat_send_all("spos: " .. minetest.pos_to_string(spos, 1))
+            --minetest.chat_send_all("obj_pos: " .. minetest.pos_to_string(pos, 1))
+            --minetest.chat_send_all("vel: " .. minetest.pos_to_string(vel, 1))
+            --minetest.chat_send_all("spos: " .. minetest.pos_to_string(spos, 1))
         end
     end,
 
@@ -59,7 +59,7 @@ minetest.register_craftitem("fl_wildlife:chicken_egg", {
     description = "chicken egg",
     inventory_image = "farlands_chicken_egg.png",
     on_use = function(itemstack, user, pointed_thing)
-        minetest.chat_send_all("used")
+        --minetest.chat_send_all("used")
         if pointed_thing.type ~= "node" then return end
 
         --note that this spawning location calculation is terrible and only works sometimes
@@ -67,8 +67,8 @@ minetest.register_craftitem("fl_wildlife:chicken_egg", {
         pt_pos.y = pt_pos.y + 0.5
         local p_pos = user:get_pos()
         p_pos.y = p_pos.y + 1.5
-        minetest.chat_send_all("player_pos: " .. minetest.pos_to_string(p_pos, 1))
-        minetest.chat_send_all("pointed_thing_pos: " .. minetest.pos_to_string(pt_pos, 1))
+        --minetest.chat_send_all("player_pos: " .. minetest.pos_to_string(p_pos, 1))
+        --minetest.chat_send_all("pointed_thing_pos: " .. minetest.pos_to_string(pt_pos, 1))
         local obj = minetest.add_entity(p_pos, "fl_wildlife:chicken_egg_entity")
         obj:set_velocity(vector.subtract(pt_pos, p_pos))
         obj:set_acceleration(vector.subtract(pt_pos, p_pos))
