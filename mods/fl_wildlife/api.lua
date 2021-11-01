@@ -182,3 +182,27 @@ function fl_wildlife.hq_die(self)
 	end
 	mobkit.queue_high(self,func,100)
 end
+
+function fl_wildlife.drop_handler(self)
+    local item_count = 0
+	for _, drop in pairs(self.drops) do
+		local count = 1
+		if drop.min or drop.max then
+			count = math.random(drop.min or 1, drop.max or drop.min+5)
+		end
+
+		if self.drops.max_items then
+			if self.drops.max_items >= item_count then return end
+			if (count+item_count) > self.drops.max_items then
+				count = self.drops.max_items - item_count
+			end
+		end
+
+		if drop.chance and math.random(1, drop.chance) ~= drop.chance then return end
+
+        if minetest.registered_items[drop.name] then
+            minetest.add_item(mobkit.get_stand_pos(self), drop.name .. " " .. count)
+            item_count = item_count+count
+        end
+	end
+end
