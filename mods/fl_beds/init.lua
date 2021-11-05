@@ -32,7 +32,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
             local def = minetest.registered_items[head.name] or nil
             if not head or not def or not def.buildable_to then
                 minetest.remove_node(pos)
-                minetest.chat_send_player(placer:get_player_name(), "No room to place the bed!")
+                minetest.chat_send_player(placer:get_player_name(), "[fl_beds]: No room to place the bed!")
                 return true
             end
             minetest.set_node(pos, {name = base.name, param2 = base.param2})
@@ -46,11 +46,13 @@ for counter, dye in pairs(fl_dyes.dyes) do
             local pos_hash = minetest.hash_node_position(pos)
             local time = minetest.get_timeofday()
 
+            if fl_beds.data[cname] then return end
+
             if fl_beds.active_beds[pos_hash] and not fl_beds.data[cname] then
-                minetest.chat_send_player(cname, "bed already in use")
+                minetest.chat_send_player(cname, "[fl_beds]: bed already in use")
                 return
             elseif time > 0.2 and time < 0.805 then
-                minetest.chat_send_player(cname, "its not night you fool")
+                minetest.chat_send_player(cname, "[fl_beds]: its not night you fool")
                 return
             end
             fl_beds.data[cname] = {}

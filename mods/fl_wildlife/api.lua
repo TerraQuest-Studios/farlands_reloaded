@@ -35,6 +35,7 @@ function fl_wildlife.egg_it(t_name, d_name, color)
                 mobkit.remember(self,"nametag",itemstack:get_meta():get_string("description"))
             end
         end,
+        groups = {not_in_creative_inventory = 1},
     })
 end
 

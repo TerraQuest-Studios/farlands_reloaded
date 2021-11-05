@@ -517,6 +517,7 @@ minetest.register_node("fl_tnt:tnt", {
     description = "tnt",
     tiles = {"farlands_tnt_top.png", "farlands_tnt_bottom.png", "farlands_tnt_side.png"},
     on_punch = function(pos, node, puncher)
+		if minetest.is_protected(pos, puncher:get_player_name()) then return end
         minetest.remove_node(pos)
         local entity = minetest.add_entity(pos, "fl_tnt:tnt_entity")
         entity:set_velocity({x=0, y=4, z=0})

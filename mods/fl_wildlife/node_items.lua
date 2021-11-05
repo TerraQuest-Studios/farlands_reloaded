@@ -76,6 +76,7 @@ minetest.register_craftitem("fl_wildlife:chicken_egg", {
         end
         return itemstack
     end,
+    groups = {not_in_creative_inventory = 1},
 })
 
 minetest.register_craftitem("fl_wildlife:leather", {
