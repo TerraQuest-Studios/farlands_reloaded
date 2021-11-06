@@ -9,6 +9,14 @@ local tool_use = {
     diamond = 50,
 }
 
+local material_list = {
+    wood = "fl_trees:apple_plank",
+    stone = "fl_stone:stone",
+    steel = "fl_ores:iron_ingot",
+    bronze = "fl_ores:bronze_ingot",
+    gold = "fl_ores:gold_ingot",
+}
+
 local function make_pickaxe(name, factor)
     if not factor then factor = {} end
     minetest.register_tool("fl_tools:" .. name .. "_pick", {
@@ -47,6 +55,16 @@ local function make_pickaxe(name, factor)
         },
         groups = {tool = 1},
     })
+
+    local material = material_list[name] or "fl_ores:" .. name .. "_ore"
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_pick",
+        recipe = {
+            {material, material, material},
+            {"", "fl_trees:stick", ""},
+            {"", "fl_trees:stick", ""},
+        }
+    })
 end
 
 make_pickaxe("wood", {1.5, nil, 1.5, 0.9})
@@ -74,6 +92,25 @@ local function make_axe(name, factor)
             damage_groups = {fleshy=2},
         },
         groups = {tool = 1},
+    })
+
+    local material = material_list[name] or "fl_ores:" .. name .. "_ore"
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_axe",
+        recipe = {
+            {material, material, ""},
+            {material, "fl_trees:stick", ""},
+            {"", "fl_trees:stick", ""},
+        }
+    })
+
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_axe",
+        recipe = {
+            {"", material, material},
+            {"", "fl_trees:stick", material},
+            {"", "fl_trees:stick", ""},
+        }
     })
 end
 
@@ -116,6 +153,16 @@ local function make_shovel(name, factor)
         },
         groups = {tool = 1},
     })
+
+    local material = material_list[name] or "fl_ores:" .. name .. "_ore"
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_shovel",
+        recipe = {
+            {material},
+            {"fl_trees:stick"},
+            {"fl_trees:stick"},
+        }
+    })
 end
 
 make_shovel("wood", {0.7, 0.8, 1})
@@ -143,6 +190,16 @@ local function make_sword(name, factor)
             damage_groups = {fleshy=2},
         },
         groups = {tool = 1},
+    })
+
+    local material = material_list[name] or "fl_ores:" .. name .. "_ore"
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_sword",
+        recipe = {
+            {material},
+            {material},
+            {"fl_trees:stick"},
+        }
     })
 end
 
@@ -179,6 +236,25 @@ local function make_hoe(name, factor)
             end
         end,
         groups = {tool = 1},
+    })
+
+    local material = material_list[name] or "fl_ores:" .. name .. "_ore"
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_hoe",
+        recipe = {
+            {material, material, ""},
+            {"", "fl_trees:stick", ""},
+            {"", "fl_trees:stick", ""},
+        }
+    })
+
+    minetest.register_craft({
+        output = "fl_tools:" .. name .. "_hoe",
+        recipe = {
+            {"", material, material},
+            {"", "fl_trees:stick", ""},
+            {"", "fl_trees:stick", ""},
+        }
     })
 end
 
