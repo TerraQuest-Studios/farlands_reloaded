@@ -1,6 +1,15 @@
 --sfan5 MIT
 minetest.set_gen_notify({dungeon = true, temple = true})
 
+dungeon_loot.biomes = {}
+
+for name, _ in pairs(minetest.registered_biomes) do
+	local split = name:split("_")
+	if not dungeon_loot.biomes[split[1]] then
+		dungeon_loot.biomes[split[1]] = true
+	end
+end
+
 local function noise3d_integer(noise, pos)
 	return math.abs(math.floor(noise:get_3d(pos) * 0x7fffffff))
 end
@@ -53,16 +62,20 @@ local function find_walls(cpos)
 		end
 	end
 
-    --need to customize this to registered_biomes
 	local biome = minetest.get_biome_data(cpos)
 	biome = biome and minetest.get_biome_name(biome.biome) or ""
 	local type = "normal"
+	--[[
 	if biome:find("desert") == 1 then
 		type = "desert"
 	elseif biome:find("sandstone_desert") == 1 then
 		type = "sandstone"
 	elseif biome:find("icesheet") == 1 then
 		type = "ice"
+	end
+	--]]
+	for bname, _ in pairs(dungeon_loot.biomes) do
+		if biome:find(bname) then type = bname end
 	end
 
 	return {
