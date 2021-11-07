@@ -24,10 +24,11 @@ minetest.register_entity("fl_avation:airballoon", {
 
         local driver
         local controls
-        if mobkit.recall(self, "driver") then
+        if mobkit.recall(self, "driver") and minetest.get_player_by_name(mobkit.recall(self, "driver")) then
             driver = minetest.get_player_by_name(mobkit.recall(self, "driver"))
             controls = driver:get_player_control()
         else
+            mobkit.forget(self, "driver")
             controls = {}
         end
         local old_vel = self.object:get_velocity()
