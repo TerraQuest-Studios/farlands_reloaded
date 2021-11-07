@@ -44,6 +44,7 @@ for _, name in ipairs(dir) do
                 type = "fixed",
                 fixed = {-0.2, -0.5, -0.2, 0.2, 0, 0.2}
             },
+            _dungeon_loot = {chance = math.random(0, 0.9), count = {4, 22}},
             groups = {oddly_breakable_by_hand = 3, plant = 1, flower = 1, potable = 1}
         })
         table.insert(fl_plantlife.decoration_flowers, "fl_plantlife:" .. fname)

@@ -28,6 +28,7 @@ local function register_sapling(name, offset)
             minetest.get_node_timer(pointed_thing.above):start(20)
             return minetest.item_place(itemstack, placer, pointed_thing)
         end,
+        _dungeon_loot = {chance = math.random(0.2, 0.6), count = {4, 12}},
         selection_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}},
         collision_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}}
     })

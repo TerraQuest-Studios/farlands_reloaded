@@ -8,7 +8,7 @@ minetest.register_node("fl_topsoil:coarse_dirt", {
 minetest.register_node("fl_topsoil:dirt", {
     description = "dirt",
     tiles = {"farlands_dirt.png"},
-    _dungeon_loot = {name = "fl_topsoil:dirt", chance = 0.6, count = {2, 16}, y = {-64, 32768}},
+    _dungeon_loot = {chance = 0.6, count = {2, 16}, y = {-64, 32768}},
     sounds = fl_topsoil.sounds.grass(),
     groups = {dig_dirt = 3, farm_convert = 1},
 })
@@ -81,6 +81,7 @@ minetest.register_node("fl_topsoil:ice", {
     description = "ice",
     tiles = {"farlands_ice.png"},
     sounds = fl_topsoil.sounds.snow(),
+    _dungeon_loot = {chance = 0.7, count = {4, 32}, types = {"tundra", "icy", "snowygrassland"}},
     groups = {dig_snow = 2, melts = 1},
 })
 
@@ -172,6 +173,7 @@ minetest.register_node("fl_topsoil:gravel", {
         }
     },
     sounds = fl_topsoil.sounds.gravel(),
+    _dungeon_loot = {chance = 0.8, count = {4, 32}},
     groups = {dig_sand = 3, falling_node = 1},
 })
 

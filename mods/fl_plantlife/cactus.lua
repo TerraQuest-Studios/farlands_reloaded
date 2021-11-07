@@ -38,5 +38,6 @@ minetest.register_node("fl_plantlife:cactus", {
         end
         minetest.get_node_timer(pos):start(math.random(600, 1200))
     end,
+    _dungeon_loot = {chance = 0.7, count = {1, 3}, types = {"desert"}},
     groups = {oddly_breakable_by_hand = 3}
 })

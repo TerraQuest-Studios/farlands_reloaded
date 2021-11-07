@@ -1,6 +1,7 @@
 minetest.register_craftitem("fl_bones:bonemeal", {
     description = "bonemeal",
     inventory_image = "farlands_bonemeal.png",
+    _dungeon_loot = {chance = 0.1, count = {4, 8}},
     on_use = function(itemstack, user, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         local node = minetest.get_node_or_nil(pointed_thing.under)
@@ -28,7 +29,7 @@ minetest.register_craftitem("fl_bones:bonemeal", {
 minetest.register_craftitem("fl_bones:bone", {
     description = "bone",
     inventory_image = "farlands_bone.png",
-    _dungeon_loot = {name = "fl_bones:bone", chance = 0.02},
+    _dungeon_loot = {chance = 0.2, count = {2, 6}},
 })
 
 minetest.register_node("fl_bones:bone_block", {

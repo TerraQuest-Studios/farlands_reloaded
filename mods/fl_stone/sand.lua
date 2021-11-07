@@ -10,6 +10,7 @@ local function create_sand_types(name, rgroups, sgroups, blgroups, brgroups)
         description = desc,
         tiles = {"farlands_" .. name .. ".png"},
         sounds = fl_stone.sounds.sand(),
+        _dungeon_loot = {chance = math.random(0.1, 0.3), count = {4, 32}},
         groups = rgp,
     })
     minetest.register_node("fl_stone:" .. name .. "stone", {

@@ -53,6 +53,7 @@ local function make_pickaxe(name, factor)
             },
             damage_groups = {fleshy=2},
         },
+        _dungeon_loot = {chance = math.random(0.01, 0.2)},
         groups = {tool = 1},
     })
 
@@ -91,6 +92,7 @@ local function make_axe(name, factor)
             },
             damage_groups = {fleshy=2},
         },
+        _dungeon_loot = {chance = math.random(0.1, 0.2)},
         groups = {tool = 1},
     })
 
@@ -151,6 +153,7 @@ local function make_shovel(name, factor)
             },
             damage_groups = {fleshy=2},
         },
+        _dungeon_loot = {chance = math.random(0.01, 0.1)},
         groups = {tool = 1},
     })
 
@@ -189,6 +192,7 @@ local function make_sword(name, factor)
             },
             damage_groups = {fleshy=2},
         },
+        _dungeon_loot = {chance = math.random(0.01, 0.09)},
         groups = {tool = 1},
     })
 
@@ -235,6 +239,7 @@ local function make_hoe(name, factor)
                 minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:dry_farmland"})
             end
         end,
+        _dungeon_loot = {chance = math.random(0.1, 0.3)},
         groups = {tool = 1},
     })
 

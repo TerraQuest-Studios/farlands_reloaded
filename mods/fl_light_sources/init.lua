@@ -122,6 +122,7 @@ minetest.register_node("fl_light_sources:chain", {
             {-1/16, -0.5, -1/16, 1/16, 0.5, 1/16},
         },
     },
+    _dungeon_loot = {chance = 0.4, count = {4, 22}},
     groups = {dig_stone = 1}
 })
 
