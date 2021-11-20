@@ -30,14 +30,40 @@ end
 
 minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, moveresult)
     self._dtime = min(dtime,0.2)
-    --minetest.chat_send_all("test")
+    local pos = self.object:get_pos()
+
     if not self._memory.thing then self._memory.thing = 1 end
     if timer(self, 1) and core.get_item_group(self.itemstring, "unburnable") == 0 then
-        local node = minetest.get_node_or_nil(self.object:get_pos()) or {name = "*"}
+        local node = minetest.get_node_or_nil(pos) or {name = "*"}
         local def = minetest.registered_nodes[node.name] or {}
         if def.damage_per_second then self._memory.health = self._memory.health - def.damage_per_second end
 
         if self._memory.health <= 0 then self.object:remove() return end
+    end
+
+    self.isinliquid = false
+    self.isinflowingliquid = false
+    local node = minetest.get_node_or_nil(pos) or {name = "*"}
+    local def = minetest.registered_nodes[node.name] or {}
+    if def.drawtype == "liquid" then
+        self.isinliquid = true
+    elseif def.drawtype == "flowingliquid" then
+        self.isinflowingliquid = true
+    end
+
+    if self.isinliquid and self.object:get_velocity().y < 1 then
+        local oldv = self.object:get_velocity()
+        self.object:add_velocity(vector.new(-oldv.x,1,-oldv.z))
+    --[[
+    elseif self.isinflowingliquid then
+        local oldv = self.object:get_velocity()
+        local level = core.get_node_level(pos)
+        minetest.chat_send_all(math.floor(pos.y+0.1)+level/8 .. " " .. pos.y .. " " .. level)
+        if math.floor(pos.y+0.1)+level/8 >= pos.y then
+            minetest.chat_send_all("true")
+            self.object:add_velocity(vector.new(-oldv.x,1,-oldv.z))
+        end
+        --]]
     end
 
     self._time_total=self._time_total+self._dtime
