@@ -1,4 +1,7 @@
 --one glass block is 16 panes
+local cgroups = {"group:dig_generic","group:dig_sand","group:dig_stone",
+                 "group:dig_glass","group:dig_tree","group:dig_snow",
+                 "group:dig_dirt"}
 
 --glass nodes
 minetest.register_node("fl_glass:framed_glass", {
@@ -92,7 +95,7 @@ minetest.register_node("fl_glass:framed_glass_panes", {
         connect_right = {{1/32, -1/2, -1/32, 1/2, 1/2, 1/32}},
     },
     groups = {dig_glass = 2, pane = 1, glass = 1, glass_pane = 1},
-    connects_to = {"group:pane", "group:glass", "group:wood_related"},
+    connects_to = cgroups--{"group:pane", "group:glass", "group:wood_related"},
 })
 
 minetest.register_node("fl_glass:tinted_framed_glass_panes", {
@@ -120,7 +123,7 @@ minetest.register_node("fl_glass:tinted_framed_glass_panes", {
         connect_right = {{1/32, -1/2, -1/32, 1/2, 1/2, 1/32}},
     },
     groups = {dig_glass = 2, pane = 1, glass = 1, glass_pane = 1},
-    connects_to = {"group:pane", "group:glass", "group:wood_related",},
+    connects_to = cgroups,--{"group:pane", "group:glass", "group:wood_related",},
     preserve_metadata = function(pos, oldnode, oldmeta, drops)
         drops[1]:get_meta():set_string(
             "description",
