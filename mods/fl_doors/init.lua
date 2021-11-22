@@ -9,6 +9,10 @@ minetest.register_node("fl_doors:blocker_top", {
     buildable_to = false,
     floodable = false,
     on_blast = function() end,
+    collision_box = {
+        type = "fixed",
+        fixed = {-15/32, 13/32, -15/32, -13/32, 1/2, -13/32},
+    },
     groups = {not_in_creative_inventory = 1}
 })
 
