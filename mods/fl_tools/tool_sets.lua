@@ -10,7 +10,7 @@ local tool_use = {
 }
 
 local material_list = {
-    wood = "fl_trees:apple_plank",
+    wood = "group:plank",
     stone = "fl_stone:stone",
     steel = "fl_ores:iron_ingot",
     bronze = "fl_ores:bronze_ingot",
@@ -280,7 +280,7 @@ local tool_upgrades = {
     --diamond = ,
 }
 
-local types = {"_pick", "_axe", "_shovel", "_sword", "_shovel", "_hoe"}
+local types = {"_pick", "_axe", "_shovel", "_sword", "_hoe"}
 
 local function make_anvil_crafts(name)
     for _, type in pairs(types) do
