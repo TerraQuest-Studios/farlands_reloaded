@@ -25,6 +25,39 @@ local function axe_behavior(self,priority)
         end
     end
 
+    local function dig_node(pos)
+        local node = minetest.get_node_or_nil(pos)
+        if not node then return end
+
+        if minetest.get_item_group(node.name, "trunk") >= 1 then
+            minetest.set_node(pos, {name = "air"})
+            --direct access to mobkit memeory
+            if not self.memory.inv then self.memory.inv = {} end
+            if not self.memory.inv[node.name] then
+                self.memory.inv[node.name] = 1
+            else
+                self.memory.inv[node.name] = self.memory.inv[node.name] + 1
+            end
+        end
+    end
+
+    local function dispose_inv()
+        minetest.chat_send_all("triggered")
+        for name, count in pairs(self.memory.inv) do
+            if count < 99 then
+                minetest.add_item(self.object:get_pos(), name .. " " .. count)
+            else
+                local stacks = count/99
+                for i = 1, math.abs(stacks) do
+                    minetest.add_item(self.object:get_pos(), name .. " 99")
+                end
+                if math.abs(stacks) ~= stacks then
+                    minetest.add_item(self.object:get_pos(), name .. " " .. stacks-math.abs(stacks))
+                end
+            end
+        end
+    end
+
     local nodes = {}
     local init = true
     local turn = 0
@@ -41,15 +74,28 @@ local function axe_behavior(self,priority)
             if #nodes == 0 then return true end
         end
 
+        --[[
+            in thoery you should never get here, but some how it does on occasion
+            so this is to prevent a crash, we reach point "end behavior" however
+            it keeps going, but this return true somehow works
+        --]]
+        --minetest.chat_send_all("alive status")
+        if not self.axe then
+            minetest.chat_send_all("in theory never get here")
+            return true
+        end
+
         if turn <= 1 and self.axe[2] > 0 then
             if not minetest.is_protected(nodes[#nodes], "") then
-                minetest.dig_node(nodes[#nodes])
+                --minetest.dig_node(nodes[#nodes])
+                dig_node(nodes[#nodes])
                 use_axe()
             end
             nodes[#nodes] = nil
         elseif self.axe[2] == 0 then
             self.axe = nil
             mobkit.forget(self, "axe")
+            dispose_inv()
             return true
         --[[
         --punch animation
@@ -70,11 +116,14 @@ local function axe_behavior(self,priority)
                 mobkit.forget(self, "axe")
                 self.axe = nil
             end
+            dispose_inv()
+            minetest.chat_send_all("end behavior")
             return true
         end
 
         mobkit.lq_turn2pos(self, nodes[#nodes])
         turn = math.floor((1/sstep)*3) --roughly 30 seconds
+        --minetest.chat_send_all(#nodes)
 
     end
     mobkit.queue_high(self,func,priority)
