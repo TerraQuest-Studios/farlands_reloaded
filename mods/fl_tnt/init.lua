@@ -522,5 +522,11 @@ minetest.register_node("fl_tnt:tnt", {
         local entity = minetest.add_entity(pos, "fl_tnt:tnt_entity")
         entity:set_velocity({x=0, y=4, z=0})
     end,
+	on_ignite = function(pos, user)
+		if minetest.is_protected(pos, user:get_player_name()) then return end
+        minetest.remove_node(pos)
+        local entity = minetest.add_entity(pos, "fl_tnt:tnt_entity")
+        entity:set_velocity({x=0, y=4, z=0})
+	end,
     groups = {snappy = 3},
 })

@@ -19,5 +19,5 @@ minetest.register_node("fl_fire:fire", {
     floodable = true,
     damage_per_second = 4,
     drop = "",
-    groups = {dig_generic = 4, not_in_creative_inventory = 1, unburnable = 1},
+    groups = {dig_generic = 4, not_in_creative_inventory = 1, unburnable = 1, attached_node = 1},
 })
