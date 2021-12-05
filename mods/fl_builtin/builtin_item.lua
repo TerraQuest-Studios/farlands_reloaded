@@ -32,6 +32,7 @@ end
 minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, moveresult)
     self._dtime = min(dtime,0.2)
     self.age = self.age + dtime
+    self.freeze = true
     local pos = self.object:get_pos()
     local node = minetest.get_node_or_nil(pos) or {name = "*", param2 = 0}
 
@@ -70,6 +71,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
 
         local oldv = self.object:get_velocity()
         self.object:add_velocity(vector.new(-oldv.x,1,-oldv.z))
+        self.freeze = false
     --[[
     elseif self.isinflowingliquid then
         local oldv = self.object:get_velocity()
@@ -95,6 +97,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
 
         self.object:set_velocity(dir)
         self.conveyor = {true, 10, dir}
+        self.freeze = false
     elseif self.conveyor and self.conveyor[1] then
         if self.conveyor[2] == 0 then
             if self.conveyor[3].x == self.object:get_velocity().x
@@ -104,6 +107,14 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
             self.conveyor = nil
         else
             self.conveyor[2] = self.conveyor[2] - 1
+            self.freeze = false
+        end
+    end
+
+    --collision stop
+    if self.freeze and not vector.equals(vector.new(0,0,0), self.object:get_velocity()) then
+        if moveresult.collides then
+            self.object:set_velocity(vector.new(0,0,0))
         end
     end
 
