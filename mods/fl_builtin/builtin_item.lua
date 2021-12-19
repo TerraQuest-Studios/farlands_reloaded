@@ -32,7 +32,7 @@ end
 minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, moveresult)
     self._dtime = min(dtime,0.2)
     self.age = self.age + dtime
-    self.freeze = true
+    self._freeze = true
     local pos = self.object:get_pos()
     local node = minetest.get_node_or_nil(pos) or {name = "*", param2 = 0}
 
@@ -40,6 +40,25 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
     if lifespan > 0 and self.age > lifespan then
         self.object:remove()
         return
+    end
+
+    --item input injects (for machines, injectors)
+    if moveresult.collides and self.conveyor then
+        if moveresult.collisions[1] and moveresult.collisions[1].type == "node" then
+            local cpos = moveresult.collisions[1].node_pos
+            local cnode = minetest.get_node(cpos)
+            local cdef = minetest.registered_nodes[cnode.name]
+
+            if minetest.get_item_group(cnode.name, "item_input") >= 1
+            and cdef._allow_input(cnode.param2, node.param2) then
+                local istack = ItemStack(self.itemstring)
+                cdef._item_input(cpos, cnode, istack)
+                self.object:remove()
+                --return
+                --minetest.chat_send_all(cnode.name)
+                return
+            end
+        end
     end
 
     --burning code
@@ -71,7 +90,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
 
         local oldv = self.object:get_velocity()
         self.object:add_velocity(vector.new(-oldv.x,1,-oldv.z))
-        self.freeze = false
+        self._freeze = false
     --[[
     elseif self.isinflowingliquid then
         local oldv = self.object:get_velocity()
@@ -97,7 +116,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
 
         self.object:set_velocity(dir)
         self.conveyor = {true, 10, dir}
-        self.freeze = false
+        self._freeze = false
     elseif self.conveyor and self.conveyor[1] then
         if self.conveyor[2] == 0 then
             if self.conveyor[3].x == self.object:get_velocity().x
@@ -107,13 +126,13 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
             self.conveyor = nil
         else
             self.conveyor[2] = self.conveyor[2] - 1
-            self.freeze = false
+            self._freeze = false
         end
     end
 
     --collision stop
-    if self.freeze and not vector.equals(vector.new(0,0,0), self.object:get_velocity()) then
-        if moveresult.collides then
+    if self._freeze and moveresult.collides then
+        if not vector.equals(vector.new(0,0,0), self.object:get_velocity()) then
             self.object:set_velocity(vector.new(0,0,0))
         end
     end
