@@ -11,6 +11,30 @@ minetest.register_node("fl_industrial:injector", {
         "farlands_conveyor_base.png",
     },
     paramtype2 = "facedir",
+    on_punch = function(pos, node, puncher, pointed_thing)
+        --handle register_on_punchnode stuff
+        minetest.node_punch(pos, node, puncher, pointed_thing)
+
+        local dir = core.facedir_to_dir(node.param2)
+        local inv = minetest.get_inventory({type = "node", pos = vector.subtract(pos, dir)})
+        local inv_node = minetest.get_node(vector.subtract(pos, dir))
+
+        if inv and not inv:is_empty("main") then
+            local list = inv:get_list("main")
+            for i = inv:get_size("main"),1,-1 do
+                if not list[i]:is_empty() then
+                    if inv_node.allow_metadata_inventory_take and
+                    inv_node.allow_metadata_inventory_take(vector.subtract(pos, dir), "main", i, list[i], nil) ~= 0 then
+                        return
+                    end
+                    minetest.add_item(vector.add(pos, dir), list[i])
+                    list[i]:clear()
+                    inv:set_list("main", list)
+                    return
+                end
+            end
+        end
+    end,
     _item_input = function(pos, node, itemstack)
         --minetest.chat_send_all(minetest.pos_to_string(pos, 2))
         local dir = core.facedir_to_dir(node.param2)
