@@ -82,6 +82,17 @@ minetest.register_craft({
     }
 })
 
+local groups = table.copy(minetest.registered_items["fl_ores:coal_ore"].groups)
+groups.fuel = 1
+minetest.override_item("fl_ores:coal_ore",{
+    groups = groups
+})
+groups = table.copy(minetest.registered_items["fl_ores:coal_block"].groups)
+groups.fuel = 1
+minetest.override_item("fl_ores:coal_block",{
+    groups = groups
+})
+
 minetest.register_craft({
     type = "fuel",
     recipe = "fl_ores:coal_ore",
