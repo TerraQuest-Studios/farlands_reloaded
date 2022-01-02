@@ -1,5 +1,5 @@
 local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
-    local rgp = rgroups or {dig_stone = 3, stairable = 1, wallable = 1, stonelike = 1}
+    local rgp = rgroups or {dig_stone = 3, stairable = 1, wallable = 1, stonelike = 1, rubble = 1}
     local sgp = sgroups or {dig_stone = 2, stairable = 1, wallable = 1, stonelike = 1, stone = 1}
     local blgp = blgroups or {dig_stone = 1, stairable = 1, stonelike = 1}
     local brgp = brgroups or {dig_stone = 1, stairable = 1, wallable = 1, stonelike = 1}
@@ -34,6 +34,12 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         on_construct = function(pos) end,
         sounds = fl_stone.sounds.stone(),
         groups = sgp,
+    })
+    minetest.register_craft({
+        type = "cooking",
+        output = "fl_stone:" .. name,
+        recipe = "fl_stone:" .. name .. "_rubble",
+        cooktime = 5,
     })
     minetest.register_node("fl_stone:" .. name .. "_block", {
         description = name .. " block",

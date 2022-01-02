@@ -273,8 +273,8 @@ minetest.register_node("fl_workshop:furnace_active", {
 minetest.register_craft({
     output = "fl_workshop:furnace",
     recipe = {
-        {"group:stone", "group:stone", "group:stone"},
-        {"group:stone", "", "group:stone"},
-        {"group:stone", "group:stone", "group:stone"},
+        {"group:rubble", "group:rubble", "group:rubble"},
+        {"group:rubble", "", "group:rubble"},
+        {"group:rubble", "group:rubble", "group:rubble"},
     },
 })
