@@ -3,6 +3,17 @@
 
 --viewing_furnace = {}
 
+local function _machine_input(pos, node, itemstack)
+    local inv = minetest.get_meta(pos):get_inventory()
+    if minetest.get_item_group(itemstack:get_name(), "fuel") >= 1 then
+        return inv:add_item("fuel", itemstack)
+    else
+        local output, _ = minetest.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
+        if output.time == 0 or output.item:is_empty() then return itemstack end
+        return inv:add_item("input", itemstack)
+    end
+end
+
 local function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
 
     --vars for stuff
@@ -184,6 +195,7 @@ minetest.register_node("fl_workshop:furnace", {
         return count
     end,
     on_timer = on_timer,
+    _machine_input = _machine_input,
 })
 
 minetest.register_node("fl_workshop:furnace_active", {
@@ -235,6 +247,7 @@ minetest.register_node("fl_workshop:furnace_active", {
         return count
     end,
     on_timer = on_timer,
+    _machine_input = _machine_input,
 })
 
 --minetest.register_on_player_receive_fields(function(player, formname, fields)

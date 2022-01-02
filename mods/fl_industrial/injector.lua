@@ -18,6 +18,7 @@ minetest.register_node("fl_industrial:injector", {
         local dir = core.facedir_to_dir(node.param2)
         local inv = minetest.get_inventory({type = "node", pos = vector.subtract(pos, dir)})
         local inv_node = minetest.get_node(vector.subtract(pos, dir))
+        local drop_def = minetest.registered_items[minetest.get_node(vector.add(pos, dir)).name]
 
         if inv and not inv:is_empty("main") then
             local list = inv:get_list("main")
@@ -27,7 +28,11 @@ minetest.register_node("fl_industrial:injector", {
                     inv_node.allow_metadata_inventory_take(vector.subtract(pos, dir), "main", i, list[i], nil) ~= 0 then
                         return
                     end
-                    minetest.add_item(vector.add(pos, dir), list[i])
+                    if drop_def.drawtype == "airlike" and not drop_def._machine_input then
+                        minetest.add_item(vector.add(pos, dir), list[i])
+                    else
+                        minetest.registered_items[node.name]._item_input(pos, node, list[i])
+                    end
                     list[i]:clear()
                     inv:set_list("main", list)
                     return
@@ -43,7 +48,9 @@ minetest.register_node("fl_industrial:injector", {
         local def = minetest.registered_nodes[inv_node.name]
 
         local dump
-        if def.allow_metadata_inventory_put
+        if def._machine_input then
+            dump = def._machine_input(vector.add(pos, dir), minetest.get_node(vector.add(pos, dir)), itemstack)
+        elseif def.allow_metadata_inventory_put
             and def.allow_metadata_inventory_put(vector.add(pos, dir), "main", 1, itemstack, nil) == 0 or not inv then
             dump = itemstack
         else
