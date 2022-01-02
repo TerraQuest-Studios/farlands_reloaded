@@ -124,7 +124,7 @@ local function on_timer(pos, elapsed)
         meta:set_float("burn_time", burn_time)
         ifuel[1]:take_item()
         inv:set_list("fuel", ifuel)
-        minetest.chat_send_all("fuel")
+        --minetest.chat_send_all("fuel")
     elseif burn_time <= 0 then
         meta:set_float("burn_time", 0)
         return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
@@ -135,7 +135,7 @@ local function on_timer(pos, elapsed)
     if coutput.time > total_time then
         minetest.get_node_timer(pos):start(1.0)
         meta:set_float("total_time", total_time)
-        minetest.chat_send_all("trigger1")
+        --minetest.chat_send_all("trigger1")
         return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = minetest.get_node(pos).param2})
     else
         meta:set_float("total_time", 0)
@@ -150,7 +150,7 @@ local function on_timer(pos, elapsed)
         inv:set_list("input", iinput)
 
         if not iinput[1]:is_empty() then minetest.get_node_timer(pos):start(1.0) end
-        minetest.chat_send_all("trigger2")
+        --minetest.chat_send_all("trigger2")
         return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = minetest.get_node(pos).param2})
     end
 end
@@ -269,3 +269,12 @@ minetest.register_node("fl_workshop:furnace_active", {
     end
     --]]
 --end)
+
+minetest.register_craft({
+    output = "fl_workshop:furnace",
+    recipe = {
+        {"group:stone", "group:stone", "group:stone"},
+        {"group:stone", "", "group:stone"},
+        {"group:stone", "group:stone", "group:stone"},
+    },
+})

@@ -10,6 +10,13 @@ local function register_ore(name, ingot_toggle, block_groups)
             description = name .. " ingot",
             inventory_image = "farlands_" .. name .. "_ingot.png",
         })
+
+        minetest.register_craft({
+            type = "cooking",
+            output = "fl_ores:" .. name .. "_ingot",
+            recipe = "fl_ores:" .. name .. "_ore",
+            cooktime = 5,
+        })
     end
     minetest.register_node("fl_ores:" .. name .. "_block", {
         description = name .. " block",
