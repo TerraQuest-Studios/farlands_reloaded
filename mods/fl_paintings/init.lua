@@ -46,6 +46,7 @@ for _, img in pairs(minetest.get_dir_list(minetest.get_modpath("fl_paintings")..
         tiles = {img},
         paramtype = "light",
         paramtype2 = "facedir",
+        use_texture_alpha = "clip",
         visual_scale = 0.5,
         wield_scale = {x=0.25, y=0.25, z=0.25},
         selection_box = {

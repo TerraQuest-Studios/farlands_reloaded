@@ -10,6 +10,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
         wield_image = "farlands_beds_" .. fl_dyes.dyes[counter][1] .. ".png",
         paramtype = "light",
         paramtype2 = "facedir",
+        use_texture_alpha = "clip",
         drawtype = "mesh",
         mesh = "farlands_bed.obj",
         selection_box = {type = "fixed", fixed = {-0.5, -0.5, -0.5, 0.5, 0.0625, 1.5}},

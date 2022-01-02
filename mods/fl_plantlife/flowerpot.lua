@@ -54,6 +54,7 @@ local box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, -0.1, 0.2}}
 minetest.register_node("fl_plantlife:flowerpot", {
     description = "flowerpot",
     paramtype = "light",
+    use_texture_alpha = "clip",
     drawtype = "mesh",
     visual_scale = 0.5,
     mesh = "farlands_flowerpot.obj",

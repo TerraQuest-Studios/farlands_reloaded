@@ -101,6 +101,7 @@ minetest.register_node("fl_signs:sign_wood", {
     drawtype = "nodebox",
     paramtype = "light",
     paramtype2 = "wallmounted",
+    use_texture_alpha = "clip",
     sunlight_propagates = true,
     node_box = {
         type = "wallmounted",

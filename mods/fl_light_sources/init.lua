@@ -10,6 +10,7 @@ minetest.register_node('fl_light_sources:torch', {
 	wield_image = 'more_fire_torch_inv.png',
 	paramtype = 'light',
 	paramtype2 = 'wallmounted',
+    use_texture_alpha = "clip",
 	sunlight_propagates = true,
 	is_ground_content = false,
 	walkable = false,

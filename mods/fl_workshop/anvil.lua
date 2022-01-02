@@ -39,6 +39,7 @@ minetest.register_node("fl_workshop:anvil", {
     description = "anvil",
     paramtype = "light",
     paramtype2 = "facedir",
+    use_texture_alpha = "clip",
     drawtype = "mesh",
     mesh = "farlands_anvil.obj",
     visual_scale = 0.5,
