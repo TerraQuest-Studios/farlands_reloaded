@@ -68,41 +68,6 @@ function fl_wildlife.node_dps_dmg(self)
 	end
 end
 
---[[
-function fl_wildlife.hq_npc_roam(self, prty)
-    local func = function(self)
-        local factor = math.random(20)
-        local pos = mobkit.get_stand_pos(self)
-		--local neighbor = math.random(8)
-        --local neighbor = math.random(10,30)
-        local neighbor = mobkit.neighbor_shift(factor, 30)
-
-		local height, tpos, liquidflag = mobkit.is_neighbor_node_reachable(self,neighbor)
-        --[[
-        if tpos then
-            tpos.x = tpos.x + 20
-            tpos.y = tpos.y + 20
-        end
-        --]
-        --if tpos then minetest.chat_send_all(minetest.pos_to_string(tpos)) end
-		--if height and not liquidflag then mobkit.dumbstep(self,height,tpos,0.3,0) end
-        if height and not liquidflag then mobkit.goto_next_waypoint(self, tpos) end
-        --[[
-        if height and not liquidflag then
-            if mobkit.is_queue_empty_low(self) and self.isonground then
-                if vector.distance(pos,tpos) > 3 then
-                    mobkit.goto_next_waypoint(self,tpos)
-                else
-                    return true
-                end
-            end
-        end
-        --]
-    end
-    mobkit.queue_high(self, func, prty)
-end
---]]
-
 --color and duration are optional fields
 function fl_wildlife.flash_color(self, cvalue, duration)
     local color = cvalue or "#FF000040"
