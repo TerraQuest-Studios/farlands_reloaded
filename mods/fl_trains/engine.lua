@@ -45,13 +45,7 @@ minetest.register_entity("fl_trains:train_engine", {
         local yaw = tonumber(string.format("%.2f", self.object:get_yaw()))
         local dir = vector.round(minetest.yaw_to_dir(yaw))
         local pos = self.object:get_pos()
-        local pos2 = vector.add(dir, pos)
-        local node = minetest.get_node_or_nil(pos2)
-        if not node then self.object:set_velocity(vector.new(0,0,0)) return end
-        if node.name ~= "fl_trains:straight_track" then
-            self.object:set_velocity(vector.new(0,0,0))
-            return
-        end
+        local ndir = dir
 
         local vel = self.object:get_velocity()
         local player
@@ -60,10 +54,16 @@ minetest.register_entity("fl_trains:train_engine", {
         if player:get_player_control().up and speed_check(vel, 5) then
             self.object:add_velocity(vector.multiply(dir, 0.2))
         elseif player:get_player_control().down and speed_check(vel, 5) then
-            --track always looks engine forwards, fix me
             self.object:add_velocity(vector.multiply(dir, -0.2))
+            ndir = vector.multiply(ndir, -1)
         end
 
+        local node = minetest.get_node_or_nil(vector.add(ndir, pos))
+        if not node then self.object:set_velocity(vector.new(0,0,0)) return end
+        if node.name ~= "fl_trains:straight_track" then
+            self.object:set_velocity(vector.new(0,0,0))
+            return
+        end
     end,
 
     on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
@@ -103,7 +103,7 @@ minetest.register_craftitem("fl_trains:train_engine", {
             local ent = minetest.add_entity(pointed_thing.under, "fl_trains:train_engine")
             if node.name == "fl_trains:straight_track" and node.param2%2 ~= 0 then
                 ent:set_rotation(vector.new(0,90*(math.pi/180),0))
-                minetest.chat_send_all(ent:get_yaw())
+                --minetest.chat_send_all(ent:get_yaw())
             end
         end
     end,
