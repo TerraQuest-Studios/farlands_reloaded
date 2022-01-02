@@ -10,6 +10,13 @@ local function register_ore(name, ingot_toggle, block_groups)
             description = name .. " ingot",
             inventory_image = "farlands_" .. name .. "_ingot.png",
         })
+
+        minetest.register_craft({
+            type = "cooking",
+            output = "fl_ores:" .. name .. "_ingot",
+            recipe = "fl_ores:" .. name .. "_ore",
+            cooktime = 5,
+        })
     end
     minetest.register_node("fl_ores:" .. name .. "_block", {
         description = name .. " block",
@@ -80,6 +87,17 @@ minetest.register_craft({
         {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
         {"fl_ores:diamond_ore", "fl_ores:diamond_ore", "fl_ores:diamond_ore"},
     }
+})
+
+local groups = table.copy(minetest.registered_items["fl_ores:coal_ore"].groups)
+groups.fuel = 1
+minetest.override_item("fl_ores:coal_ore",{
+    groups = groups
+})
+groups = table.copy(minetest.registered_items["fl_ores:coal_block"].groups)
+groups.fuel = 1
+minetest.override_item("fl_ores:coal_block",{
+    groups = groups
 })
 
 minetest.register_craft({

@@ -11,7 +11,7 @@ fl_workshop.details = {
 
 local tool_nodes = {
     "saw",
-    --"furnace",
+    "furnace",
     "anvil",
 }
 
