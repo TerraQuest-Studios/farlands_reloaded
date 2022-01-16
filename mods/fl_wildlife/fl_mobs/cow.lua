@@ -68,6 +68,11 @@ minetest.register_entity("fl_wildlife:cow", {
 
     brainfunc = cow_brain,
     _egg_it = {"cow", "#100c0c"},
+    _spawning = {
+        rarity = 0.5,
+        light_min = 11,
+        cluster = 3,
+    },
 
     bucket = function(itemstack, user, self)
         --very op, needs some time limit till can be milked again

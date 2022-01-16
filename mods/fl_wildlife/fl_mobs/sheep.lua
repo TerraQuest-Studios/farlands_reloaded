@@ -119,8 +119,22 @@ minetest.register_entity("fl_wildlife:sheep", {
     },
 
     brainfunc = sheep_brain,--villager_brain, --function for the brain
-    --_spawner = {},
     _egg_it = {"sheep", "#a49b95"},
+    _spawning = {
+        rarity = 0.75,
+        light_min = 11,
+        cluster = 3,
+    },
+    _on_spawn=function(ent)
+        local self = ent:get_luaentity()
+        self.sheep_color = "white"
+        if math.random() < 0.1 then self.sheep_color = "black" end
+
+        mobkit.remember(self,"sheep_color", self.sheep_color)
+        ent:set_properties(
+            {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. self.sheep_color .. ".png"}}
+       )
+    end,
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)

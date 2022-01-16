@@ -72,6 +72,10 @@ minetest.register_entity("fl_wildlife:chicken", {
     },
 
     brainfunc = chicken_brain,
+    _spawning = {
+        rarity = 0.4,
+        light_min = 11,
+    },
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)

@@ -45,3 +45,4 @@ for _, mob in pairs(mob_list) do
 end
 
 dofile(modpath .. "/spawner.lua")
+dofile(modpath .. "/spawning.lua")

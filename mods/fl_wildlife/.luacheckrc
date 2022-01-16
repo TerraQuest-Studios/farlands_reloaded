@@ -21,5 +21,5 @@ read_globals = {
     "default", "sfinv", "creative", "carts",
 
     --depends
-    "mobkit",
+    "mobkit", "fl_dyes",
 }
