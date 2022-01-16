@@ -92,6 +92,12 @@ local function spawn_mob(stable, cmob, ccount)
     local pos = stable[index]
     local light = minetest.get_natural_light(pos)
     local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
+
+    --catches "default" biome aka no biome present
+    if not mob_biomes[biome] then
+        return
+    end
+
     local mob = cmob or mob_biomes[biome][m_random(#mob_biomes[biome])]
 
     if mob_spawndata.light_type and mob_spawndata.light_type == "total" then
