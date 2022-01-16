@@ -78,6 +78,7 @@ function fl_stairs.register_stairslab(itemstring)
         local regnode = itemstring .. "_" .. stairinfo[1]
         local groups = table.copy(nodedef.groups)
         groups[stairinfo[1]] = 1
+        groups["all_nodes"] = 1
         groups.stairable, groups.wallable, groups.not_in_creative_inventory = nil, nil, 1
 
         minetest.register_node(":" .. regnode, {
@@ -109,6 +110,7 @@ function fl_stairs.register_wall(itemstring)
     local nodedef = minetest.registered_nodes[itemstring]
     local groups = table.copy(nodedef.groups)
     groups.stairable, groups.wallable, groups.wall, groups.not_in_creative_inventory = nil, nil, 1, 1
+    groups.all_nodes, groups.spawn_blacklist = 1, 1
 
     minetest.register_node(":" .. itemstring .. "_wall", {
         description = nodedef.description .. " wall",

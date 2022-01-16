@@ -20,7 +20,6 @@ local mopb = minetest.settings:get("max_objects_per_block") or 64
     }
 ]]
 
---make me local
 local mob_biomes = {}
 local mob_spawndata = {}
 
@@ -45,6 +44,10 @@ minetest.register_on_mods_loaded(function()
 end)
 
 function find_nodes(p_min, p_max)
+    --local time = minetest.get_us_time()
+
+    --[[
+        --voxel manip very much slower than minetest.find_nodes_in_area_under_air
     local vm = minetest.get_voxel_manip()
     local emin, emax = vm:read_from_map(p_min, p_max)
     local area = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
@@ -57,16 +60,34 @@ function find_nodes(p_min, p_max)
         local def = minetest.registered_items[minetest.get_name_from_content_id(data[vi])]
         local pos = area:position(vi)
 
-        if def.walkable and def.groups and not def.groups.spawn_blacklist
-        and data[area:index(pos.x, pos.y + 1, pos.z)] == c_air then
+        if def.walkable and def.groups and not def.groups.spawn_blacklist and
+        data[area:index(pos.x, pos.y + 1, pos.z)] == c_air then
             table.insert(pos_list, vector.new(pos.x, pos.y + 1, pos.z))
         end
     end
+    ]]
+    local gcheck = minetest.get_item_group
+    local list = minetest.find_nodes_in_area_under_air(p_min, p_max, "group:all_nodes")
+    local pos_list = {}
+
+    for _, pos in pairs(list) do
+        --node under is checked for situations like snow on tree leaves, etc
+        local def = minetest.registered_items[minetest.get_node(pos).name]
+        local def2 = minetest.registered_items[minetest.get_node(vector.new(pos.x,pos.y-1,pos.z)).name]
+        if def.walkable and gcheck(def.name, "spawn_blacklist") <= 0 and gcheck(def2.name, "spawn_blacklist") <= 0 then
+            table.insert(pos_list, vector.new(pos.x, pos.y+1, pos.z))
+        end
+    end
+
+    --minetest.chat_send_all("find time: " .. minetest.get_us_time()-time)
+    --minetest.chat_send_all(#pos_list)
 
     return pos_list
 end
 
 local function spawn_mob(stable, cmob, ccount)
+    --local time = minetest.get_us_time()
+
     local index = m_random(#stable)
     local pos = stable[index]
     local light = minetest.get_natural_light(pos)
@@ -93,6 +114,8 @@ local function spawn_mob(stable, cmob, ccount)
         minetest.registered_entities[mob]._on_spawn(ent)
     end
 
+    --minetest.chat_send_all("spawn time: " .. minetest.get_us_time()-time)
+
     --use recursion for cluster spawning
     table.remove(stable, index)
     if not ccount and mob_spawndata[mob].cluster then
@@ -111,6 +134,7 @@ local function spawn_step()
         minetest.after(11, spawn_step)
         return
     end
+    --local time = minetest.get_us_time()
 
     --minetest.chat_send_all("fired")
 
@@ -142,6 +166,8 @@ local function spawn_step()
             spawn_mob(s_table)
         end
     end
+
+    --minetest.chat_send_all("step time: " .. minetest.get_us_time()-time)
 
     minetest.after(11, spawn_step)
 end

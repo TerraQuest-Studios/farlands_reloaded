@@ -14,3 +14,14 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
         meta:set_string("description", itemstack:get_meta():get_string("description"))
     end
 end)
+
+minetest.register_on_mods_loaded(function()
+    --other on loaded registered nodes add this themselves, see fl_stairs
+    for node, def in pairs(minetest.registered_nodes) do
+        local groups = table.copy(def.groups)
+        groups["all_nodes"] = 1
+        minetest.override_item(node, {
+            groups = groups
+        })
+    end
+end)

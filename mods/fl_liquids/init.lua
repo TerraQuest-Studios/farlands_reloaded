@@ -73,7 +73,7 @@ minetest.register_node("fl_liquids:water_source", {
 	liquid_alternative_source = "fl_liquids:water_source",
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
-	groups = {water = 3, liquid = 3, cools_lava = 1},
+	groups = {water = 3, liquid = 3, cools_lava = 1, spawn_blacklist = 1},
     _bottle_item = "fl_bottles:water",
     _bucket = function(itemstack, user, pos)
         return bucket_func(itemstack, user, pos, "fl_bucket:bucket_water", "fl_liquids:water_source")
@@ -122,7 +122,7 @@ minetest.register_node("fl_liquids:water_flowing", {
 	liquid_alternative_source = "fl_liquids:water_source",
 	liquid_viscosity = 1,
 	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
-	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1},
+	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1, spawn_blacklist = 1},
 })
 
 
@@ -170,7 +170,7 @@ minetest.register_node("fl_liquids:river_water_source", {
 	liquid_renewable = false,
 	liquid_range = 2,
 	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
-	groups = {water = 3, liquid = 3, cools_lava = 1},
+	groups = {water = 3, liquid = 3, cools_lava = 1, spawn_blacklist = 1},
     _bottle_item = "fl_bottles:river_water",
     _bucket = function(itemstack, user, pos)
         return bucket_func(itemstack, user, pos, "fl_bucket:bucket_river_water", "fl_liquids:river_water_source")
@@ -220,7 +220,7 @@ minetest.register_node("fl_liquids:river_water_flowing", {
 	liquid_renewable = false,
 	liquid_range = 2,
 	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
-	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1},
+	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1, spawn_blacklist = 1},
 })
 
 minetest.register_node("fl_liquids:lava_source", {
@@ -264,7 +264,7 @@ minetest.register_node("fl_liquids:lava_source", {
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
-	groups = {lava = 3, liquid = 2, igniter = 1},
+	groups = {lava = 3, liquid = 2, igniter = 1, spawn_blacklist = 1},
     _bucket = function(itemstack, user, pos)
         return bucket_func(itemstack, user, pos, "fl_bucket:bucket_lava", "fl_liquids:lava_source")
     end,
@@ -313,7 +313,7 @@ minetest.register_node("fl_liquids:lava_flowing", {
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
-	groups = {lava = 3, liquid = 2, igniter = 1, not_in_creative_inventory = 1},
+	groups = {lava = 3, liquid = 2, igniter = 1, not_in_creative_inventory = 1, spawn_blacklist = 1},
 })
 
 minetest.register_alias("fl_terrain:water_source", "fl_liquids:water_source")

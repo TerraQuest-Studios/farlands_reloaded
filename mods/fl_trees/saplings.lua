@@ -8,7 +8,7 @@ local function register_sapling(name, offset)
         sunlight_propagates = true,
         walkable = true,
         tiles = {"farlands_" .. name .. "_sapling.png"},
-        groups = {oddly_breakable_by_hand = 3, plant = 1},
+        groups = {oddly_breakable_by_hand = 3, plant = 1, spawn_blacklist = 1},
         on_timer = function(pos)
             minetest.remove_node(pos)
             minetest.place_schematic(

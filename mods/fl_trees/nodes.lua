@@ -9,7 +9,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     local lgp = lgroup or {dig_tree = 3, wood_related = 1, tree = 1, leaf = 1, spawn_blacklist = 1}
     local pgp = pgroup or {dig_tree = 2, wood_related = 1, plank = 1, fenceable = 1, stairable = 1}
     local fgp = table.copy(pgp)
-    fgp.stairable, fgp.fenceable, fgp.fence, fgp.not_in_creative_inventory = nil, nil, 1, 1
+    fgp.stairable, fgp.fenceable, fgp.fence, fgp.not_in_creative_inventory, fgp.spawn_blacklist = nil, nil, 1, 1, 1
 
     minetest.register_node("fl_trees:" .. name .. "_trunk", {
         --nodes

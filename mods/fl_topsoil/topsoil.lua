@@ -82,7 +82,7 @@ minetest.register_node("fl_topsoil:ice", {
     tiles = {"farlands_ice.png"},
     sounds = fl_topsoil.sounds.snow(),
     _dungeon_loot = {chance = 0.7, count = {4, 32}, types = {"tundra", "icy", "snowygrassland"}},
-    groups = {dig_snow = 2, melts = 1},
+    groups = {dig_snow = 2, melts = 1, spawn_blacklist = 1},
 })
 
 minetest.register_node("fl_topsoil:condensed_ice", {
