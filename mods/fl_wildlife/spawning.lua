@@ -90,6 +90,16 @@ local function spawn_mob(stable, cmob, ccount)
 
     local index = m_random(#stable)
     local pos = stable[index]
+
+    --hack to force recalc if nill, else return
+    --prevents crash on server unable to replicate on test enviroment
+    if type(pos) ~= table then
+        index = m_random(#stable)
+        pos = stable[index]
+        if type(pos) ~= "table" then return end
+    end
+
+
     local light = minetest.get_natural_light(pos)
     local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
 
