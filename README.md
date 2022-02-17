@@ -1,5 +1,7 @@
 # Minetest Farlands Reloaded Game
 
+![Logo](/menu/banner.png)
+
 ![Luacheck](https://github.com/terraquest-studios/farlands_reloaded/workflows/luacheck/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-blue)](https://creativecommons.org/licenses/by-sa/4.0/)
