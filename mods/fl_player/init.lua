@@ -30,7 +30,7 @@ local key_table = {}
 
 for _, sn in pairs(minetest.get_dir_list(minetest.get_modpath("fl_player").."/textures")) do
     local nn = string.split(string.split(sn, "_")[2],".")
-    table.insert(data_table, {_texture = sn, name = nn[1]})
+    table.insert(data_table, {_texture = sn, name = nn[1], get_preview = function() return "" end})
     key_table[sn] = 1
 end
 
@@ -210,4 +210,8 @@ function skins.get_player_skin(player)
     local skin = player:get_meta():get("skin") or "character_Jonathon.png"
     local nn = string.split(string.split(skin, "_")[2],".")
     return {name = nn[1], _texture = skin}
+end
+
+function skins.get_preview()
+    return ""
 end
