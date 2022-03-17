@@ -218,3 +218,123 @@ minetest.register_node(":fl_stairs:tablesaw", {
         minetest.item_place(itemstack, placer, pointed_thing)
     end
 })
+
+--TODO: rewrite this, its terrible
+i3.new_tab("inv_saw", {
+	description = "Inv Saw",
+
+	access = function(player, data)
+		local name = player:get_player_name()
+		return minetest.is_creative_enabled(name)
+	end,
+
+	formspec = function(player, data, fs)
+        --variables
+        local rLength = 9
+        local slotSize = 1
+
+        --inventory stuff
+        local inv = player:get_inventory()
+        inv:set_size("creative_saw", 1)
+
+        --formspec
+		--saw part
+        fs("style_type[box;colors=#77777710,#77777710,#777,#777]")
+        fs("style_type[list;size=1;spacing=0.1]")
+        fs("listcolors[#0000;#ffffff20]")
+        fs("label[0.3,0.4;Saw]")
+        fs("box[1,1.2;1,1;]")
+        fs("list[current_player;creative_saw;1,1.2;1,1;]")
+        fs("image[2.5,1.2;1,1;i3_arrow.png]")
+
+        for i=0, 1 do
+            for j=0, 3 do
+                fs("image[" .. 4+j+(j*0.1) .. "," .. 0.6+i+(i*0.1) .. ";1,1;i3_slot.png]")
+            end
+        end
+
+        if not inv:is_empty("creative_saw") then
+            local stack = inv:get_stack("creative_saw", 1)
+            --minetest.chat_send_all(stack:get_name())
+            local node_table = {}
+            if minetest.get_item_group(stack:get_name(), "stairable") ~= 0 then
+                table.insert(node_table, {stack:get_name(), "slab", 99})
+                table.insert(node_table, {stack:get_name(), "stair", 99})
+                table.insert(node_table, {stack:get_name(), "outer_stair", 99})
+                table.insert(node_table, {stack:get_name(), "inner_stair", 99})
+            end
+            if minetest.get_item_group(stack:get_name(), "fenceable") ~= 0 then
+                table.insert(node_table, {stack:get_name(), "fence", 99})
+            end
+            if minetest.get_item_group(stack:get_name(), "wallable") ~= 0 then
+                table.insert(node_table, {stack:get_name(), "wall", 99})
+            end
+            if minetest.get_item_group(stack:get_name(), "stone") ~= 0 then
+                table.insert(node_table, {stack:get_name(), "block", 99})
+            end
+            fs("style_type[item_image_button;border=false]")
+            fs("style_type[item_image_button;bgimg_hovered=i3_slot.png]")
+            local x = 0
+            local y = 0
+            for i = 1, #node_table do
+                if x==4 then x=0 y=1 end
+                local nm = ItemStack(node_table[i][1] .. "_" .. node_table[i][2])
+                nm:set_count(node_table[i][3])
+                nm = nm:to_string()
+                fs(
+                    "item_image_button[" .. 4+x+(x*0.1) .. "," .. 0.6+y+(y*0.1) .. ";1,1;"
+                    .. nm .. ";" .. node_table[i][2] .. ";]"
+                )
+                x=x+1
+            end
+        end
+
+        --build inventory part of formspec
+        fs("label[0.25,7.1;Inventory]")--5.4
+        fs("style_type[box;colors=#77777710,#77777710,#777,#777]")
+        for i=0, 8 do
+            fs("box[" .. 0.25+i+(i*0.1) ..",7.5;1,1;]")
+        end
+        fs("style_type[list;size=" .. slotSize .. ";spacing=0.1]")
+        fs("list[current_player;main;0.25,7.5;9,1;]")
+        fs("style_type[box;colors=#666]") -- change bottom 3 rows color
+        for i=0, 2 do
+            for j=0, rLength-1 do
+                fs("box[" .. 0.25+(j*0.1)+(j*slotSize) .."," .. 8.6+(i*0.1)+(i*slotSize) .. ";"
+                .. slotSize .. "," .. slotSize .. ";]")
+            end
+            fs("list[current_player;main;0.25," .. 8.6+(i*0.1)+(i*slotSize) .. ";"
+            .. rLength .. ",1;" .. 9+(rLength*i) .. "]")
+        end
+
+        fs("listring[current_player;creative_saw]")
+        fs("listring[current_player;main]")
+	end,
+
+	-- Events handling happens here
+	fields = function(player, data, fields)
+        local valid_bits = {
+            inner_stair = true,
+            outer_stair = true,
+            stair = true,
+            slab = true,
+            block = true,
+            fence = true,
+            wall = true,
+        }
+
+        for k, _ in pairs(fields) do
+            if valid_bits[k] then
+                local inv = player:get_inventory()
+                local stack = ItemStack(inv:get_stack("creative_saw", 1):get_name() .. "_" .. k)
+                stack:set_count(99)
+                inv:add_item("main", stack)
+            end
+        end
+        i3.set_fs(player)
+    end,
+})
+
+minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
+    if inventory_info.from_list == "creative_saw" or inventory_info.to_list == "creative_saw" then i3.set_fs(player) end
+end)
