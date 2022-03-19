@@ -17,6 +17,7 @@ local function reg_grass(name)
                 fixed = {-0.5,-0.5,-0.5,0.5,-0.45,0.5},
             },
             walkable = false,
+            buildable_to = true,
             frop = "fl_plantlife:" .. name .. "_5",
             groups = groups,
         })
