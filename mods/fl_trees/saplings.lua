@@ -32,6 +32,15 @@ local function register_sapling(name, offset)
         selection_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}},
         collision_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}}
     })
+
+    minetest.register_craft({
+        output = "fl_trees:" .. name .. "_sapling 2",
+        recipe = {
+            {"fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves",},
+            {"fl_trees:" .. name .. "_leaves","fl_trees:stick","fl_trees:" .. name .. "_leaves",},
+            {"fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves",},
+        }
+    })
 end
 
 register_sapling("aspen", {x=2,y=2})
