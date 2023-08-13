@@ -9,6 +9,23 @@ local function speed_check(vec, limit)
     return true
 end
 
+function deg_to_rad(x)
+    return x * math.pi/180
+end
+
+function rad_to_deg(x)
+    return x * 180/math.pi
+end
+
+local function is_centered(vec) --is centered ish
+    local fx, fz = math.floor(vec.x), math.floor(vec.z)
+    if vec.x >= fx-0.1 and vec.x <= fx+0.1 and vec.z >= fz-0.1 and vec.z <= fz+0.1 then
+        return true
+    else
+        return false
+    end
+end
+
 minetest.register_entity("fl_trains:train_engine", {
     --mte object properties
     initial_properties = {
@@ -67,8 +84,53 @@ minetest.register_entity("fl_trains:train_engine", {
         end
 
         local node = minetest.get_node_or_nil(vector.add(ndir, pos))
-        if not node then self.object:set_velocity(vector.new(0,0,0)) return end
-        if node.name ~= "fl_trains:straight_track" and node.name ~= "fl_trains:crossing_track" then
+        local currnode = minetest.get_node_or_nil(pos)
+        if not node or not currnode then self.object:set_velocity(vector.new(0,0,0)) return end
+
+        local continue_rail_nodes = {
+            ["fl_trains:straight_track"] = true,
+            ["fl_trains:crossing_track"] = true,
+            ["fl_trains:straight_45_track"] = true,
+            ["fl_trains:curve_left_track"] = true,
+        }
+
+        if continue_rail_nodes[node.name] then
+            --self.object:set_velocity(vector.new(0,0,0))
+            --just keep moving
+            return
+        else
+            --works if straight headed in to curve left track param2 of 1
+            --TODO: take into account param2 for rotation
+            if currnode.name == "fl_trains:curve_left_track" then
+                --minetest.chat_send_all(dump(pos))
+                if is_centered(pos) then
+                    local currrotation = self.object:get_rotation()
+
+                    if math.floor(rad_to_deg(currrotation.y))%90==0 then
+                        --is center can only determine if we are roughly center, so force center
+                        self.object:set_pos(vector.apply(pos, math.floor))
+                        self.object:set_rotation(
+                            vector.new(currrotation.x, currrotation.y + deg_to_rad(45), currrotation.z)
+                        )
+                        --self.object:set_velocity(vector.new(0,0,0))
+                        self.object:set_velocity(
+                            vector.multiply(
+                                minetest.yaw_to_dir(
+                                    self.object:get_yaw()
+                                ),
+                                vector.length( --speed
+                                    self.object:get_velocity()
+                                )
+                            )
+                        )
+                    end
+                end
+
+                return
+            end
+            --minetest.chat_send_all(node.name)
+
+            --dont know what the next rail is, stop
             self.object:set_velocity(vector.new(0,0,0))
             return
         end
