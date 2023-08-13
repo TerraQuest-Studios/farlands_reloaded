@@ -98,6 +98,7 @@ minetest.register_entity("fl_trains:train_engine", {
         if continue_rail_nodes[node.name] then
             --self.object:set_velocity(vector.new(0,0,0))
             --just keep moving
+            --minetest.chat_send_all(node.name)
             return
         else
             --works if straight headed in to curve left track param2 of 1
@@ -173,8 +174,14 @@ minetest.register_craftitem("fl_trains:train_engine", {
         if string.find(node.name, "fl_trains") then
             local ent = minetest.add_entity(pointed_thing.under, "fl_trains:train_engine")
             if node.name == "fl_trains:straight_track" and node.param2%2 ~= 0 then
-                ent:set_rotation(vector.new(0,90*(math.pi/180),0))
+                ent:set_rotation(vector.new(0,deg_to_rad(90),0))
                 --minetest.chat_send_all(ent:get_yaw())
+            elseif node.name == "fl_trains:straight_45_track" then
+                if node.param2%2 ~= 0 then
+                    ent:set_rotation(vector.new(0,deg_to_rad(45),0))
+                else
+                    ent:set_rotation(vector.new(0,deg_to_rad(-45),0))
+                end
             end
         end
     end,
