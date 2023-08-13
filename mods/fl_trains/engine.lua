@@ -107,12 +107,29 @@ minetest.register_entity("fl_trains:train_engine", {
                 --minetest.chat_send_all(dump(pos))
                 if is_centered(pos) then
                     local currrotation = self.object:get_rotation()
+                    --minetest.chat_send_all("hiii")
 
                     if math.floor(rad_to_deg(currrotation.y))%90==0 then
                         --is center can only determine if we are roughly center, so force center
                         self.object:set_pos(vector.apply(pos, math.floor))
                         self.object:set_rotation(
                             vector.new(currrotation.x, currrotation.y + deg_to_rad(45), currrotation.z)
+                        )
+                        --self.object:set_velocity(vector.new(0,0,0))
+                        self.object:set_velocity(
+                            vector.multiply(
+                                minetest.yaw_to_dir(
+                                    self.object:get_yaw()
+                                ),
+                                vector.length( --speed
+                                    self.object:get_velocity()
+                                )
+                            )
+                        )
+                    elseif math.floor(rad_to_deg(currrotation.y))%45==0 then
+                        self.object:set_pos(vector.apply(pos, math.floor))
+                        self.object:set_rotation(
+                            vector.new(currrotation.x, currrotation.y + deg_to_rad(-45), currrotation.z)
                         )
                         --self.object:set_velocity(vector.new(0,0,0))
                         self.object:set_velocity(
