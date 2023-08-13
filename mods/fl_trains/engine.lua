@@ -51,11 +51,17 @@ minetest.register_entity("fl_trains:train_engine", {
         local player
         if self.memory.driver then player = minetest.get_player_by_name(self.memory.driver) end
         if not player then return end
-        if player:get_player_control().up and speed_check(vel, 5) then
+        local pcontrols = player:get_player_control()
+        if pcontrols.up and speed_check(vel, 5) then
             self.object:add_velocity(vector.multiply(dir, 0.2))
-        elseif player:get_player_control().down and speed_check(vel, 5) then
+        elseif pcontrols.down and speed_check(vel, 5) then
             self.object:add_velocity(vector.multiply(dir, -0.2))
             ndir = vector.multiply(ndir, -1)
+        end
+
+        --brakes
+        if pcontrols.jump then
+            self.object:set_velocity(vector.new(0,0,0))
         end
 
         local node = minetest.get_node_or_nil(vector.add(ndir, pos))
