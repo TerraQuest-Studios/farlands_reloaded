@@ -22,7 +22,8 @@ minetest.register_entity("fl_trains:cart", {
 
     --more mte properties
     on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
-        minetest.chat_send_all("punched")
+        --minetest.chat_send_all("punched")
+        self.object:remove()
     end,
 })
 
