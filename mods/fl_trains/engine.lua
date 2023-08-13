@@ -1,3 +1,5 @@
+local max_speed = 5
+
 local function speed_check(vec, limit)
     local v = vector.apply(vec, math.abs)
     local l = limit
@@ -52,9 +54,9 @@ minetest.register_entity("fl_trains:train_engine", {
         if self.memory.driver then player = minetest.get_player_by_name(self.memory.driver) end
         if not player then return end
         local pcontrols = player:get_player_control()
-        if pcontrols.up and speed_check(vel, 5) then
+        if pcontrols.up and speed_check(vel, max_speed) then
             self.object:add_velocity(vector.multiply(dir, 0.2))
-        elseif pcontrols.down and speed_check(vel, 5) then
+        elseif pcontrols.down and speed_check(vel, max_speed) then
             self.object:add_velocity(vector.multiply(dir, -0.2))
             ndir = vector.multiply(ndir, -1)
         end
@@ -66,7 +68,7 @@ minetest.register_entity("fl_trains:train_engine", {
 
         local node = minetest.get_node_or_nil(vector.add(ndir, pos))
         if not node then self.object:set_velocity(vector.new(0,0,0)) return end
-        if node.name ~= "fl_trains:straight_track" then
+        if node.name ~= "fl_trains:straight_track" and node.name ~= "fl_trains:crossing_track" then
             self.object:set_velocity(vector.new(0,0,0))
             return
         end
