@@ -18,8 +18,8 @@ function rad_to_deg(x)
 end
 
 local function is_centered(vec) --is centered ish
-    local fx, fz = math.floor(vec.x), math.floor(vec.z)
-    if vec.x >= fx-0.1 and vec.x <= fx+0.1 and vec.z >= fz-0.1 and vec.z <= fz+0.1 then
+    local fx, fz = math.floor(vec.x+0.01), math.floor(vec.z+0.01)
+    if vec.x >= fx-0.15 and vec.x <= fx+0.15 and vec.z >= fz-0.15 and vec.z <= fz+0.15 then
         return true
     else
         return false
