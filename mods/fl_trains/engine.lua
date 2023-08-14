@@ -133,8 +133,6 @@ minetest.register_entity("fl_trains:train_engine", {
             --[[ ["fl_trains:curve_right_track"] = true, ]]
         }
 
-        --minetest.chat_send_all(dump(vector.dot(self.object:get_velocity(), minetest.yaw_to_dir(self.object:get_yaw()))))
-
         if continue_rail_nodes[node.name] then
             --self.object:set_velocity(vector.new(0,0,0))
             --just keep moving
