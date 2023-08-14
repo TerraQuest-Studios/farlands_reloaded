@@ -17,14 +17,42 @@ function rad_to_deg(x)
     return x * 180/math.pi
 end
 
-local function is_centered(vec) --is centered ish
+--old junky function that worked with floor rather than round
+--[[ local function is_centered(vec) --is centered ish
     local fx, fz = math.floor(vec.x+0.01), math.floor(vec.z+0.01)
     if vec.x >= fx-0.15 and vec.x <= fx+0.15 and vec.z >= fz-0.15 and vec.z <= fz+0.15 then
         return true
     else
         return false
     end
+end ]]
+
+local function is_centered(vec)
+    local rv = vector.round(vec)
+    if vec.x >= rv.x-0.25 and vec.x <= rv.x+0.25 and vec.z >= rv.z-0.25 and vec.z <= rv.z+0.25 then
+        return true
+    else
+        return false
+    end
 end
+
+--[[ function is_centered(pos)
+    --minetest.chat_send_all(dump(pos))
+    local pos1 = {}
+    for i, v in pairs(pos) do
+    --get the distances.
+    local floor = math.floor(v)
+    local ciel = math.ceil(v)
+    if math.abs(v-floor) > math.abs(v-ciel) then
+        pos1[i] = ciel
+    else
+        pos1[i] = floor
+    end
+    end
+    if vector.distance(pos1, pos) < .15 then
+        return true
+    end
+end ]]
 
 minetest.register_entity("fl_trains:train_engine", {
     --mte object properties
@@ -124,7 +152,7 @@ minetest.register_entity("fl_trains:train_engine", {
                     local rotation = math.floor(rad_to_deg(currrotation.y))
 
                     --is center can only determine if we are roughly center, so force center
-                    self.object:set_pos(vector.apply(pos, math.floor))
+                    self.object:set_pos(vector.apply(pos, math.round))
                     if rotation%90==0 then
                         self.object:set_rotation(
                             vector.new(currrotation.x, currrotation.y + deg_to_rad(45), currrotation.z)
