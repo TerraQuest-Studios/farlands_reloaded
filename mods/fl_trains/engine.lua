@@ -84,7 +84,16 @@ minetest.register_entity("fl_trains:train_engine", {
             end
         end
 
+        local direction = vector.dot(self.object:get_velocity(), minetest.yaw_to_dir(self.object:get_yaw()))
+        local reverse = false
+        if direction <= 0 then
+            reverse = true
+        end
         local node = minetest.get_node_or_nil(vector.add(ndir, pos))
+        --going backwards, flip direction
+        if reverse then
+            node = minetest.get_node_or_nil(vector.add(vector.multiply(ndir, -1), pos))
+        end
         local currnode = minetest.get_node_or_nil(pos)
         if not node or not currnode then self.object:set_velocity(vector.new(0,0,0)) return end
 
@@ -94,6 +103,8 @@ minetest.register_entity("fl_trains:train_engine", {
             ["fl_trains:straight_45_track"] = true,
             ["fl_trains:curve_left_track"] = true,
         }
+
+        --minetest.chat_send_all(dump(vector.dot(self.object:get_velocity(), minetest.yaw_to_dir(self.object:get_yaw()))))
 
         if continue_rail_nodes[node.name] then
             --self.object:set_velocity(vector.new(0,0,0))
@@ -109,29 +120,35 @@ minetest.register_entity("fl_trains:train_engine", {
                     local currrotation = self.object:get_rotation()
                     --minetest.chat_send_all("hiii")
 
-                    if math.floor(rad_to_deg(currrotation.y))%90==0 then
-                        --is center can only determine if we are roughly center, so force center
-                        self.object:set_pos(vector.apply(pos, math.floor))
+                    --minetest.chat_send_all(math.floor(rad_to_deg(currrotation.y)))
+                    local rotation = math.floor(rad_to_deg(currrotation.y))
+
+                    --is center can only determine if we are roughly center, so force center
+                    self.object:set_pos(vector.apply(pos, math.floor))
+                    if rotation%90==0 then
                         self.object:set_rotation(
                             vector.new(currrotation.x, currrotation.y + deg_to_rad(45), currrotation.z)
                         )
-                        --self.object:set_velocity(vector.new(0,0,0))
+                    elseif rotation%45==0 then
+                        self.object:set_rotation(
+                            vector.new(currrotation.x, currrotation.y + deg_to_rad(-45), currrotation.z)
+                        )
+                    end
+                    if reverse then
                         self.object:set_velocity(
                             vector.multiply(
-                                minetest.yaw_to_dir(
-                                    self.object:get_yaw()
+                                vector.multiply(
+                                    minetest.yaw_to_dir(
+                                        self.object:get_yaw()
+                                    ),
+                                    -1
                                 ),
                                 vector.length( --speed
                                     self.object:get_velocity()
                                 )
                             )
                         )
-                    elseif math.floor(rad_to_deg(currrotation.y))%45==0 then
-                        self.object:set_pos(vector.apply(pos, math.floor))
-                        self.object:set_rotation(
-                            vector.new(currrotation.x, currrotation.y + deg_to_rad(-45), currrotation.z)
-                        )
-                        --self.object:set_velocity(vector.new(0,0,0))
+                    else
                         self.object:set_velocity(
                             vector.multiply(
                                 minetest.yaw_to_dir(
