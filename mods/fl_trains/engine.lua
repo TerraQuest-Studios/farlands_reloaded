@@ -143,7 +143,7 @@ minetest.register_entity("fl_trains:train_engine", {
         else
             --works if straight headed in to curve left track param2 of 1
             --TODO: take into account param2 for rotation
-            if currnode.name == "fl_trains:curve_left_track" --[[ or currnode.name == "fl_trains:curve_right_track" ]] then
+            if currnode.name == "fl_trains:curve_left_track"--[[or currnode.name == "fl_trains:curve_right_track"]] then
                 --minetest.chat_send_all(dump(pos))
                 --[[ local curvetype = currnode.name:split(":")[2]:split("_")[2] ]]
                 --minetest.chat_send_all(dump(curvetype))
