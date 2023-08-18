@@ -130,7 +130,7 @@ minetest.register_entity("fl_trains:train_engine", {
             ["fl_trains:crossing_track"] = true,
             ["fl_trains:straight_45_track"] = true,
             ["fl_trains:curve_left_track"] = true,
-            --[[ ["fl_trains:curve_right_track"] = true, ]]
+            ["fl_trains:curve_right_track"] = true,
         }
 
         if continue_rail_nodes[node.name] then
@@ -141,23 +141,29 @@ minetest.register_entity("fl_trains:train_engine", {
         else
             --works if straight headed in to curve left track param2 of 1
             --TODO: take into account param2 for rotation
-            if currnode.name == "fl_trains:curve_left_track"--[[or currnode.name == "fl_trains:curve_right_track"]] then
+            if currnode.name == "fl_trains:curve_left_track" or currnode.name == "fl_trains:curve_right_track" then
                 --minetest.chat_send_all(dump(pos))
-                --[[ local curvetype = currnode.name:split(":")[2]:split("_")[2] ]]
+                local curvetype = currnode.name:split(":")[2]:split("_")[2]
                 --minetest.chat_send_all(dump(curvetype))
                 if is_centered(pos) then
                     local currrotation = self.object:get_rotation()
                     --minetest.chat_send_all("hiii")
 
-                    --minetest.chat_send_all(math.floor(rad_to_deg(currrotation.y)))
-                    local rotation = math.floor(rad_to_deg(currrotation.y))
+                    --[[ minetest.chat_send_all(dump(
+                        {
+                            rad = currrotation.y,
+                            deg = rad_to_deg(currrotation.y),
+                            floor = math.floor(rad_to_deg(currrotation.y))
+                        }
+                    )) ]]
+                    local rotation = math.round(rad_to_deg(currrotation.y))
 
                     --is center can only determine if we are roughly center, so force center
                     self.object:set_pos(vector.apply(pos, math.round))
 
                     local rotation_degrees = 0
                     if rotation%90==0 then rotation_degrees = 45 elseif rotation%45==0 then rotation_degrees = -45 end
-                    --if curvetype=="right" then rotation_degrees = rotation_degrees*-1 end
+                    if curvetype=="right" then rotation_degrees = rotation_degrees*-1 end
 
                     self.object:set_rotation(
                         vector.new(currrotation.x, currrotation.y + deg_to_rad(rotation_degrees), currrotation.z)
