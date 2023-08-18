@@ -59,7 +59,7 @@ minetest.register_entity("fl_trains:train_engine", {
     initial_properties = {
         physical = true,
         --stepheight = 0.4,
-        collide_with_objects = true,
+        --[[ collide_with_objects = true, ]]
         collisionbox = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
         visual = "mesh",
         mesh = "farlands_train_engine.obj",
@@ -93,6 +93,14 @@ minetest.register_entity("fl_trains:train_engine", {
         local dir = vector.round(minetest.yaw_to_dir(yaw))
         local pos = self.object:get_pos()
         local ndir = dir
+
+        if moveresult and moveresult.collides then
+            --minetest.chat_send_all(dump(moveresult.collisions))
+            for k,v in pairs(moveresult.collisions) do
+                v.object:set_hp(0, "die")
+                self.object:set_velocity(v.old_velocity)
+            end
+        end
 
         local vel = self.object:get_velocity()
         local player
