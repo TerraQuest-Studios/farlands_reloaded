@@ -218,6 +218,7 @@ for i=1, 3 do
     })
 end
 
+minetest.register_alias("fl_stone:dirt", "fl_topsoil:dirt")
 minetest.register_alias("fl_terrain:dirt", "fl_topsoil:dirt")
 minetest.register_alias("fl_terrain:dirt_with_grass", "fl_topsoil:dirt_with_grass")
 minetest.register_alias("fl_terrain:sand", "fl_topsoil:sand")
