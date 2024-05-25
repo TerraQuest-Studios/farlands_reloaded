@@ -235,6 +235,7 @@ local function make_hoe(name, factor)
             if pointed_thing.type ~= "node" then return end
             local node = minetest.get_node_or_nil(pointed_thing.under)
             if not node then return end
+            if minetest.is_protected(pointed_thing.under, user:get_player_name()) then return end
             if minetest.get_node_group(node.name, "farm_convert") == 1 then
                 minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:dry_farmland"})
             end

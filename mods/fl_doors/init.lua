@@ -49,6 +49,10 @@ local function make_door(file, modname, append)
             local dpos = pointed_thing.above--vector.new(pos.x, pos.y+1, pos.z)
             local anode = minetest.get_node(vector.new(dpos.x, dpos.y+1, dpos.z))
             local adef = minetest.registered_nodes[anode.name]
+
+            if minetest.is_protected(dpos, placer:get_player_name())
+                or minetest.is_protected(vector.new(dpos.x, dpos.y+1, dpos.z), placer:get_player_name()) then return end
+
             if adef and adef.drawtype == "airlike" then
                 local dir = placer and minetest.dir_to_facedir(placer:get_look_dir()) or 0
 
