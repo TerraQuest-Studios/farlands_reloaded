@@ -3,4 +3,5 @@
 	url = https://github.com/TheTermos/mobkit.git
 [submodule "mods/fl_others/i3"]
 	path = mods/fl_others/i3
-	url = https://github.com/minetest-mods/i3.git
+	url = https://github.com/mt-historical/i3
+	branch = mt_5_4_support
