@@ -4,4 +4,3 @@
 [submodule "mods/fl_others/i3"]
 	path = mods/fl_others/i3
 	url = https://github.com/mt-historical/i3
-	branch = mt_5_4_support
