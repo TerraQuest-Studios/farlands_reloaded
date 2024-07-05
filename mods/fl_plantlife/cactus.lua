@@ -2,6 +2,7 @@ minetest.register_node("fl_plantlife:cactus", {
     description = "cactus",
     paramtype = "light",
     drawtype = "nodebox",
+    use_texture_alpha = "clip",
     node_box = {
         type = "fixed",
         fixed = {-7/16, -0.5, -7/16, 7/16, 0.5, 7/16}

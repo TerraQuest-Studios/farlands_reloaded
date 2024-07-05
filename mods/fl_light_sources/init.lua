@@ -40,6 +40,7 @@ minetest.register_node("fl_light_sources:lantern_c", {
     description = "lantern",
     drawtype = "mesh",
     mesh = "farlands_lantern_c.obj",
+    use_texture_alpha = "clip",
     tiles = {"farlands_lantern.png", "farlands_lantern_metal.png"},
     paramtype = 'light',
     selection_box = {
@@ -63,6 +64,7 @@ minetest.register_node("fl_light_sources:lantern", {
     description = "lantern",
     drawtype = "mesh",
     mesh = "farlands_lantern_f.obj",
+    use_texture_alpha = "clip",
     tiles = {"farlands_lantern.png", "farlands_lantern_metal.png"},
     paramtype = 'light',
     light_source = 14,
@@ -107,6 +109,7 @@ minetest.register_node("fl_light_sources:chain", {
     description = "chain",
     drawtype = "mesh",
     mesh = "farlands_chain.obj",
+    use_texture_alpha = "clip",
     paramtype = "light",
     paramtype2 = "facedir",
     place_param2 = 0,
