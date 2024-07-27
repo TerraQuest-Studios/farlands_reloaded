@@ -1,6 +1,6 @@
 local function reg_grass(name)
     local desc = string.split(name, "_")
-    local groups = {dig_generic = 4, plant = 1, not_in_creative_inventory = 1}
+    local groups = {dig_generic = 4, plant = 1, not_in_creative_inventory = 1, attached_node=1}
     for i=1, 5 do
         minetest.register_node("fl_plantlife:" .. name .. "_" .. i, {
             description = table.concat(desc, " "),
@@ -18,13 +18,13 @@ local function reg_grass(name)
             },
             walkable = false,
             buildable_to = true,
-            frop = "fl_plantlife:" .. name .. "_5",
+            drop = "fl_plantlife:" .. name .. "_5",
             groups = groups,
         })
     end
     minetest.override_item("fl_plantlife:" .. name .. "_5", {
         inventory_image = "[combine:16x16:0,4=farlands_" .. name .. "_plant.png",
-        groups = {dig_generic = 4, plant = 1, not_in_creative_inventory = 0}
+        groups = {dig_generic = 4, plant = 1, attached_node=1, not_in_creative_inventory = 0}
     })
 end
 
