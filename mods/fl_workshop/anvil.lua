@@ -102,8 +102,8 @@ minetest.register_node("fl_workshop:anvil", {
             "field[3.3,1.5;3.3,0.5;description;;]",
             "field_close_on_enter[description;false]",
             "style_type[image_button;border=false]",
-            "style_type[image_button:hovered;fgimg=i3_export.png^\\[brighten]",
-            "image_button[6.75,1.55;0.35,0.35;i3_export.png;set_description;]",
+            "style_type[image_button:hovered;fgimg=i3_next.png^\\[brighten]",
+            "image_button[6.75,1.55;0.35,0.35;i3_next.png;set_description;]",
             --start crafting section
             "box[1.7,3.2;1,1;]",
             "list[nodemeta:" .. iPos .. ";input;1.7,3.2;1,1;]",
