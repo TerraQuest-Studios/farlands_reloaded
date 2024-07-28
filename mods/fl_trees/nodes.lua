@@ -78,19 +78,18 @@ minetest.register_node("fl_trees:dead_aspen_leaves", {
     groups = {dig_tree = 3, tree = 1, leaf = 1},
 })
 
-local wtypes = {"acacia", "aspen", "pine", "spruce", "yellow_ipe", "willow", "baobab", "palm", "jungletree", "apple"}
-
-for _, wood in pairs(wtypes) do
+for _, wood in pairs(fl_trees.types) do
     tree_nodes(wood)
 end
 
 if minetest.get_modpath("i3") then
     local types = {"plank", "trunk", "leaves"}
-    wtypes[#wtypes] = nil
+    local wood_types = table.copy(fl_trees.types)
+    wood_types[#wood_types] = nil
     for _, type in pairs(types) do
         i3.compress("fl_trees:apple_" .. type, {
             replace = "apple",
-            by = wtypes
+            by = wood_types
         })
     end
 end
