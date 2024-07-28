@@ -157,14 +157,14 @@ minetest.register_on_mods_loaded(function()
                 minetest.log("error", "basalt node found")
                 minetest.log("error", dump(node))
             end
-            if node.groups.stairable == 1 then
+            if node.groups and node.groups.stairable == 1 then
                 if node.name == "fl_stone:basalt_block" then
                     minetest.log("error", "basalt node stair function calling")
                 end
 
                 fl_stairs.register_stairslab(node.name)
             end
-            if node.groups.wallable == 1 then
+            if node.groups and node.groups.wallable == 1 then
                 fl_stairs.register_wall(node.name)
             end
         end
