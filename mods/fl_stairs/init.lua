@@ -146,17 +146,16 @@ end)
 --]]
 
 minetest.register_on_mods_loaded(function()
-    for nodename, nodedef in pairs(minetest.registered_nodes) do
-        if string.find(nodename, "fl_stone") then
-            minetest.log("error", nodename)
-        end
-        if nodename == "fl_stone:basalt_block" then
-            minetest.log("error", dump(nodedef))
-        end
-    end
     --minetest.after(0, function()
         for _, node in pairs(minetest.registered_items) do
+            if node.name == "fl_stone:basalt_block" then
+                minetest.log("error", "basalt node found")
+            end
             if node.groups.stairable == 1 then
+                if node.name == "fl_stone:basalt_block" then
+                    minetest.log("error", "basalt node stair function calling")
+                end
+
                 fl_stairs.register_stairslab(node.name)
             end
             if node.groups.wallable == 1 then
