@@ -151,7 +151,7 @@ minetest.register_on_mods_loaded(function()
             minetest.log("error", nodename)
         end
         if nodename == "fl_stone:basalt_block" then
-            minetest.log("error", nodedef)
+            minetest.log("error", dump(nodedef))
         end
     end
     --minetest.after(0, function()
