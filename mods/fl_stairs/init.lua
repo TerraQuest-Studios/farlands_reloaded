@@ -146,6 +146,11 @@ end)
 --]]
 
 minetest.register_on_mods_loaded(function()
+    for nodename, _ in pairs(minetest.registered_items) do
+        if string.find(nodename, "fl_stone") then
+            minetest.log("error", nodename)
+        end
+    end
     --minetest.after(0, function()
         for _, node in pairs(minetest.registered_items) do
             if node.groups.stairable == 1 then
