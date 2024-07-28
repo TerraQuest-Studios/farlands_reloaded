@@ -146,9 +146,12 @@ end)
 --]]
 
 minetest.register_on_mods_loaded(function()
-    for nodename, _ in pairs(minetest.registered_items) do
+    for nodename, nodedef in pairs(minetest.registered_items) do
         if string.find(nodename, "fl_stone") then
             minetest.log("error", nodename)
+        end
+        if nodename == "fl_stone:basalt_block" then
+            minetest.log("error", nodedef)
         end
     end
     --minetest.after(0, function()
