@@ -131,6 +131,18 @@ minetest.register_node("fl_signs:sign_wood", {
         if pointed_thing.under.y+1 == pointed_thing.above.y then return itemstack end
         return minetest.item_place(itemstack, placer, pointed_thing)
     end,
+    on_dig = function(pos, node, digger)
+        local ents = minetest.get_objects_inside_radius(pos, 0.5)
+
+        for _, ent in pairs(ents) do
+            local entn = ent:get_luaentity().name
+            if entn == "fl_signs:text" then
+                ent:remove()
+            end
+        end
+
+        return minetest.node_dig(pos, node, digger)
+    end,
     groups = {sign = 1, dig_generic = 4}
 })
 
