@@ -211,7 +211,11 @@ minetest.register_node(":fl_stairs:tablesaw", {
         and pointed_thing.type == "node"
         and minetest.get_modpath("fl_tnt") then
             fl_tnt.boom(pointed_thing.under, {radius = 3})
-            itemstack:take_item()
+            if not (placer and placer:is_player()
+                and minetest.is_creative_enabled(placer:get_player_name()))
+            then
+                itemstack:take_item()
+            end
             --placer:set_wielded_item(itemstack)
             return itemstack
         end

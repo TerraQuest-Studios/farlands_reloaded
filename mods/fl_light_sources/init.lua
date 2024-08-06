@@ -80,18 +80,13 @@ minetest.register_node("fl_light_sources:lantern", {
             {-3/16, -0.5, -3/16, 3/16, 0, 3/16},
         },
     },
-    on_place = function(itemstack, placer, pointed_thing)
+   on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         if pointed_thing.under.y-pointed_thing.above.y == 1 then
-            local stack = ItemStack(itemstack)
-            stack:set_name("fl_light_sources:lantern_c")
-            minetest.item_place(stack, placer, pointed_thing)
-            itemstack:take_item()
-            return itemstack
+            -- This does not mutate the original stack
+            itemstack:set_name("fl_light_sources:lantern_c")
         end
         minetest.item_place(itemstack, placer, pointed_thing)
-        itemstack:take_item()
-        return itemstack
     end,
     groups = {dig_stone = 2, lantern = 1}
 })

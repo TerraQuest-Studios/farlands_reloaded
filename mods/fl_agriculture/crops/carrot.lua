@@ -13,7 +13,11 @@ minetest.register_craftitem("fl_agriculture:carrot", {
         if minetest.get_item_group(node.name, "plantable") ~= 1 then return end
         if minetest.registered_nodes[anode.name].drawtype ~= "airlike" then return end
         minetest.set_node({x=pos.x, y=pos.y+1,z=pos.z}, {name = "fl_agriculture:carrot_1", param2 = 3})
-        itemstack:take_item()
+        if not (placer and placer:is_player()
+            and minetest.is_creative_enabled(placer:get_player_name()))
+        then
+            itemstack:take_item()
+        end
         return itemstack
     end,
     _dungeon_loot = {name = "fl_agriculture:carrot", chance = 0.6, count = {3, 6}},
