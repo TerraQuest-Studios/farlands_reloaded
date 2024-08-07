@@ -94,7 +94,23 @@ minetest.register_craftitem("fl_bottles:invisibility", {
             end
         )
 
-        itemstack:take_item()
+        if not (placer and placer:is_player()
+            and minetest.is_creative_enabled(placer:get_player_name()))
+        then
+            itemstack:take_item()
+        end
         return itemstack
     end,
 })
+
+minetest.register_on_leaveplayer(function(player, _)
+    player:get_meta():set_int("vanish", 0)
+    player:get_meta():set_int("in_vanish", 0)
+end)
+
+minetest.register_on_shutdown(function()
+    for _, player in pairs(minetest.get_connected_players()) do
+        player:get_meta():set_int("vanish", 0)
+        player:get_meta():set_int("in_vanish", 0)
+    end
+end)

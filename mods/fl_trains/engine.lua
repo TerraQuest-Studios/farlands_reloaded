@@ -217,6 +217,13 @@ minetest.register_entity("fl_trains:train_engine", {
 
     on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
         self.object:remove()
+        if not (puncher and puncher:is_player()) then return end
+        local inv = puncher:get_inventory()
+        if minetest.is_creative_enabled(puncher:get_player_name())
+            and inv:contains_item("main", "fl_trains:train_engine")
+        then return end
+
+        inv:add_item("main", "fl_trains:train_engine")
     end,
 
     on_rightclick=function(self, clicker)
@@ -260,7 +267,14 @@ minetest.register_craftitem("fl_trains:train_engine", {
                     ent:set_rotation(vector.new(0,deg_to_rad(-45),0))
                 end
             end
+
+            if not (placer and placer:is_player()
+                and minetest.is_creative_enabled(placer:get_player_name()))
+            then
+                itemstack:take_item()
+            end
         end
+        return itemstack
     end,
     groups = {not_in_creative_inventory = 1}
 })

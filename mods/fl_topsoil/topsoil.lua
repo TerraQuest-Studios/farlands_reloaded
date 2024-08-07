@@ -130,9 +130,14 @@ minetest.register_node("fl_topsoil:snow", {
         minetest.node_dig(pos, node, digger)
         local inv = digger:get_inventory()
         if not inv then return end
-        local inv_add = inv:add_item("main", "fl_topsoil:snow "..tostring(level/8-1))
-        if not inv_add:is_empty() then
-            minetest.add_item(pos, inv_add)
+        if not (digger and digger:is_player()
+            and minetest.is_creative_enabled(digger:get_player_name())
+            and inv:contains_item("main", "fl_topsoil:snow"))
+        then
+            local inv_add = inv:add_item("main", "fl_topsoil:snow "..tostring(level/8-1))
+            if not inv_add:is_empty() then
+                minetest.add_item(pos, inv_add)
+            end
         end
     end,
     on_place = function(itemstack, player, pointed_thing)
@@ -141,16 +146,21 @@ minetest.register_node("fl_topsoil:snow", {
 
         if under_node.name == "fl_topsoil:snow" then
             local level = minetest.get_node_level(pointed_thing.under)
+            -- Set node level
             if level >= 56 then
                 minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:snow_block"})
-                itemstack:take_item()
-                return itemstack, true
             else
                 level = level + 8
                 minetest.set_node_level(pointed_thing.under, level)
-                itemstack:take_item()
-                return itemstack, true
             end
+
+            -- Now take item away in survival
+            if not (player and player:is_player()
+                and minetest.is_creative_enabled(player:get_player_name()))
+            then
+                itemstack:take_item()
+            end
+            return itemstack
         else
             return minetest.item_place_node(itemstack, player, pointed_thing)
         end
