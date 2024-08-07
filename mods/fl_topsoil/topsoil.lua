@@ -139,8 +139,6 @@ minetest.register_node("fl_topsoil:snow", {
                 minetest.add_item(pos, inv_add)
             end
         end
-        return itemstack
-
     end,
     on_place = function(itemstack, player, pointed_thing)
         local under_node = minetest.get_node_or_nil(pointed_thing.under)
