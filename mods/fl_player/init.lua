@@ -54,10 +54,10 @@ minetest.register_on_joinplayer(function(player)
     })
     --patch this
     player:set_local_animation(
-        {},
-        {},
-        {},
-        {},
+        {x = 0, y = 0},
+        {x = 0, y = 0},
+        {x = 0, y = 0},
+        {x = 0, y = 0},
         30
     )
 end)

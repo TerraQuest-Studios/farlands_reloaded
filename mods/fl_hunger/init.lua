@@ -73,17 +73,22 @@ minetest.register_on_joinplayer(function(player, last_login)
 end)
 
 --write data
+local function save_hunger(player)
+    local data = hunger_data[player:get_player_name()]
+    if not data then return end
+    player:get_meta():set_string("hunger_value", data["hunger_value"])
+end
 minetest.register_on_leaveplayer(function(player, timed_out)
-    player:get_meta():set_string("hunger_value", hunger_data[player:get_player_name()]["hunger_value"])
+    save_hunger(player)
 end)
 minetest.register_on_shutdown(function()
     for _, player in pairs(minetest.get_connected_players()) do
-        player:get_meta():set_string("hunger_value", hunger_data[player:get_player_name()]["hunger_value"])
+        save_hunger(player)
     end
 end)
 local function write_data()
     for _, player in pairs(minetest.get_connected_players()) do
-        player:get_meta():set_string("hunger_value", hunger_data[player:get_player_name()]["hunger_value"])
+        save_hunger(player)
     end
     minetest.after(600, write_data)
 end
