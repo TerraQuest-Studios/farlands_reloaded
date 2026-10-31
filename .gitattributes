@@ -1,0 +1,6 @@
+# normalize line endings
+* text=auto eol=lf
+
+# leave development files out of ContentDB releases, see https://content.luanti.org/help/package_config/#excluding-files
+.* export-ignore
+flint.toml export-ignore

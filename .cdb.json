@@ -1,0 +1,7 @@
+{
+	"$schema": "https://content.luanti.org/api/cdb_schema/",
+	"type": "GAME",
+	"title": "Farlands Reloaded",
+	"issue_tracker": "https://github.com/TerraQuest-Studios/farlands_reloaded/issues",
+	"repo": "https://github.com/TerraQuest-Studios/farlands_reloaded"
+}
