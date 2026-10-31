@@ -79,6 +79,26 @@ function fl_wildlife.flash_color(self, cvalue, duration)
     end)
 end
 
+--shared on_punch: only launches upward from the ground so repeated hits can't juggle mobs into the air
+function fl_wildlife.on_punch(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    --like the engine, quick punches do partial damage instead of being ignored
+    local interval = tool_capabilities.full_punch_interval or 1
+    local scale = math.min(1, (time_from_last_punch or interval) / interval)
+    local damage = (tool_capabilities.damage_groups.fleshy or 1) * scale
+
+    local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
+    local vy = self.object:get_velocity().y
+    if self.isonground then vy = 2 end
+    fl_wildlife.flash_color(self)
+    self.object:set_velocity({x=hvel.x,y=vy,z=hvel.z})
+    mobkit.make_sound(self,'hurt')
+    mobkit.hurt(self,damage)
+    if mobkit.is_alive(self) then
+        mobkit.hq_runfrom(self,10,puncher)
+    end
+    return true
+end
+
 function fl_wildlife.actfunc(self, staticdata, dtime_s)
     mobkit.actfunc(self, staticdata, dtime_s)
     self.nametag = mobkit.recall(self, "nametag") or ""

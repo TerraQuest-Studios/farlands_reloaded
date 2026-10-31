@@ -115,16 +115,7 @@ core.register_entity("fl_wildlife:trader", {
     end,
 
    --more mte properties
-    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
-        local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
-        fl_wildlife.flash_color(self)
-        self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})
-        mobkit.make_sound(self,'hurt')
-        mobkit.hurt(self,tool_capabilities.damage_groups.fleshy or 1)
-        if mobkit.is_alive(self) then
-            mobkit.hq_runfrom(self,10,puncher)
-        end
-    end,
+    on_punch = fl_wildlife.on_punch,
 })
 
 --fl_wildlife.egg_it("fl_wildlife:trader", "trader", "#3c521d")
