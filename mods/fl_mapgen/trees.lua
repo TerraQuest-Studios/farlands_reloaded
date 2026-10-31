@@ -77,7 +77,7 @@ core.register_decoration({
     place_on = "fl_topsoil:dirt_with_grass",
     sidelen = 16,
     fill_ratio = 0.0001,
-    biomes = {"grassland", "snowy_grassland"},
+    biomes = {"grassland", "snowygrassland"},
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,

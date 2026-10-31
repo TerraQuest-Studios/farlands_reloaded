@@ -13,7 +13,9 @@ for name, data in pairs(biomes) do
     local temp = {}
     for _, biome in pairs(data) do
         table.insert(temp, biome)
-        table.insert(temp, biome .. "_ocean")
+        if core.registered_biomes[biome .. "_ocean"] then
+            table.insert(temp, biome .. "_ocean")
+        end
     end
     biomes[name] = table.copy(temp)
 end

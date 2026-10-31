@@ -220,7 +220,7 @@ core.register_node("fl_workshop:furnace_active", {
         "farlands_stone_block.png",
         "farlands_stone_block.png",
         {
-            image = "farlands_furnace_active.png",
+            name = "farlands_furnace_active.png",
             backface_culling = false,
             animation = {
                 type = "vertical_frames",
