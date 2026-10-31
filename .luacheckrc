@@ -18,7 +18,7 @@ read_globals = {
     "math", "table",
 
     -- Builtin
-    "vector", "ItemStack", "dump", "DIR_DELIM", "VoxelArea", "Settings", "PcgRandom", "VoxelManip", "PseudoRandom", "core",
+    "vector", "ItemStack", "dump", "DIR_DELIM", "VoxelArea", "Settings", "PcgRandom", "VoxelManip", "PseudoRandom",
 
     --mod produced
     "fl_dyes", "fl_hand", "fl_tools", "mobkit", "fl_tnt", "i3",
