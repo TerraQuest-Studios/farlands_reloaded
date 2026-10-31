@@ -1,3 +1,72 @@
+fl_storage = {}
+
+-- shows a 9x4 chest inventory at `location` (formspec inventory location, e.g. "nodemeta:x,y,z")
+function fl_storage.show_chest_formspec(clicker, location, title)
+    --vars for stuff
+    local cInvSize = clicker:get_inventory():get_size("main")
+    local rLength = (cInvSize-9)/3
+    local slotSize
+    local formSize
+    if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
+    elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
+    elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
+    else
+        slotSize, formSize = 1, "10.4,10.3"
+    end
+
+    --header of formspec
+    local formspec = {
+        "formspec_version[4]",
+        "size[" .. formSize .. "]",
+        "no_prepend[]",
+        "style_type[box;colors=#77777710,#77777710,#777,#777]",
+        "style_type[list;size=1;spacing=0.1]",
+        "listcolors[#0000;#ffffff20]",
+        "bgcolor[black;neither]",
+        "background9[0,0;" .. formSize .. ";i3_bg_full.png;false;10]",
+    }
+
+    --build chest inventory
+    local chest_inv = {
+        "label[0.3,0.4;" .. core.formspec_escape(title) .. "]",
+    }
+
+    for i=0, 3 do
+        for j=0, 8 do
+            table.insert(chest_inv, "box[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;]")
+        end
+    end
+    table.insert(chest_inv, "list[" .. location .. ";main;0.3,0.7;9,4;]")
+    table.insert(formspec, table.concat(chest_inv, ""))
+
+
+    --build inventory part of formspec
+    table.insert(formspec, "label[0.3,5.4;Inventory]")
+    table.insert(formspec, "style_type[box;colors=#77777710,#77777710,#777,#777]")
+    for i=0, 8 do
+        table.insert(formspec, "box[" .. 0.3+i+(i*0.1) ..",5.7;1,1;]")
+    end
+    table.insert(formspec, "list[current_player;main;0.3,5.7;9,1;]")
+    table.insert(formspec, "style_type[list;size=" .. slotSize .. ";spacing=0.1]")
+    table.insert(formspec, "style_type[box;colors=#666]") -- change bottom 3 rows color
+    for i=0, 2 do
+        for j=0, rLength-1 do
+            table.insert(formspec, "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
+            .. slotSize .. "," .. slotSize .. ";]")
+        end
+        table.insert(formspec, "list[current_player;main;0.3," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
+        .. rLength .. ",1;" .. 9+(rLength*i) .. "]")
+    end
+
+    --enable shiftclicking?
+    table.insert(formspec, "listring[" .. location .. ";main]")
+    table.insert(formspec, "listring[current_player;main]")
+
+    --show formspec
+    local chest_formspec = table.concat(formspec, "")
+    core.show_formspec(clicker:get_player_name(), "fl_storage:chest_formspec", chest_formspec)
+end
+
 core.register_node("fl_storage:wood_chest", {
     description = "wood chest",
     paramtype = "light",
@@ -16,77 +85,13 @@ core.register_node("fl_storage:wood_chest", {
     },
     groups = {dig_tree = 1},
     on_rightclick = function(pos, _node, clicker)
-
-        --vars for stuff
-        local chName = "chest name"
-        local iPos = pos.x .. "," .. pos.y .. "," .. pos.z
-        local cInvSize = clicker:get_inventory():get_size("main")
-        local rLength = (cInvSize-9)/3
-        local slotSize
-        local formSize
-        if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
-        elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
-        elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
-        else
-            slotSize, formSize = 1, "10.4,10.3"
+        local meta = core.get_meta(pos)
+        local title = "chest name"
+        if meta:get_string("description") ~= "" then
+            title = meta:get_string("description")
+            meta:set_string("infotext", title)
         end
-
-        if core.get_meta(pos):get_string("description") ~= "" then
-            chName = core.get_meta(pos):get_string("description")
-            core.get_meta(pos):set_string("infotext", core.get_meta(pos):get_string("description"))
-        end
-
-        --header of formspec
-        local formspec = {
-            "formspec_version[4]",
-            "size[" .. formSize .. "]",
-            "no_prepend[]",
-            "style_type[box;colors=#77777710,#77777710,#777,#777]",
-            "style_type[list;size=1;spacing=0.1]",
-            "listcolors[#0000;#ffffff20]",
-            "bgcolor[black;neither]",
-            "background9[0,0;" .. formSize .. ";i3_bg_full.png;false;10]",
-        }
-
-        --build chest inventory
-        local chest_inv = {
-            "label[0.3,0.4;" .. chName .. "]",
-        }
-
-        for i=0, 3 do
-            for j=0, 8 do
-                table.insert(chest_inv, "box[" .. 0.3+j+(j*0.1) .. "," .. i+0.7+(i*0.1) .. ";1,1;]")
-            end
-        end
-        table.insert(chest_inv, "list[nodemeta:" .. iPos .. ";main;0.3,0.7;9,4;]")
-        table.insert(formspec, table.concat(chest_inv, ""))
-
-
-        --build inventory part of formspec
-        table.insert(formspec, "label[0.3,5.4;Inventory]")
-        table.insert(formspec, "style_type[box;colors=#77777710,#77777710,#777,#777]")
-        for i=0, 8 do
-            table.insert(formspec, "box[" .. 0.3+i+(i*0.1) ..",5.7;1,1;]")
-        end
-        table.insert(formspec, "list[current_player;main;0.3,5.7;9,1;]")
-        table.insert(formspec, "style_type[list;size=" .. slotSize .. ";spacing=0.1]")
-        table.insert(formspec, "style_type[box;colors=#666]") -- change bottom 3 rows color
-        for i=0, 2 do
-            for j=0, rLength-1 do
-                table.insert(formspec, "box[" .. 0.3+(j*0.1)+(j*slotSize) .."," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
-                .. slotSize .. "," .. slotSize .. ";]")
-            end
-            table.insert(formspec, "list[current_player;main;0.3," .. 6.8+(i*0.1)+(i*slotSize) .. ";"
-            .. rLength .. ",1;" .. 9+(rLength*i) .. "]")
-        end
-
-        --enable shiftclicking?
-        table.insert(formspec, "listring[nodemeta:" .. iPos .. ";main]")
-        table.insert(formspec, "listring[current_player;main]")
-
-        --show formspec
-        local chest_formspec = table.concat(formspec, "")
-        core.show_formspec(clicker:get_player_name(), "fl_storage:chest_formspec", chest_formspec)
+        fl_storage.show_chest_formspec(clicker, "nodemeta:" .. pos.x .. "," .. pos.y .. "," .. pos.z, title)
     end,
     on_dig = function(pos, node, digger)
         local inv = core.get_inventory({type="node", pos=pos})

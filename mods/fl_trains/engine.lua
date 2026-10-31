@@ -1,237 +1,23 @@
-local max_speed = 5
+local seat_pos = vector.new(0,-0.46,0.45)
+local eye_offset = vector.new(0,-13,5.5)
 
-local function speed_check(vec, limit)
-    local v = vector.apply(vec, math.abs)
-    local l = limit
-    if v.x >= l then return false
-    elseif v.y >= l then return false
-    elseif v.z >= l then
-        return false
-    end
-    return true
-end
-
-function deg_to_rad(x)
-    return x * math.pi/180
-end
-
-function rad_to_deg(x)
-    return x * 180/math.pi
-end
-
---old junky function that worked with floor rather than round
---[[ local function is_centered(vec) --is centered ish
-    local fx, fz = math.floor(vec.x+0.01), math.floor(vec.z+0.01)
-    if vec.x >= fx-0.15 and vec.x <= fx+0.15 and vec.z >= fz-0.15 and vec.z <= fz+0.15 then
-        return true
-    else
-        return false
-    end
-end ]]
-
-local function is_centered(vec)
-    local rv = vector.round(vec)
-    if vec.x >= rv.x-0.25 and vec.x <= rv.x+0.25 and vec.z >= rv.z-0.25 and vec.z <= rv.z+0.25 then
-        return true
-    else
-        return false
-    end
-end
-
---[[ function is_centered(pos)
-    --minetest.chat_send_all(dump(pos))
-    local pos1 = {}
-    for i, v in pairs(pos) do
-    --get the distances.
-    local floor = math.floor(v)
-    local ciel = math.ceil(v)
-    if math.abs(v-floor) > math.abs(v-ciel) then
-        pos1[i] = ciel
-    else
-        pos1[i] = floor
-    end
-    end
-    if vector.distance(pos1, pos) < .15 then
-        return true
-    end
-end ]]
-
-core.register_entity("fl_trains:train_engine", {
-    --mte object properties
-    initial_properties = {
-        physical = true,
-        --stepheight = 0.4,
-        --[[ collide_with_objects = true, ]]
-        collisionbox = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
-        visual = "mesh",
-        mesh = "farlands_train_engine.obj",
-        textures = {
-            "farlands_train_engine.png",
-        },
-        backface_culling = false,
-        visual_size = {x=10, y=10, z=10},
-        static_save = true,
-        damage_texture_modifier = "^[colorize:#FF000040"
-    },
-
-    --on_step = mobkit.stepfunc, --this is required
-    on_activate = function(self, staticdata)
-        --load memory
-        local sdata = core.deserialize(staticdata)
-        if sdata then
-            for k,v in pairs(sdata) do
-                self[k] = v
-            end
-        end
-        if not self.memory then
-            self.memory = {}
-        end
-        --other stuff
+fl_trains.register_vehicle("train_engine", {
+    length = 2,
+    can_drive = true,
+    -- two nodes long, it covers the clicked node and the one behind it
+    place_head = function()
+        return 0
     end,
-    get_staticdata = function(self)
-        local tmp = {memory = self.memory}
-        return core.serialize(tmp)
+    -- engines saved before trains could have carts on either side
+    legacy = function(data)
+        if not data.path then return end
+        local vehicles = {{type = "train_engine"}}
+        for _, car in ipairs(data.cars or {}) do
+            vehicles[#vehicles + 1] = {type = "cart", car = car}
+        end
+        return {path = data.path, head = data.head, speed = data.speed, vehicles = vehicles}
     end,
-    on_step = function(self, _dtime, moveresult)
-        local yaw = tonumber(string.format("%.2f", self.object:get_yaw()))
-        local dir = vector.round(core.yaw_to_dir(yaw))
-        local pos = self.object:get_pos()
-        local ndir = dir
-
-        if moveresult and moveresult.collides then
-            --minetest.chat_send_all(dump(moveresult.collisions))
-            for _, v in pairs(moveresult.collisions) do
-                v.object:set_hp(0, "die")
-                self.object:set_velocity(v.old_velocity)
-            end
-        end
-
-        local vel = self.object:get_velocity()
-        local player
-        if self.memory.driver then
-            player = core.get_player_by_name(self.memory.driver)
-        end
-        if player then
-            local pcontrols = player:get_player_control()
-            if pcontrols.up and speed_check(vel, max_speed) then
-                self.object:add_velocity(vector.multiply(dir, 0.2))
-            elseif pcontrols.down and speed_check(vel, max_speed) then
-                self.object:add_velocity(vector.multiply(dir, -0.2))
-                ndir = vector.multiply(ndir, -1)
-            end
-
-            --brakes
-            if pcontrols.jump then
-                self.object:set_velocity(vector.new(0,0,0))
-            end
-        end
-
-        local direction = vector.dot(self.object:get_velocity(), core.yaw_to_dir(self.object:get_yaw()))
-        local reverse = false
-        if direction <= 0 then
-            reverse = true
-        end
-        local node = core.get_node_or_nil(vector.add(ndir, pos))
-        --going backwards, flip direction
-        if reverse then
-            node = core.get_node_or_nil(vector.add(vector.multiply(ndir, -1), pos))
-        end
-        local currnode = core.get_node_or_nil(pos)
-        if not node or not currnode then
-            self.object:set_velocity(vector.new(0,0,0))
-            return
-        end
-
-        local continue_rail_nodes = {
-            ["fl_trains:straight_track"] = true,
-            ["fl_trains:crossing_track"] = true,
-            ["fl_trains:straight_45_track"] = true,
-            ["fl_trains:curve_left_track"] = true,
-            ["fl_trains:curve_right_track"] = true,
-        }
-
-        if continue_rail_nodes[node.name] then
-            --self.object:set_velocity(vector.new(0,0,0))
-            --just keep moving
-            --minetest.chat_send_all(node.name)
-            return
-        else
-            --works if straight headed in to curve left track param2 of 1
-            --TODO: take into account param2 for rotation
-            if currnode.name == "fl_trains:curve_left_track" or currnode.name == "fl_trains:curve_right_track" then
-                --minetest.chat_send_all(dump(pos))
-                local curvetype = currnode.name:split(":")[2]:split("_")[2]
-                --minetest.chat_send_all(dump(curvetype))
-                if is_centered(pos) then
-                    local currrotation = self.object:get_rotation()
-                    --minetest.chat_send_all("hiii")
-
-                    --[[ minetest.chat_send_all(dump(
-                        {
-                            rad = currrotation.y,
-                            deg = rad_to_deg(currrotation.y),
-                            floor = math.floor(rad_to_deg(currrotation.y))
-                        }
-                    )) ]]
-                    local rotation = math.round(rad_to_deg(currrotation.y))
-
-                    --is center can only determine if we are roughly center, so force center
-                    self.object:set_pos(vector.apply(pos, math.round))
-
-                    local rotation_degrees = 0
-                    if rotation%90==0 then
-                        rotation_degrees = 45
-                    elseif rotation%45==0 then
-                        rotation_degrees = -45
-                    end
-                    if curvetype=="right" then
-                        rotation_degrees = rotation_degrees*-1
-                    end
-
-                    self.object:set_rotation(
-                        vector.new(currrotation.x, currrotation.y + deg_to_rad(rotation_degrees), currrotation.z)
-                    )
-
-                    if reverse then
-                        self.object:set_velocity(
-                            vector.multiply(
-                                vector.multiply(
-                                    core.yaw_to_dir(
-                                        self.object:get_yaw()
-                                    ),
-                                    -1
-                                ),
-                                vector.length( --speed
-                                    self.object:get_velocity()
-                                )
-                            )
-                        )
-                    else
-                        self.object:set_velocity(
-                            vector.multiply(
-                                core.yaw_to_dir(
-                                    self.object:get_yaw()
-                                ),
-                                vector.length( --speed
-                                    self.object:get_velocity()
-                                )
-                            )
-                        )
-                    end
-                end
-
-                return
-            end
-            --minetest.chat_send_all(node.name)
-
-            --dont know what the next rail is, stop
-            self.object:set_velocity(vector.new(0,0,0))
-            return
-        end
-    end,
-
-    on_punch = function(self, puncher)
-        self.object:remove()
+    on_remove = function(_, puncher)
         if not (puncher and puncher:is_player()) then return end
         local inv = puncher:get_inventory()
         if core.is_creative_enabled(puncher:get_player_name())
@@ -241,55 +27,45 @@ core.register_entity("fl_trains:train_engine", {
         inv:add_item("main", "fl_trains:train_engine")
     end,
 
-    on_rightclick=function(self, clicker)
-        if #self.object:get_children() > 0 then
-            for _, obj in pairs(self.object:get_children()) do
-                if obj:is_player() and obj:get_player_name() == self.memory.driver then
-                    obj:set_detach()
-                    obj:set_properties({visual_size = vector.new(1,1,1)})
-                    fl_player.ignore[obj:get_player_name()] = nil
-                    obj:set_eye_offset(vector.new(0,0,0), vector.new(0,0,0))
-                    self.memory.driver = nil
-                end
-            end
-        else
-            clicker:set_attach(self.object, "", vector.new(0,-0.49,0.45), vector.new(0,0,0), true)
-            clicker:set_properties({visual_size = vector.new(.075,.075,.075)})
-            fl_player.ignore[clicker:get_player_name()] = true
-            clicker:set_animation(fl_player.animations["sit"], 15)
-            clicker:set_eye_offset(vector.new(0,-13,5.5), vector.new(0,-13,5.5))
-            self.memory.driver = clicker:get_player_name()
-        end
-    end,
-})
+    entity = {
+        initial_properties = {
+            -- movement is driven by the track, not physics
+            physical = false,
+            collisionbox = {-0.5, -0.47, -0.5, 0.5, 0.53, 0.5},
+            selectionbox = {-0.5, -0.47, -1, 0.5, 0.53, 1, rotate = true},
+            visual = "mesh",
+            mesh = "farlands_train_engine.obj",
+            textures = {
+                "farlands_train_engine.png",
+            },
+            backface_culling = false,
+            visual_size = {x=10, y=10, z=10},
+            static_save = true,
+            damage_texture_modifier = "^[colorize:#FF000040"
+        },
 
-core.register_craftitem("fl_trains:train_engine", {
-    description = "train_engine",
-    inventory_image = "farlands_cart_item.png",
-    wield_image = "farlands_cart_item.png",
-    on_place = function(itemstack, placer, pointed_thing)
-        if pointed_thing.type ~= "node" then return end
-        local node = core.get_node_or_nil(pointed_thing.under)
-        if string.find(node.name, "fl_trains") then
-            local ent = core.add_entity(pointed_thing.under, "fl_trains:train_engine")
-            if node.name == "fl_trains:straight_track" and node.param2%2 ~= 0 then
-                ent:set_rotation(vector.new(0,deg_to_rad(90),0))
-                --minetest.chat_send_all(ent:get_yaw())
-            elseif node.name == "fl_trains:straight_45_track" then
-                if node.param2%2 ~= 0 then
-                    ent:set_rotation(vector.new(0,deg_to_rad(45),0))
-                else
-                    ent:set_rotation(vector.new(0,deg_to_rad(-45),0))
-                end
+        on_rightclick = function(self, clicker)
+            if not (clicker and clicker:is_player()) then return end
+            local name = clicker:get_player_name()
+            if not (self.vehicle and fl_trains.can_access(clicker, self.vehicle.owner)) then
+                local owner = self.vehicle and self.vehicle.owner or "someone"
+                core.chat_send_player(name, "this engine belongs to " .. owner)
+                return
             end
+            if self.rider == name then
+                fl_trains.unseat(name)
+                self.rider = nil
+            elseif not self.rider then
+                fl_trains.seat(clicker, self.object, seat_pos, eye_offset, "third")
+                self.rider = name
+            end
+        end,
+    },
 
-            if not (placer and placer:is_player()
-                and core.is_creative_enabled(placer:get_player_name()))
-            then
-                itemstack:take_item()
-            end
-        end
-        return itemstack
-    end,
-    groups = {not_in_creative_inventory = 1}
+    item = {
+        description = "train_engine",
+        inventory_image = "farlands_cart_item.png",
+        wield_image = "farlands_cart_item.png",
+        groups = {not_in_creative_inventory = 1},
+    },
 })
