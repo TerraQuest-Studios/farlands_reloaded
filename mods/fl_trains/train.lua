@@ -2,7 +2,7 @@ local rail = fl_trains.rail
 
 -- gap between coupled or touching vehicles
 local gap = 1/8
-local max_speed = 5
+local max_speed = 10
 local acceleration = 2
 local brake_force = 6
 local friction = 0.4
