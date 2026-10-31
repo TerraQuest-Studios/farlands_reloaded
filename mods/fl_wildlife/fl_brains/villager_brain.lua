@@ -6,7 +6,7 @@ function fl_brains.villager_brain(self)
         local item_drops = fl_wildlife.drops(self.drops)
         if item_drops ~= nil then
             for _, i in pairs(item_drops) do
-                minetest.add_item(mobkit.get_stand_pos(self), i)
+                core.add_item(mobkit.get_stand_pos(self), i)
             end
         end
 

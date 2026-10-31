@@ -39,24 +39,24 @@ local function updateformspec(pos, clicker)
         end
     end
 
-    local inv = minetest.get_inventory({type = "node", pos = pos})
+    local inv = core.get_inventory({type = "node", pos = pos})
     if not inv:is_empty("main") and inv:get_stack("main", 1):get_count() >= 6 then
         local stack = inv:get_stack("main", 1)
         --minetest.chat_send_all(stack:get_name())
         local node_table = {}
-        if minetest.get_item_group(stack:get_name(), "stairable") ~= 0 then
+        if core.get_item_group(stack:get_name(), "stairable") ~= 0 then
             table.insert(node_table, {stack:get_name(), "slab", 4})
             table.insert(node_table, {stack:get_name(), "stair", 2})
             table.insert(node_table, {stack:get_name(), "outer_stair", 3})
             table.insert(node_table, {stack:get_name(), "inner_stair", 1})
         end
-        if minetest.get_item_group(stack:get_name(), "fenceable") ~= 0 then
+        if core.get_item_group(stack:get_name(), "fenceable") ~= 0 then
             table.insert(node_table, {stack:get_name(), "fence", 4})
         end
-        if minetest.get_item_group(stack:get_name(), "wallable") ~= 0 then
+        if core.get_item_group(stack:get_name(), "wallable") ~= 0 then
             table.insert(node_table, {stack:get_name(), "wall", 2})
         end
-        if minetest.get_item_group(stack:get_name(), "stone") ~= 0 then
+        if core.get_item_group(stack:get_name(), "stone") ~= 0 then
             table.insert(node_table, {stack:get_name(), "block", 1})
         end
         table.insert(formspec, "style_type[item_image_button;border=false]")
@@ -103,14 +103,14 @@ local function updateformspec(pos, clicker)
     --show formspec
     local saw_formspec = table.concat(formspec, "")
     --this breaks recieving fields
-    minetest.show_formspec(clicker:get_player_name(), "fl_tool_nodes:saw_formspec", saw_formspec)
+    core.show_formspec(clicker:get_player_name(), "fl_tool_nodes:saw_formspec", saw_formspec)
     viewing_saw[clicker:get_player_name()] = pos
 
     --local meta = minetest.get_meta(pos)
     --meta:set_string("formspec", saw_formspec)
 end
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
     if formname ~= "fl_tool_nodes:saw_formspec" then return end
     if fields.quit == "true" then
         viewing_saw[player:get_player_name()] = nil
@@ -119,7 +119,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
     local function add_item(item, gcount, tcount)
         local inv = player:get_inventory()
-        local saw_inv = minetest.get_inventory({type = "node", pos = viewing_saw[player:get_player_name()]})
+        local saw_inv = core.get_inventory({type = "node", pos = viewing_saw[player:get_player_name()]})
         local saw_stack = saw_inv:get_stack("main", 1)
         local stack = ItemStack(saw_stack:get_name() .. item)
         stack:set_count(gcount)
@@ -129,7 +129,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
             saw_inv:set_stack("main", 1, saw_stack)
             for sname, spos in pairs(viewing_saw) do
                 if vector.equals(spos, viewing_saw[player:get_player_name()]) then
-                    updateformspec(spos, minetest.get_player_by_name(sname))
+                    updateformspec(spos, core.get_player_by_name(sname))
                 end
             end
         end
@@ -145,7 +145,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 end)
 
 --textures and nodebox are temperary and suck
-minetest.register_node(":fl_stairs:tablesaw", {
+core.register_node(":fl_stairs:tablesaw", {
     description = "table saw",
     tiles = {
         "farlands_apple_planks.png^farlands_saw_top.png",
@@ -168,14 +168,14 @@ minetest.register_node(":fl_stairs:tablesaw", {
         }
     },
     on_construct = function(pos)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         inv:set_size("main", 1)
     end,
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         updateformspec(pos, clicker)
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        local get_group = minetest.get_item_group
+        local get_group = core.get_item_group
         if get_group(stack:get_name(), "stairable") ~= 0
         or get_group(stack:get_name(), "fenceable") ~= 0
         or get_group(stack:get_name(), "wallable") ~= 0 then
@@ -187,7 +187,7 @@ minetest.register_node(":fl_stairs:tablesaw", {
         for sname, spos in pairs(viewing_saw) do
             --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
             if vector.equals(spos, pos) then
-                updateformspec(pos, minetest.get_player_by_name(sname))
+                updateformspec(pos, core.get_player_by_name(sname))
             end
         end
     end,
@@ -195,31 +195,31 @@ minetest.register_node(":fl_stairs:tablesaw", {
         for sname, spos in pairs(viewing_saw) do
             --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
             if vector.equals(spos, pos) then
-                updateformspec(pos, minetest.get_player_by_name(sname))
+                updateformspec(pos, core.get_player_by_name(sname))
             end
         end
     end,
     on_dig = function(pos, node, digger)
-        local inv = minetest.get_inventory({type="node", pos=pos})
+        local inv = core.get_inventory({type="node", pos=pos})
         for _, item in ipairs(inv:get_list("main")) do
-            minetest.add_item(pos, item)
+            core.add_item(pos, item)
         end
-        minetest.node_dig(pos, node, digger)
+        core.node_dig(pos, node, digger)
     end,
     on_place = function(itemstack, placer, pointed_thing)
         if itemstack:get_meta():get_string("description") == "wsaw"
         and pointed_thing.type == "node"
-        and minetest.get_modpath("fl_tnt") then
+        and core.get_modpath("fl_tnt") then
             fl_tnt.boom(pointed_thing.under, {radius = 3})
             if not (placer and placer:is_player()
-                and minetest.is_creative_enabled(placer:get_player_name()))
+                and core.is_creative_enabled(placer:get_player_name()))
             then
                 itemstack:take_item()
             end
             --placer:set_wielded_item(itemstack)
             return itemstack
         end
-        minetest.item_place(itemstack, placer, pointed_thing)
+        core.item_place(itemstack, placer, pointed_thing)
     end
 })
 
@@ -229,7 +229,7 @@ i3.new_tab("inv_saw", {
 
 	access = function(player, data)
 		local name = player:get_player_name()
-		return minetest.is_creative_enabled(name)
+		return core.is_creative_enabled(name)
 	end,
 
 	formspec = function(player, data, fs)
@@ -261,19 +261,19 @@ i3.new_tab("inv_saw", {
             local stack = inv:get_stack("creative_saw", 1)
             --minetest.chat_send_all(stack:get_name())
             local node_table = {}
-            if minetest.get_item_group(stack:get_name(), "stairable") ~= 0 then
+            if core.get_item_group(stack:get_name(), "stairable") ~= 0 then
                 table.insert(node_table, {stack:get_name(), "slab", 99})
                 table.insert(node_table, {stack:get_name(), "stair", 99})
                 table.insert(node_table, {stack:get_name(), "outer_stair", 99})
                 table.insert(node_table, {stack:get_name(), "inner_stair", 99})
             end
-            if minetest.get_item_group(stack:get_name(), "fenceable") ~= 0 then
+            if core.get_item_group(stack:get_name(), "fenceable") ~= 0 then
                 table.insert(node_table, {stack:get_name(), "fence", 99})
             end
-            if minetest.get_item_group(stack:get_name(), "wallable") ~= 0 then
+            if core.get_item_group(stack:get_name(), "wallable") ~= 0 then
                 table.insert(node_table, {stack:get_name(), "wall", 99})
             end
-            if minetest.get_item_group(stack:get_name(), "stone") ~= 0 then
+            if core.get_item_group(stack:get_name(), "stone") ~= 0 then
                 table.insert(node_table, {stack:get_name(), "block", 99})
             end
             fs("style_type[item_image_button;border=false]")
@@ -339,6 +339,6 @@ i3.new_tab("inv_saw", {
     end,
 })
 
-minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
+core.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
     if inventory_info.from_list == "creative_saw" or inventory_info.to_list == "creative_saw" then i3.set_fs(player) end
 end)

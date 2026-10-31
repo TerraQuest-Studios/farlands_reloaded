@@ -1,4 +1,4 @@
-minetest.register_node("fl_doors:blocker_top", {
+core.register_node("fl_doors:blocker_top", {
     description = "door top blocker",
     drawtype = "airlike",
     paramtype = "light",
@@ -21,7 +21,7 @@ local function make_door(file, modname, append)
     local name = split[1]:sub(10, #split[1])
     local material = split[1]:sub(10, #file-9)
 
-    minetest.register_node("fl_doors:" .. name .. "_a", {
+    core.register_node("fl_doors:" .. name .. "_a", {
         description = name:gsub("_", " "),
         drawtype = "mesh",
         paramtype = "light",
@@ -36,25 +36,25 @@ local function make_door(file, modname, append)
         on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
             local p2 = node.param2+1
             if p2 == 4 then p2 = 0 end
-            minetest.set_node(pos, {name = "fl_doors:" .. name .. "_b", param2 = p2})
+            core.set_node(pos, {name = "fl_doors:" .. name .. "_b", param2 = p2})
         end,
         on_place = function(itemstack, placer, pointed_thing)
             if pointed_thing.type ~= "node" then return end
-            local node = minetest.get_node(pointed_thing.under)
-            local def = minetest.registered_nodes[node.name]
+            local node = core.get_node(pointed_thing.under)
+            local def = core.registered_nodes[node.name]
             if def and def.on_rightclick
             and not (placer and placer:is_player() and placer:get_player_control().sneak) then
                 return def.on_rightclick(pointed_thing.under, node, placer, itemstack, pointed_thing)
             end
             local dpos = pointed_thing.above--vector.new(pos.x, pos.y+1, pos.z)
-            local anode = minetest.get_node(vector.new(dpos.x, dpos.y+1, dpos.z))
-            local adef = minetest.registered_nodes[anode.name]
+            local anode = core.get_node(vector.new(dpos.x, dpos.y+1, dpos.z))
+            local adef = core.registered_nodes[anode.name]
 
-            if minetest.is_protected(dpos, placer:get_player_name())
-                or minetest.is_protected(vector.new(dpos.x, dpos.y+1, dpos.z), placer:get_player_name()) then return end
+            if core.is_protected(dpos, placer:get_player_name())
+                or core.is_protected(vector.new(dpos.x, dpos.y+1, dpos.z), placer:get_player_name()) then return end
 
             if adef and adef.drawtype == "airlike" then
-                local dir = placer and minetest.dir_to_facedir(placer:get_look_dir()) or 0
+                local dir = placer and core.dir_to_facedir(placer:get_look_dir()) or 0
 
                 local ref = {
                     {x = -1, y = 0, z = 0},
@@ -69,23 +69,23 @@ local function make_door(file, modname, append)
                     z = dpos.z + ref[dir + 1].z,
                 }
 
-                if minetest.get_item_group(minetest.get_node(aside).name, "door") == 1 then
-                    minetest.set_node(dpos, {name = "fl_doors:" .. name .. "_b", param2 = dir})
-                    minetest.set_node(vector.new(dpos.x, dpos.y+1, dpos.z), {name = "fl_doors:blocker_top"})
+                if core.get_item_group(core.get_node(aside).name, "door") == 1 then
+                    core.set_node(dpos, {name = "fl_doors:" .. name .. "_b", param2 = dir})
+                    core.set_node(vector.new(dpos.x, dpos.y+1, dpos.z), {name = "fl_doors:blocker_top"})
                 else
-                    minetest.set_node(dpos, {name = "fl_doors:" .. name .. "_a", param2 = dir})
-                    minetest.set_node(vector.new(dpos.x, dpos.y+1, dpos.z), {name = "fl_doors:blocker_top"})
+                    core.set_node(dpos, {name = "fl_doors:" .. name .. "_a", param2 = dir})
+                    core.set_node(vector.new(dpos.x, dpos.y+1, dpos.z), {name = "fl_doors:blocker_top"})
                 end
             end
         end,
         after_dig_node = function(pos, node, meta, digger)
-            minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
-            minetest.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
+            core.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
+            core.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
         end,
         groups = {dig_tree = 2, door = 1},
     })
 
-    minetest.register_node("fl_doors:" .. name .. "_b", {
+    core.register_node("fl_doors:" .. name .. "_b", {
         description = name:gsub("_", " "),
         drawtype = "mesh",
         paramtype = "light",
@@ -100,11 +100,11 @@ local function make_door(file, modname, append)
         on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
             local p2 = node.param2-1
             if p2 == -1 then p2 = 3 end
-            minetest.set_node(pos, {name = "fl_doors:" .. name .. "_a", param2 = p2})
+            core.set_node(pos, {name = "fl_doors:" .. name .. "_a", param2 = p2})
         end,
         after_dig_node = function(pos, node, meta, digger)
-            minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
-            minetest.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
+            core.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
+            core.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
         end,
         drop = "fl_doors:" .. name .. "_a",
         groups = {dig_tree = 2, door = 1, not_in_creative_inventory = 1},
@@ -112,7 +112,7 @@ local function make_door(file, modname, append)
 
     if material == "steel" then material = "iron" end
     local cm = modname .. ":" .. material .. append
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_doors:" .. name .. "_a",
         recipe = {
             {cm, cm},
@@ -125,8 +125,8 @@ local function make_door(file, modname, append)
 end
 
 local door_list = {}
-local pdir = minetest.get_dir_list(minetest.get_modpath("fl_doors") .. "/textures/planks", false)
-local mdir = minetest.get_dir_list(minetest.get_modpath("fl_doors") .. "/textures/metal", false)
+local pdir = core.get_dir_list(core.get_modpath("fl_doors") .. "/textures/planks", false)
+local mdir = core.get_dir_list(core.get_modpath("fl_doors") .. "/textures/metal", false)
 
 for _, file in pairs(pdir) do
     if not file:find("item") then table.insert(door_list, make_door(file, "fl_trees", "_plank")) end
@@ -136,7 +136,7 @@ for _, file in pairs(mdir) do
     if not file:find("item") then table.insert(door_list, make_door(file, "fl_ores", "_ingot")) end
 end
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local item = door_list[#door_list]
     door_list[#door_list] = nil
     local material = {}

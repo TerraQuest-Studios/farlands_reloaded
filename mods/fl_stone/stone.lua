@@ -6,13 +6,13 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
     local rn = "fl_stone:" .. name .. "_rubble"
 
     --node registration
-    minetest.register_node("fl_stone:" .. name .. "_rubble", {
+    core.register_node("fl_stone:" .. name .. "_rubble", {
         description = name .. " rubble",
         tiles = {"farlands_" .. name .. "_rubble.png"},
         sounds = fl_stone.sounds.stone(),
         groups = rgp,
     })
-    minetest.register_node("fl_stone:" .. name, {
+    core.register_node("fl_stone:" .. name, {
         description = name,
         tiles = {"farlands_" .. name .. ".png"},
         --drop = "fl_stone:" .. name .. "_rubble",
@@ -35,19 +35,19 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         sounds = fl_stone.sounds.stone(),
         groups = sgp,
     })
-    minetest.register_craft({
+    core.register_craft({
         type = "cooking",
         output = "fl_stone:" .. name,
         recipe = "fl_stone:" .. name .. "_rubble",
         cooktime = 5,
     })
-    minetest.register_node("fl_stone:" .. name .. "_block", {
+    core.register_node("fl_stone:" .. name .. "_block", {
         description = name .. " block",
         tiles = {"farlands_" .. name .. "_block.png"},
         sounds = fl_stone.sounds.stone(),
         groups = blgp,
     })
-    minetest.register_node("fl_stone:" .. name .. "_brick", {
+    core.register_node("fl_stone:" .. name .. "_brick", {
         description = name .. " brick",
         paramtype2 = "facedir",
         place_param2 = 0,
@@ -58,7 +58,7 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
 
     --craft registration
     local coreN = "fl_stone:" .. name
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_stone:" .. name .. "_block",
         recipe = {
             {coreN, coreN, coreN},
@@ -66,7 +66,7 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
             {coreN, coreN, coreN},
         }
     })
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_stone:" .. name .. "_brick",
         recipe = {
             {coreN, coreN},
@@ -74,10 +74,10 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         }
     })
 
-    minetest.register_alias("fl_terrain:" .. name .. "_rubble", "fl_stone:" .. name .. "_rubble")
-    minetest.register_alias("fl_terrain:" .. name, "fl_stone:" .. name)
-    minetest.register_alias("fl_terrain:" .. name .. "_block", "fl_stone:" .. name .. "_block")
-    minetest.register_alias("fl_terrain:" .. name .. "_brick", "fl_stone:" .. name .. "_brick")
+    core.register_alias("fl_terrain:" .. name .. "_rubble", "fl_stone:" .. name .. "_rubble")
+    core.register_alias("fl_terrain:" .. name, "fl_stone:" .. name)
+    core.register_alias("fl_terrain:" .. name .. "_block", "fl_stone:" .. name .. "_block")
+    core.register_alias("fl_terrain:" .. name .. "_brick", "fl_stone:" .. name .. "_brick")
 end
 
 local stone_types = {"stone", "mossy_stone", "savannah", "ors", "tuff", "basalt", "gneiss", "desert_stone"}
@@ -88,7 +88,7 @@ end
 
 --granite, brown granite,
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local types = {"", "_rubble", "_block", "_brick"}
     stone_types[#stone_types] = nil
     for _, type in pairs(types) do

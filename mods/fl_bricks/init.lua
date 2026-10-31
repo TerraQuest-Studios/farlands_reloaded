@@ -1,4 +1,4 @@
-minetest.register_node("fl_bricks:brick", {
+core.register_node("fl_bricks:brick", {
     description = "brick",
     tiles = {"farlands_brick.png^[multiply:#f3f3f3"},
     --tiles = {"farlands_brick.png"},
@@ -18,24 +18,24 @@ minetest.register_node("fl_bricks:brick", {
     end,
 })
 
-minetest.register_craftitem("fl_bricks:clay", {
+core.register_craftitem("fl_bricks:clay", {
     description = "clay",
     inventory_image = "farlands_clay.png"
 })
 
-minetest.register_node("fl_bricks:clay_block", {
+core.register_node("fl_bricks:clay_block", {
     description = "clay block",
     tiles = {"farlands_clay_block.png"},
     drop = "fl_bricks:clay 4",
     groups = {dig_sand = 3},
 })
 
-minetest.register_craftitem("fl_bricks:raw_brick", {
+core.register_craftitem("fl_bricks:raw_brick", {
     description = "raw brick",
     inventory_image = "farlands_raw_brick.png"
 })
 
-minetest.register_node("fl_bricks:terracotta", {
+core.register_node("fl_bricks:terracotta", {
     description = "terracotta",
     tiles = {"farlands_terracotta_base.png^farlands_terracotta_overlay.png"},
     paramtype = "light",
@@ -48,14 +48,14 @@ minetest.register_node("fl_bricks:terracotta", {
     end,
 })
 
-minetest.register_craft({
+core.register_craft({
     type = "cooking",
     output = "fl_bricks:terracotta",
     recipe = "fl_bricks:clay_block",
     cooktime = 3,
 })
 
-minetest.register_craft({
+core.register_craft({
     type = "cooking",
     output = "fl_bricks:brick",
     recipe = "fl_bricks:clay",
@@ -64,12 +64,12 @@ minetest.register_craft({
 
 --crafts
 for counter, dye in pairs(fl_dyes.dyes) do
-    local brick_item = ItemStack(minetest.itemstring_with_palette("fl_bricks:brick", counter - 1))
+    local brick_item = ItemStack(core.itemstring_with_palette("fl_bricks:brick", counter - 1))
     brick_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " brick")
     if fl_dyes.dyes[counter][2] == "White" then
         brick_item:get_meta():set_string("description", "brick")
     end
-    minetest.register_craft({
+    core.register_craft({
         output = brick_item:to_string(),
         type = "shapeless",
         recipe = {
@@ -77,7 +77,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
             "fl_dyes:" .. dye[1] .. "_dye"
         },
     })
-    minetest.register_craft({
+    core.register_craft({
         output = brick_item:to_string(),
         recipe = {
             {"fl_bricks:raw_brick", "fl_bricks:raw_brick", "fl_dyes:" .. dye[1] .. "_dye"},
@@ -87,9 +87,9 @@ for counter, dye in pairs(fl_dyes.dyes) do
     })
 end
 
-local out_item = ItemStack(minetest.itemstring_with_palette("fl_bricks:brick", 0))
+local out_item = ItemStack(core.itemstring_with_palette("fl_bricks:brick", 0))
 out_item:get_meta():set_string("description", "brick")
-minetest.register_craft({
+core.register_craft({
     output = out_item:to_string(),
     recipe = {
         {"fl_bricks:raw_brick", "fl_bricks:raw_brick", ""},
@@ -98,7 +98,7 @@ minetest.register_craft({
     }
 })
 
-minetest.register_craft({
+core.register_craft({
     output = "fl_bricks:clay_block",
     recipe = {
         {"fl_bricks:clay", "fl_bricks:clay", ""},

@@ -4,7 +4,7 @@ fl_beds.active_beds = {}
 
 for counter, dye in pairs(fl_dyes.dyes) do
     local cwool = "farlands_wool.png\\^[multiply\\:" .. fl_dyes.dyes[counter][3]
-    minetest.register_node("fl_beds:bed_" .. fl_dyes.dyes[counter][1], {
+    core.register_node("fl_beds:bed_" .. fl_dyes.dyes[counter][1], {
         description = fl_dyes.dyes[counter][2] .. " bed",
         inventory_image = "farlands_beds_" .. fl_dyes.dyes[counter][1] .. ".png",
         wield_image = "farlands_beds_" .. fl_dyes.dyes[counter][1] .. ".png",
@@ -25,35 +25,35 @@ for counter, dye in pairs(fl_dyes.dyes) do
             "16,9=farlands_apple_planks.png:16,25=farlands_apple_planks.png" --bottom
         },
         after_place_node = function(pos, placer, itemstack)
-            local base = minetest.get_node_or_nil(pos)
-            if not base or not base.param2 then minetest.remove_node(pos) return true end
-            local dir = minetest.facedir_to_dir(base.param2)
+            local base = core.get_node_or_nil(pos)
+            if not base or not base.param2 then core.remove_node(pos) return true end
+            local dir = core.facedir_to_dir(base.param2)
             local head_pos = {x=pos.x+dir.x,y=pos.y,z=pos.z+dir.z}
-            local head = minetest.get_node_or_nil(head_pos)
-            local def = minetest.registered_items[head.name] or nil
+            local head = core.get_node_or_nil(head_pos)
+            local def = core.registered_items[head.name] or nil
             if not head or not def or not def.buildable_to then
-                minetest.remove_node(pos)
-                minetest.chat_send_player(placer:get_player_name(), "[fl_beds]: No room to place the bed!")
+                core.remove_node(pos)
+                core.chat_send_player(placer:get_player_name(), "[fl_beds]: No room to place the bed!")
                 return true
             end
-            minetest.set_node(pos, {name = base.name, param2 = base.param2})
+            core.set_node(pos, {name = base.name, param2 = base.param2})
             return false
         end,
         -- non complete bed sleep function that needs to be completed
         on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
             local cname = clicker:get_player_name()
-            local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
+            local dir = core.facedir_to_dir(core.get_node(pos).param2)
             local mpos = {x = pos.x + dir.x/2, y = pos.y+.07, z = pos.z+dir.z/2}
-            local pos_hash = minetest.hash_node_position(pos)
-            local time = minetest.get_timeofday()
+            local pos_hash = core.hash_node_position(pos)
+            local time = core.get_timeofday()
 
             if fl_beds.data[cname] then return end
 
             if fl_beds.active_beds[pos_hash] and not fl_beds.data[cname] then
-                minetest.chat_send_player(cname, "[fl_beds]: bed already in use")
+                core.chat_send_player(cname, "[fl_beds]: bed already in use")
                 return
             elseif time > 0.2 and time < 0.805 then
-                minetest.chat_send_player(cname, "[fl_beds]: its not night you fool")
+                core.chat_send_player(cname, "[fl_beds]: its not night you fool")
                 return
             end
             fl_beds.data[cname] = {}
@@ -69,11 +69,11 @@ for counter, dye in pairs(fl_dyes.dyes) do
             clicker:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
             fl_beds.active = true
 
-            minetest.after(5, function()
+            core.after(5, function()
                 if not fl_beds.active then return end
-                minetest.set_timeofday(0.23)
+                core.set_timeofday(0.23)
                 for name, pdata in pairs(fl_beds.data) do
-                    local player = minetest.get_player_by_name(name)
+                    local player = core.get_player_by_name(name)
                     player:set_pos(pdata.spawn_pos)
                     fl_player.ignore[name] = nil
                     player:set_physics_override({
@@ -95,9 +95,9 @@ for counter, dye in pairs(fl_dyes.dyes) do
     })
 
     --note that this does not work properly in the engine, only exists for i3, see craft_hacks
-    local wool = ItemStack(minetest.itemstring_with_palette("fl_wool:wool", counter - 1))
+    local wool = ItemStack(core.itemstring_with_palette("fl_wool:wool", counter - 1))
     wool:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " wool")
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_beds:bed_" .. fl_dyes.dyes[counter][1],
         recipe = {
             {wool:to_string(), wool:to_string(), wool:to_string()},
@@ -105,7 +105,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
         },
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_beds:bed_" .. fl_dyes.dyes[counter][1],
         type = "shapeless",
         recipe = {
@@ -134,10 +134,10 @@ local function craft_hacks(itemstack, player, old_craft_grid, craft_inv)
     return ItemStack()
 end
 
-minetest.register_craft_predict(craft_hacks)
-minetest.register_on_craft(craft_hacks)
+core.register_craft_predict(craft_hacks)
+core.register_on_craft(craft_hacks)
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local colors = {}
     for counter, dye in pairs(fl_dyes.dyes) do
         if dye[1] ~= "red" then table.insert(colors, dye[1]) end

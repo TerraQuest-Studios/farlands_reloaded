@@ -19,7 +19,7 @@ local material_list = {
 
 local function make_pickaxe(name, factor)
     if not factor then factor = {} end
-    minetest.register_tool("fl_tools:" .. name .. "_pick", {
+    core.register_tool("fl_tools:" .. name .. "_pick", {
         description = name .. " pick",
         inventory_image = "farlands_" .. name .. "_pick.png",
         tool_capabilities = {
@@ -58,7 +58,7 @@ local function make_pickaxe(name, factor)
     })
 
     local material = material_list[name] or "fl_ores:" .. name .. "_ore"
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_pick",
         recipe = {
             {material, material, material},
@@ -77,7 +77,7 @@ make_pickaxe("diamond", {4, 7.5, 4, 5.4})
 
 local function make_axe(name, factor)
     if not factor then factor = {} end
-    minetest.register_tool("fl_tools:" .. name .. "_axe", {
+    core.register_tool("fl_tools:" .. name .. "_axe", {
         description = name .. " axe",
         inventory_image = "farlands_" .. name .. "_axe.png",
         tool_capabilities = {
@@ -97,7 +97,7 @@ local function make_axe(name, factor)
     })
 
     local material = material_list[name] or "fl_ores:" .. name .. "_ore"
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_axe",
         recipe = {
             {material, material, ""},
@@ -106,7 +106,7 @@ local function make_axe(name, factor)
         }
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_axe",
         recipe = {
             {"", material, material},
@@ -125,7 +125,7 @@ make_axe("diamond", {7.2})
 
 local function make_shovel(name, factor)
     if not factor then factor = {} end
-    minetest.register_tool("fl_tools:" .. name .. "_shovel", {
+    core.register_tool("fl_tools:" .. name .. "_shovel", {
         description = name .. " shovel",
         inventory_image = "farlands_" .. name .. "_shovel.png",
         tool_capabilities = {
@@ -158,7 +158,7 @@ local function make_shovel(name, factor)
     })
 
     local material = material_list[name] or "fl_ores:" .. name .. "_ore"
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_shovel",
         recipe = {
             {material},
@@ -178,7 +178,7 @@ make_shovel("diamond", {4.2, 4.8, 6})
 --adress damage groups for mobs
 local function make_sword(name, factor)
     if not factor then factor = {} end
-    minetest.register_tool("fl_tools:" .. name .. "_sword", {
+    core.register_tool("fl_tools:" .. name .. "_sword", {
         description = name .. " sword",
         inventory_image = "farlands_" .. name .. "_sword.png",
         tool_capabilities = {
@@ -197,7 +197,7 @@ local function make_sword(name, factor)
     })
 
     local material = material_list[name] or "fl_ores:" .. name .. "_ore"
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_sword",
         recipe = {
             {material},
@@ -217,7 +217,7 @@ make_sword("diamond")
 --need to add in tool wear
 local function make_hoe(name, factor)
     if not factor then factor = {} end
-    minetest.register_tool("fl_tools:" .. name .. "_hoe", {
+    core.register_tool("fl_tools:" .. name .. "_hoe", {
         description = name .. " hoe",
         inventory_image = "farlands_" .. name .. "_hoe.png",
         tool_capabilities = {
@@ -233,11 +233,11 @@ local function make_hoe(name, factor)
         },
         on_use = function(itemstack, user, pointed_thing)
             if pointed_thing.type ~= "node" then return end
-            local node = minetest.get_node_or_nil(pointed_thing.under)
+            local node = core.get_node_or_nil(pointed_thing.under)
             if not node then return end
-            if minetest.is_protected(pointed_thing.under, user:get_player_name()) then return end
-            if minetest.get_node_group(node.name, "farm_convert") == 1 then
-                minetest.swap_node(pointed_thing.under, {name = "fl_topsoil:dry_farmland"})
+            if core.is_protected(pointed_thing.under, user:get_player_name()) then return end
+            if core.get_item_group(node.name, "farm_convert") == 1 then
+                core.swap_node(pointed_thing.under, {name = "fl_topsoil:dry_farmland"})
             end
         end,
         _dungeon_loot = {chance = math.random(0.1, 0.3)},
@@ -245,7 +245,7 @@ local function make_hoe(name, factor)
     })
 
     local material = material_list[name] or "fl_ores:" .. name .. "_ore"
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_hoe",
         recipe = {
             {material, material, ""},
@@ -254,7 +254,7 @@ local function make_hoe(name, factor)
         }
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_tools:" .. name .. "_hoe",
         recipe = {
             {"", material, material},
@@ -298,7 +298,7 @@ make_anvil_crafts("steel")
 make_anvil_crafts("stone")
 make_anvil_crafts("wood")
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     for _, type in pairs(types) do
         i3.compress("fl_tools:diamond" .. type, {
             replace = "diamond",

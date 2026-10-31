@@ -1,4 +1,4 @@
-minetest.register_entity("fl_wildlife:trader", {
+core.register_entity("fl_wildlife:trader", {
     physical = true,
     stepheight = 1.1,
     collide_with_objects = true,
@@ -108,7 +108,7 @@ minetest.register_entity("fl_wildlife:trader", {
 
         --show formspec
         local trader_formspec = table.concat(formspec, "")
-        minetest.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", trader_formspec)
+        core.show_formspec(clicker:get_player_name(), "fl_wildlife:trader_formspec", trader_formspec)
     end,
 
    --more mte properties

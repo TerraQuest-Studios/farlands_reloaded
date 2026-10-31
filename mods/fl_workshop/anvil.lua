@@ -2,7 +2,7 @@
 --do note that because of this method, crafts can be registered during game play,
 --however will not show up in registered_crafts
 local registered_anvil_crafts = {}
-minetest.register_on_mods_loaded(function()
+core.register_on_mods_loaded(function()
     fl_workshop.registered_anvil_crafts = table.copy(registered_anvil_crafts)
 end)
 
@@ -35,7 +35,7 @@ fl_workshop.register_anvil_craft({
 --table containing players currently shown anvil formspec
 viewing_anvil = {}
 
-minetest.register_node("fl_workshop:anvil", {
+core.register_node("fl_workshop:anvil", {
     description = "anvil",
     paramtype = "light",
     paramtype2 = "facedir",
@@ -62,7 +62,7 @@ minetest.register_node("fl_workshop:anvil", {
     },
     tiles = {"farlands_anvil.png"},
     on_construct = function(pos)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         inv:set_size("input", 2)
         inv:set_size("output", 1)
     end,
@@ -141,7 +141,7 @@ minetest.register_node("fl_workshop:anvil", {
 
         --show formspec
         local chest_formspec = table.concat(formspec, "")
-        minetest.show_formspec(clicker:get_player_name(), "fl_workshop:anvil_formspec", chest_formspec)
+        core.show_formspec(clicker:get_player_name(), "fl_workshop:anvil_formspec", chest_formspec)
         viewing_anvil[clicker:get_player_name()] = pos
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -150,14 +150,14 @@ minetest.register_node("fl_workshop:anvil", {
     allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
         if to_list == "output" then return 0
         elseif from_list == "output" and to_list == "input" then
-            local inv = minetest.get_meta(pos):get_inventory()
+            local inv = core.get_meta(pos):get_inventory()
             if inv:get_stack(to_list, to_index):is_empty() then return count else return 0 end
         else return 0 end
     end,
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         if listname == "input" and inv:get_stack(listname, 1):get_name() == inv:get_stack(listname, 2):get_name() then
-            if minetest.get_item_group(inv:get_stack(listname, index):get_name(), "tool")  ~= 0 then
+            if core.get_item_group(inv:get_stack(listname, index):get_name(), "tool")  ~= 0 then
                 local out_stack = inv:get_stack(listname, 1)
                 local out_wear = inv:get_stack(listname, 2):get_wear()
                 out_stack:set_wear(65535 - ((65535 - inv:get_stack(listname, 1):get_wear()) + (65535 - out_wear)))
@@ -165,7 +165,7 @@ minetest.register_node("fl_workshop:anvil", {
                 return
             end
         end
-        if minetest.get_item_group(inv:get_stack("input", 2):get_name(), "dye") ~= 0
+        if core.get_item_group(inv:get_stack("input", 2):get_name(), "dye") ~= 0
         and inv:get_stack("input", 1):get_name() ~= "" then
             --minetest.chat_send_all("sucess")
             local color
@@ -180,17 +180,17 @@ minetest.register_node("fl_workshop:anvil", {
                 local out_stack = ItemStack(inv:get_stack("input", 1):get_name())
                 out_stack:get_meta():set_string(
                     "description",
-                    minetest.colorize(
+                    core.colorize(
                         color,
-                        minetest.strip_colors(inv:get_stack("input", 1):get_meta():get_string("description"))
+                        core.strip_colors(inv:get_stack("input", 1):get_meta():get_string("description"))
                     )
                 )
                 inv:set_stack("output", 1, out_stack)
             else
-                if not minetest.registered_items[inv:get_stack("input", 1):get_name()] then return end
-                local desc = minetest.registered_items[inv:get_stack("input", 1):get_name()].description
+                if not core.registered_items[inv:get_stack("input", 1):get_name()] then return end
+                local desc = core.registered_items[inv:get_stack("input", 1):get_name()].description
                 local out_stack = ItemStack(inv:get_stack("input", 1):get_name())
-                out_stack:get_meta():set_string("description", minetest.colorize(color, desc))
+                out_stack:get_meta():set_string("description", core.colorize(color, desc))
                 inv:set_stack("output", 1, out_stack)
             end
         end
@@ -204,7 +204,7 @@ minetest.register_node("fl_workshop:anvil", {
         end
     end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         if listname == "input" then inv:set_stack("output", 1, ItemStack(""))
         elseif listname == "output" then
             local one = inv:get_stack("input", 1)
@@ -216,22 +216,22 @@ minetest.register_node("fl_workshop:anvil", {
         end
     end,
     on_dig = function(pos, node, digger)
-        local inv = minetest.get_inventory({type="node", pos=pos})
+        local inv = core.get_inventory({type="node", pos=pos})
         for _, item in ipairs(inv:get_list("input")) do
             local posi = {
                 x=pos.x + (math.random(-2,2)/5),
                 y=pos.y + (math.random(0,2)/5),
                 z=pos.z + (math.random(-2,2)/5),
             }
-            minetest.add_item(posi, item)
+            core.add_item(posi, item)
         end
-        minetest.node_dig(pos, node, digger)
+        core.node_dig(pos, node, digger)
     end,
-    on_place = minetest.rotate_node,
+    on_place = core.rotate_node,
     groups = {oddly_breakable_by_hand = 1},
 })
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
     if formname ~= "fl_workshop:anvil_formspec" then return end
     if fields.quit == "true" then
         viewing_anvil[player:get_player_name()] = nil
@@ -240,7 +240,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
     --minetest.chat_send_all(dump(fields))
 
-    local anvil_inv = minetest.get_inventory({type = "node", pos = viewing_anvil[player:get_player_name()]})
+    local anvil_inv = core.get_inventory({type = "node", pos = viewing_anvil[player:get_player_name()]})
     if fields.description and not anvil_inv:get_stack("output", 1):is_empty() and fields.description ~= "" then
         local desc = fields.description
         local i, j = string.find(anvil_inv:get_stack("output", 1):get_meta():get_string("description"), "%(c@[^)]+%)")

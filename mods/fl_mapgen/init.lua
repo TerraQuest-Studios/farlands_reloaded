@@ -1,4 +1,4 @@
-local modpath = minetest.get_modpath("fl_mapgen")
+local modpath = core.get_modpath("fl_mapgen")
 
 dofile(modpath .. "/aliases.lua")
 dofile(modpath .. "/abm.lua")

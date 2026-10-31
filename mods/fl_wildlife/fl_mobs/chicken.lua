@@ -24,14 +24,14 @@ function chicken_brain(self)
         end
 
         if math.random(1000) <=1 then
-            minetest.add_item(mobkit.get_stand_pos(self), "fl_wildlife:chicken_egg")
+            core.add_item(mobkit.get_stand_pos(self), "fl_wildlife:chicken_egg")
         end
 
     end
 
 end
 
-minetest.register_entity("fl_wildlife:chicken", {
+core.register_entity("fl_wildlife:chicken", {
     --mte object properties
     initial_properties = {
         physical = true,

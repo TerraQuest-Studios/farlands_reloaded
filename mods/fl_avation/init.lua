@@ -4,7 +4,7 @@ local min = math.min
 --vars
 local speed_limit = 10
 
-minetest.register_entity("fl_avation:airballoon", {
+core.register_entity("fl_avation:airballoon", {
     initial_properties = {
         visual = "mesh",
         mesh = "farlands_airballoon.b3d",
@@ -24,8 +24,8 @@ minetest.register_entity("fl_avation:airballoon", {
 
         local driver
         local controls
-        if mobkit.recall(self, "driver") and minetest.get_player_by_name(mobkit.recall(self, "driver")) then
-            driver = minetest.get_player_by_name(mobkit.recall(self, "driver"))
+        if mobkit.recall(self, "driver") and core.get_player_by_name(mobkit.recall(self, "driver")) then
+            driver = core.get_player_by_name(mobkit.recall(self, "driver"))
             controls = driver:get_player_control()
         else
             mobkit.forget(self, "driver")

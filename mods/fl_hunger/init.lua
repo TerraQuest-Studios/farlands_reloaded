@@ -20,7 +20,7 @@
 --]]
 
 --do nothing here if damage not enabled
-if not minetest.settings:get_bool("enable_damage") then return end
+if not core.settings:get_bool("enable_damage") then return end
 
 local hunger_data = {}
 
@@ -54,7 +54,7 @@ core.hud_replace_builtin("health", health_bar_def)
 
 
 --init data
-minetest.register_on_joinplayer(function(player, last_login)
+core.register_on_joinplayer(function(player, last_login)
     local hv = player:get_meta():get("hunger_value") or 20
     hunger_data[player:get_player_name()] = {hunger_value = hv, node_interact = 0}
 
@@ -78,24 +78,24 @@ local function save_hunger(player)
     if not data then return end
     player:get_meta():set_string("hunger_value", data["hunger_value"])
 end
-minetest.register_on_leaveplayer(function(player, timed_out)
+core.register_on_leaveplayer(function(player, timed_out)
     save_hunger(player)
 end)
-minetest.register_on_shutdown(function()
-    for _, player in pairs(minetest.get_connected_players()) do
+core.register_on_shutdown(function()
+    for _, player in pairs(core.get_connected_players()) do
         save_hunger(player)
     end
 end)
 local function write_data()
-    for _, player in pairs(minetest.get_connected_players()) do
+    for _, player in pairs(core.get_connected_players()) do
         save_hunger(player)
     end
-    minetest.after(600, write_data)
+    core.after(600, write_data)
 end
-minetest.after(600, write_data)
+core.after(600, write_data)
 
-local old_eat = minetest.do_item_eat
-function minetest.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
+local old_eat = core.do_item_eat
+function core.do_item_eat(hp_change, replace_with_item, itemstack, user, pointed_thing)
 
     if tonumber(hunger_data[user:get_player_name()]["hunger_value"]) < 20 then
         local hpchange = 0
@@ -148,11 +148,11 @@ local function node_hunger(_, _, player, test, _, _, _, _, _, val)
     hunger_data[pname]["node_interact"] = interaction
 end
 
-minetest.register_on_placenode(node_hunger)
-minetest.register_on_dignode(node_hunger)
+core.register_on_placenode(node_hunger)
+core.register_on_dignode(node_hunger)
 
 local function after()
-    for _, player in pairs(minetest.get_connected_players()) do
+    for _, player in pairs(core.get_connected_players()) do
         local controls = player:get_player_control()
         if controls.up or controls.down or controls.left or controls.right then
             node_hunger(nil, nil, player, "randomness")
@@ -160,10 +160,10 @@ local function after()
             node_hunger(nil, nil, player)
         end
     end
-    minetest.after(4, after)
+    core.after(4, after)
 end
 
-minetest.after(4, after)
+core.after(4, after)
 
 
 

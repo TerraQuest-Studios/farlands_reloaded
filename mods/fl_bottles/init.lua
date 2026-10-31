@@ -1,24 +1,24 @@
-minetest.register_craftitem("fl_bottles:water", {
+core.register_craftitem("fl_bottles:water", {
     description = "bottle with water",
     inventory_image = "farlands_bottle_blue.png",
     groups = {bottle = 1, vessel = 1},
 })
 
-minetest.register_craftitem("fl_bottles:river_water", {
+core.register_craftitem("fl_bottles:river_water", {
     description = "bottle with river water",
     inventory_image = "farlands_bottle_aqua.png",
     groups = {bottle = 1, vessel = 1},
 })
 
-minetest.register_craftitem("fl_bottles:bottle", {
+core.register_craftitem("fl_bottles:bottle", {
     description = "empty bottle",
     inventory_image = "farlands_bottle_empty.png",
     liquids_pointable = true,
     on_use = function(itemstack, user, pointed_thing)
         if pointed_thing.type ~= "node" then return end
 
-        local node = minetest.get_node(pointed_thing.under)
-        local node_def = minetest.registered_nodes[node.name]
+        local node = core.get_node(pointed_thing.under)
+        local node_def = core.registered_nodes[node.name]
 
         if user and not user:get_player_control().sneak then
             if node_def.on_rightclick then
@@ -36,7 +36,7 @@ minetest.register_craftitem("fl_bottles:bottle", {
                 else
                     local pos = user:get_pos()
                     pos.y = math.floor(pos.y + 0.5)
-                    minetest.add_item(pos, node_def._bottle_item)
+                    core.add_item(pos, node_def._bottle_item)
                 end
                 itemstack:take_item()
                 return itemstack
@@ -47,19 +47,19 @@ minetest.register_craftitem("fl_bottles:bottle", {
     groups = {bottle = 1, vessel = 1},
 })
 
-minetest.register_craft({
+core.register_craft({
     type = "shapeless",
     output = "fl_bottles:bottle 16",
     recipe = {"group:glass_block"}
 })
 
-minetest.register_craft({
+core.register_craft({
     type = "shapeless",
     output = "fl_bottles:bottle",
     recipe = {"group:glass_pane"}
 })
 
-minetest.register_craftitem("fl_bottles:invisibility", {
+core.register_craftitem("fl_bottles:invisibility", {
     description = "bottle of invisibilty",
     inventory_image = "farlands_bottle_darkpurple.png",
     --on_use throw, particles, anyone nearby gets invisibility
@@ -76,11 +76,11 @@ minetest.register_craftitem("fl_bottles:invisibility", {
         })
         placer:set_nametag_attributes({color = {a = 0, r = 255, g = 255, b = 255}})
 
-        minetest.after(60,
+        core.after(60,
             function()
                 --minetest.chat_send_all("after")
-                if minetest.get_player_by_name(pname) then
-                    local player = minetest.get_player_by_name(pname)
+                if core.get_player_by_name(pname) then
+                    local player = core.get_player_by_name(pname)
                     player:get_meta():set_int("vanish", 0)
                     player:get_meta():set_int("in_vanish", 0)
                     player:set_properties({
@@ -95,7 +95,7 @@ minetest.register_craftitem("fl_bottles:invisibility", {
         )
 
         if not (placer and placer:is_player()
-            and minetest.is_creative_enabled(placer:get_player_name()))
+            and core.is_creative_enabled(placer:get_player_name()))
         then
             itemstack:take_item()
         end
@@ -103,13 +103,13 @@ minetest.register_craftitem("fl_bottles:invisibility", {
     end,
 })
 
-minetest.register_on_leaveplayer(function(player, _)
+core.register_on_leaveplayer(function(player, _)
     player:get_meta():set_int("vanish", 0)
     player:get_meta():set_int("in_vanish", 0)
 end)
 
-minetest.register_on_shutdown(function()
-    for _, player in pairs(minetest.get_connected_players()) do
+core.register_on_shutdown(function()
+    for _, player in pairs(core.get_connected_players()) do
         player:get_meta():set_int("vanish", 0)
         player:get_meta():set_int("in_vanish", 0)
     end

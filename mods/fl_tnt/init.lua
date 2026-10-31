@@ -13,9 +13,9 @@ local loss_prob = {}
 
 -- Fill a list with data for content IDs, after all nodes are registered
 local cid_data = {}
-minetest.register_on_mods_loaded(function()
-	for name, def in pairs(minetest.registered_nodes) do
-		cid_data[minetest.get_content_id(name)] = {
+core.register_on_mods_loaded(function()
+	for name, def in pairs(core.registered_nodes) do
+		cid_data[core.get_content_id(name)] = {
 			name = name,
 			drops = def.drops,
 			flammable = def.groups.flammable,
@@ -26,7 +26,7 @@ end)
 
 local function rand_pos(center, pos, radius)
 	local def
-	local reg_nodes = minetest.registered_nodes
+	local reg_nodes = core.registered_nodes
 	local i = 0
 	repeat
 		-- Give up and use the center if this takes too long
@@ -36,7 +36,7 @@ local function rand_pos(center, pos, radius)
 		end
 		pos.x = center.x + math.random(-radius, radius)
 		pos.z = center.z + math.random(-radius, radius)
-		def = reg_nodes[minetest.get_node(pos).name]
+		def = reg_nodes[core.get_node(pos).name]
 		i = i + 1
 	until def and not def.walkable
 end
@@ -52,7 +52,7 @@ local function eject_drops(drops, pos, radius)
 			rand_pos(pos, drop_pos, radius)
 			local dropitem = ItemStack(item)
 			dropitem:set_count(take)
-			local obj = minetest.add_item(drop_pos, dropitem)
+			local obj = core.add_item(drop_pos, dropitem)
 			if obj then
 				obj:get_luaentity().collect = true
 				obj:set_acceleration({x = 0, y = -10, z = 0})
@@ -84,7 +84,7 @@ local basic_flame_on_construct -- cached value
 local function destroy(drops, npos, cid, c_air, c_fire,
 		on_blast_queue, on_construct_queue,
 		ignore_protection, ignore_on_blast, owner)
-	if not ignore_protection and minetest.is_protected(npos, owner) then
+	if not ignore_protection and core.is_protected(npos, owner) then
 		return cid
 	end
 
@@ -112,7 +112,7 @@ local function destroy(drops, npos, cid, c_air, c_fire,
         --minetest.chat_send_all("flammable")
 		return c_fire
 	else
-		local node_drops = minetest.get_node_drops(def.name, "")
+		local node_drops = core.get_node_drops(def.name, "")
 		for _, item in pairs(node_drops) do
 			add_drop(drops, item)
 		end
@@ -155,7 +155,7 @@ local function calc_velocity(pos1, pos2, old_vel, power)
 end
 
 local function entity_physics(pos, radius, drops)
-	local objs = minetest.get_objects_inside_radius(pos, radius)
+	local objs = core.get_objects_inside_radius(pos, radius)
 	for _, obj in pairs(objs) do
 		local obj_pos = obj:get_pos()
 		local dist = math.max(1, vector.distance(pos, obj_pos))
@@ -175,7 +175,7 @@ local function entity_physics(pos, radius, drops)
 				local do_damage = true
 				local do_knockback = true
 				local entity_drops = {}
-				local objdef = minetest.registered_entities[luaobj.name]
+				local objdef = core.registered_entities[luaobj.name]
 
 				if objdef and objdef.on_blast then
 					do_damage, do_knockback, entity_drops = objdef.on_blast(luaobj, damage)
@@ -203,7 +203,7 @@ local function entity_physics(pos, radius, drops)
 end
 
 local function add_effects(pos, radius, drops)
-	minetest.add_particle({
+	core.add_particle({
 		pos = pos,
 		velocity = {x=0, y=1, z=0},
 		acceleration = vector.new(),
@@ -215,7 +215,7 @@ local function add_effects(pos, radius, drops)
         animation = {type="vertical_frames", aspect_w=32, aspect_h=32, frame_length=1},
 		glow = 15,
 	})
-	minetest.add_particlespawner({
+	core.add_particlespawner({
 		amount = 16,
 		time = 0.5,
 		minpos = vector.subtract(pos, radius / 2),
@@ -231,7 +231,7 @@ local function add_effects(pos, radius, drops)
 		texture = "farlands_explosion_small.png",
         animation = {type="vertical_frames", aspect_w=32, aspect_h=32, frame_length=1},
 	})
-    minetest.add_particlespawner({
+    core.add_particlespawner({
 		amount = 32,
 		time = 0.5,
 		minpos = vector.subtract(pos, radius / 2),
@@ -247,8 +247,8 @@ local function add_effects(pos, radius, drops)
 		texture = "farlands_smoke.png",
         animation = {type="vertical_frames", aspect_w=32, aspect_h=32, frame_length=1},
 	})
-    minetest.after(0.2, function()
-		minetest.add_particle({
+    core.after(0.2, function()
+		core.add_particle({
 			pos = {x=pos.x-0.5, y=pos.y-0.5, z=pos.z},
 			velocity = {x=0, y=1, z=0},
 			acceleration = {x=0, y=0, z=0},
@@ -261,8 +261,8 @@ local function add_effects(pos, radius, drops)
 			glow = 10
 		})
 	end)
-	minetest.after(0.4, function()
-		minetest.add_particle({
+	core.after(0.4, function()
+		core.add_particle({
 			pos = {x=pos.x+0.5, y=pos.y+0.5, z=pos.z+0.5},
 			velocity = {x=0, y=1, z=0},
 			acceleration = {x=0, y=0, z=0},
@@ -285,7 +285,7 @@ local function add_effects(pos, radius, drops)
 		local count = stack:get_count()
 		if count > most then
 			most = count
-			local def = minetest.registered_nodes[name]
+			local def = core.registered_nodes[name]
 			if def then
 				node = { name = name }
 			end
@@ -297,7 +297,7 @@ local function add_effects(pos, radius, drops)
 		end
 	end
 
-	minetest.add_particlespawner({
+	core.add_particlespawner({
 		amount = 64,
 		time = 0.1,
 		minpos = vector.subtract(pos, radius / 2),
@@ -328,8 +328,8 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
 	local data = vm1:get_data()
 	local count = 0
-	local c_air = minetest.get_content_id("air")
-    local c_tnt = minetest.get_content_id("fl_tnt:tnt")
+	local c_air = core.get_content_id("air")
+    local c_tnt = core.get_content_id("fl_tnt:tnt")
 
 	-- make sure we still have explosion even when centre node isnt tnt related
 	if explode_center then
@@ -342,7 +342,7 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 		for x = pos.x - 2, pos.x + 2 do
             local cid = data[vi]
             if cid == c_tnt then
-                minetest.add_entity({x = x, y = y, z = z}, "fl_tnt:tnt_entity")
+                core.add_entity({x = x, y = y, z = z}, "fl_tnt:tnt_entity")
                 count = count + 1
 				data[vi] = c_air
             end
@@ -371,9 +371,9 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 	local drops = {}
 	local on_blast_queue = {}
 	local on_construct_queue = {}
-	basic_flame_on_construct = minetest.registered_nodes["fl_stone:ors"].on_construct
+	basic_flame_on_construct = core.registered_nodes["fl_stone:ors"].on_construct
 
-	local c_fire = minetest.get_content_id("fl_stone:ors")
+	local c_fire = core.get_content_id("fl_stone:ors")
 	for z = -radius, radius do
 	for y = -radius, radius do
 	local vi = a:index(pos.x + (-radius), pos.y + y, pos.z + z)
@@ -406,7 +406,7 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 		local s = vector.add(pos, rad)
 		local r = vector.length(rad)
 		if r / radius < 1.4 then
-			minetest.check_single_for_falling(s)
+			core.check_single_for_falling(s)
 		end
 	end
 	end
@@ -427,8 +427,8 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast, owne
 		queued_data.fn(queued_data.pos)
 	end
 
-	minetest.log("action", "TNT owned by " .. owner .. " detonated at " ..
-		minetest.pos_to_string(pos) .. " with radius " .. radius)
+	core.log("action", "TNT owned by " .. owner .. " detonated at " ..
+		core.pos_to_string(pos) .. " with radius " .. radius)
 
 	return drops, radius
 end
@@ -438,7 +438,7 @@ function fl_tnt.boom(pos, def)
 	def.radius = def.radius or 4
     --def.radius = 4
 	def.damage_radius = def.damage_radius or def.radius * 2
-	local meta = minetest.get_meta(pos)
+	local meta = core.get_meta(pos)
 	local owner = meta:get_string("owner")
     --[[
 	local sound = def.sound or "tnt_explode"
@@ -454,13 +454,13 @@ function fl_tnt.boom(pos, def)
 		eject_drops(drops, pos, radius)
 	end
 	add_effects(pos, radius, drops)
-	minetest.log("action", "A TNT explosion occurred at " .. minetest.pos_to_string(pos) ..
+	core.log("action", "A TNT explosion occurred at " .. core.pos_to_string(pos) ..
 		" with radius " .. radius)
 end
 
 --start node/entity logic
 
-minetest.register_entity("fl_tnt:tnt_entity", {
+core.register_entity("fl_tnt:tnt_entity", {
     initial_properties = {
         hp_max = 1,
         physical = true,
@@ -513,19 +513,19 @@ minetest.register_entity("fl_tnt:tnt_entity", {
 
 })
 
-minetest.register_node("fl_tnt:tnt", {
+core.register_node("fl_tnt:tnt", {
     description = "tnt",
     tiles = {"farlands_tnt_top.png", "farlands_tnt_bottom.png", "farlands_tnt_side.png"},
     on_punch = function(pos, node, puncher)
-		if minetest.is_protected(pos, puncher:get_player_name()) then return end
-        minetest.remove_node(pos)
-        local entity = minetest.add_entity(pos, "fl_tnt:tnt_entity")
+		if core.is_protected(pos, puncher:get_player_name()) then return end
+        core.remove_node(pos)
+        local entity = core.add_entity(pos, "fl_tnt:tnt_entity")
         entity:set_velocity({x=0, y=4, z=0})
     end,
 	on_ignite = function(pos, user)
-		if minetest.is_protected(pos, user:get_player_name()) then return end
-        minetest.remove_node(pos)
-        local entity = minetest.add_entity(pos, "fl_tnt:tnt_entity")
+		if core.is_protected(pos, user:get_player_name()) then return end
+        core.remove_node(pos)
+        local entity = core.add_entity(pos, "fl_tnt:tnt_entity")
         entity:set_velocity({x=0, y=4, z=0})
 	end,
     groups = {snappy = 3},

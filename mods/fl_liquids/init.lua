@@ -1,4 +1,4 @@
-local modpath = minetest.get_modpath("fl_liquids")
+local modpath = core.get_modpath("fl_liquids")
 local water_inventory_image =
 "[inventorycube{farlands_water_source_animated.png&[verticalframe:16:8"
 .. "{farlands_water_source_animated.png&[verticalframe:16:8"
@@ -17,20 +17,20 @@ local function bucket_func(itemstack, user, pos, bucket, liquid)
         else
             local ppos = user:get_pos()
             ppos.y = math.floor(pos.y + 0.5)
-            minetest.add_item(ppos, bucket)
+            core.add_item(ppos, bucket)
         end
-        local renew = minetest.find_node_near(pos, 1, liquid)
-        if not renew then minetest.add_node(pos, {name = "air"}) end
+        local renew = core.find_node_near(pos, 1, liquid)
+        if not renew then core.add_node(pos, {name = "air"}) end
         itemstack:take_item()
         return itemstack
     end
 
-        local renew = minetest.find_node_near(pos, 1, liquid)
-        if not renew then minetest.add_node(pos, {name = "air"}) end
+        local renew = core.find_node_near(pos, 1, liquid)
+        if not renew then core.add_node(pos, {name = "air"}) end
         return ItemStack(bucket)
 end
 
-minetest.register_node("fl_liquids:water_source", {
+core.register_node("fl_liquids:water_source", {
 	description = "Water Source",
 	drawtype = "liquid",
 	waving = 3,
@@ -80,7 +80,7 @@ minetest.register_node("fl_liquids:water_source", {
     end,
 })
 
-minetest.register_node("fl_liquids:water_flowing", {
+core.register_node("fl_liquids:water_flowing", {
 	description = "Flowing Water",
 	drawtype = "flowingliquid",
 	waving = 3,
@@ -126,7 +126,7 @@ minetest.register_node("fl_liquids:water_flowing", {
 })
 
 
-minetest.register_node("fl_liquids:river_water_source", {
+core.register_node("fl_liquids:river_water_source", {
 	description = "River Water Source",
 	drawtype = "liquid",
 	tiles = {
@@ -177,7 +177,7 @@ minetest.register_node("fl_liquids:river_water_source", {
     end,
 })
 
-minetest.register_node("fl_liquids:river_water_flowing", {
+core.register_node("fl_liquids:river_water_flowing", {
 	description = "Flowing River Water",
 	drawtype = "flowingliquid",
 	tiles = {"farlands_river_water.png"},
@@ -223,7 +223,7 @@ minetest.register_node("fl_liquids:river_water_flowing", {
 	groups = {water = 3, liquid = 3, not_in_creative_inventory = 1, cools_lava = 1, spawn_blacklist = 1},
 })
 
-minetest.register_node("fl_liquids:lava_source", {
+core.register_node("fl_liquids:lava_source", {
 	description = "Lava Source",
 	drawtype = "liquid",
 	tiles = {
@@ -270,7 +270,7 @@ minetest.register_node("fl_liquids:lava_source", {
     end,
 })
 
-minetest.register_node("fl_liquids:lava_flowing", {
+core.register_node("fl_liquids:lava_flowing", {
 	description = "Flowing Lava",
 	drawtype = "flowingliquid",
 	tiles = {"farlands_lava.png"},
@@ -316,9 +316,9 @@ minetest.register_node("fl_liquids:lava_flowing", {
 	groups = {lava = 3, liquid = 2, igniter = 1, not_in_creative_inventory = 1, spawn_blacklist = 1},
 })
 
-minetest.register_alias("fl_terrain:water_source", "fl_liquids:water_source")
-minetest.register_alias("fl_terrain:water_flowing", "fl_liquids:water_flowing")
-minetest.register_alias("fl_terrain:river_water_source", "fl_liquids:river_water_source")
-minetest.register_alias("fl_terrain:river_water_flowing", "fl_liquids:river_water_flowing")
-minetest.register_alias("fl_terrain:lava_source", "fl_liquids:lava_source")
-minetest.register_alias("fl_terrain:lava_flowing", "fl_liquids:lava_flowing")
+core.register_alias("fl_terrain:water_source", "fl_liquids:water_source")
+core.register_alias("fl_terrain:water_flowing", "fl_liquids:water_flowing")
+core.register_alias("fl_terrain:river_water_source", "fl_liquids:river_water_source")
+core.register_alias("fl_terrain:river_water_flowing", "fl_liquids:river_water_flowing")
+core.register_alias("fl_terrain:lava_source", "fl_liquids:lava_source")
+core.register_alias("fl_terrain:lava_flowing", "fl_liquids:lava_flowing")

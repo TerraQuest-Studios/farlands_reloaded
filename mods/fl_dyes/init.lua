@@ -27,7 +27,7 @@ fl_dyes.dyes = {
 
 --this exists for legacy reasons
 --maybe should be aliased to terracotta?
-minetest.register_node("fl_dyes:demo_node", {
+core.register_node("fl_dyes:demo_node", {
     description = "dye test node",
     tiles = {"farlands_demo.png"},
     paramtype = "light",
@@ -41,7 +41,7 @@ minetest.register_node("fl_dyes:demo_node", {
 })
 
 for _, dye in pairs(fl_dyes.dyes) do
-    minetest.register_craftitem("fl_dyes:" .. dye[1] .. "_dye", {
+    core.register_craftitem("fl_dyes:" .. dye[1] .. "_dye", {
         description = dye[2] .. " dye",
         inventory_image = "farlands_" .. dye[1] .. "_dye.png",
         groups = {dye = 1},
@@ -49,9 +49,9 @@ for _, dye in pairs(fl_dyes.dyes) do
 end
 
 for counter, dye in pairs(fl_dyes.dyes) do
-    local out_item = ItemStack(minetest.itemstring_with_palette("fl_dyes:demo_node", counter - 1))
+    local out_item = ItemStack(core.itemstring_with_palette("fl_dyes:demo_node", counter - 1))
     out_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " test_node")
-    minetest.register_craft({
+    core.register_craft({
         output = out_item:to_string(),
         type = "shapeless",
         recipe = {
@@ -61,7 +61,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
     })
 end
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local colors = {}
     for _, dye in pairs(fl_dyes.dyes) do
         if dye[1] ~= "red" then table.insert(colors, dye[1]) end

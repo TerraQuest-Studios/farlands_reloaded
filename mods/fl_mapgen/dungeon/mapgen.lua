@@ -1,9 +1,9 @@
 --sfan5 MIT
-minetest.set_gen_notify({dungeon = true, temple = true})
+core.set_gen_notify({dungeon = true, temple = true})
 
 dungeon_loot.biomes = {}
 
-for name, _ in pairs(minetest.registered_biomes) do
+for name, _ in pairs(core.registered_biomes) do
 	local split = name:split("_")
 	if not dungeon_loot.biomes[split[1]] then
 		dungeon_loot.biomes[split[1]] = true
@@ -30,7 +30,7 @@ local function find_walls(cpos)
 	end
 
 	local dirs = {{x=1, z=0}, {x=-1, z=0}, {x=0, z=1}, {x=0, z=-1}}
-	local get_node = minetest.get_node
+	local get_node = core.get_node
 
 	local ret = {}
 	local mindist = {x=0, z=0}
@@ -62,8 +62,8 @@ local function find_walls(cpos)
 		end
 	end
 
-	local biome = minetest.get_biome_data(cpos)
-	biome = biome and minetest.get_biome_name(biome.biome) or ""
+	local biome = core.get_biome_data(cpos)
+	biome = biome and core.get_biome_name(biome.biome) or ""
 	local type = "normal"
 	--[[
 	if biome:find("desert") == 1 then
@@ -98,14 +98,14 @@ local function populate_chest(pos, rand, dungeontype)
 	local items = {}
 	for _, loot in ipairs(item_list) do
 		if rand:next(0, 1000) / 1000 <= loot.chance then
-			local itemdef = minetest.registered_items[loot.name]
+			local itemdef = core.registered_items[loot.name]
 			local amount = 1
 			if loot.count ~= nil then
 				amount = rand:next(loot.count[1], loot.count[2])
 			end
 
 			if not itemdef then
-				minetest.log("warning", "Registered loot item " .. loot.name .. " does not exist")
+				core.log("warning", "Registered loot item " .. loot.name .. " does not exist")
 			elseif itemdef.tool_capabilities then
 				for n = 1, amount do
 					local wear = rand:next(0.20 * 65535, 0.75 * 65535) -- 20% to 75% wear
@@ -123,7 +123,7 @@ local function populate_chest(pos, rand, dungeontype)
 	end
 
 	-- place items at random places in chest
-	local inv = minetest.get_meta(pos):get_inventory()
+	local inv = core.get_meta(pos):get_inventory()
 	local listsz = inv:get_size("main")
 	assert(listsz >= #items)
 	for _, item in ipairs(items) do
@@ -137,15 +137,15 @@ local function populate_chest(pos, rand, dungeontype)
 end
 
 
-minetest.register_on_generated(function(minp, maxp, blockseed)
-	local gennotify = minetest.get_mapgen_object("gennotify")
+core.register_on_generated(function(minp, maxp, blockseed)
+	local gennotify = core.get_mapgen_object("gennotify")
 	local poslist = gennotify["dungeon"] or {}
 	for _, entry in ipairs(gennotify["temple"] or {}) do
 		table.insert(poslist, entry)
 	end
 	if #poslist == 0 then return end
 
-	local noise = minetest.get_perlin(10115, 4, 0.5, 1)
+	local noise = core.get_perlin(10115, 4, 0.5, 1)
 	local rand = PcgRandom(noise3d_integer(noise, poslist[1]))
 
 	local candidates = {}
@@ -176,10 +176,10 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 		local off = rand:next(-room.size[vi]/2 + 1, room.size[vi]/2 - 1)
 		chestpos = vector.add(chestpos, vector.multiply(v, off))
 
-		if minetest.get_node(chestpos).name == "air" then
+		if core.get_node(chestpos).name == "air" then
 			-- make it face inwards to the room
-			local facedir = minetest.dir_to_facedir(vector.multiply(wall.facing, -1))
-			minetest.add_node(chestpos, {name = "fl_storage:wood_chest", param2 = facedir})
+			local facedir = core.dir_to_facedir(vector.multiply(wall.facing, -1))
+			core.add_node(chestpos, {name = "fl_storage:wood_chest", param2 = facedir})
 			populate_chest(chestpos, PcgRandom(noise3d_integer(noise, chestpos)), room.type)
             --need to add in a way of placing spawners here
 		end

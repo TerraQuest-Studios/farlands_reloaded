@@ -1,4 +1,4 @@
-minetest.register_node("fl_wool:wool", {
+core.register_node("fl_wool:wool", {
     description = "wool",
     tiles = {"farlands_wool.png"},
     paramtype = "light",
@@ -12,7 +12,7 @@ minetest.register_node("fl_wool:wool", {
 })
 
 --note the wield item looks like junk
-minetest.register_node("fl_wool:wool_carpet", {
+core.register_node("fl_wool:wool_carpet", {
     description = "wool carpet",
     tiles = {"farlands_wool.png"},
     drawtype = "nodebox",
@@ -31,9 +31,9 @@ minetest.register_node("fl_wool:wool_carpet", {
 })
 
 for counter, dye in pairs(fl_dyes.dyes) do
-    local out_item = ItemStack(minetest.itemstring_with_palette("fl_wool:wool", counter - 1))
+    local out_item = ItemStack(core.itemstring_with_palette("fl_wool:wool", counter - 1))
     out_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " wool")
-    minetest.register_craft({
+    core.register_craft({
         output = out_item:to_string(),
         type = "shapeless",
         recipe = {

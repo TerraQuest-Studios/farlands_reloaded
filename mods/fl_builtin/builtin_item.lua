@@ -3,8 +3,8 @@ local min = math.min
 local item_health = 8
 local lifespan = tonumber(core.settings:get("item_entity_ttl")) or 900
 --local on_step = minetest.registered_entities["__builtin:item"].on_step
-local on_activate = minetest.registered_entities["__builtin:item"].on_activate
-local get_staticdata = minetest.registered_entities["__builtin:item"].get_staticdata
+local on_activate = core.registered_entities["__builtin:item"].on_activate
+local get_staticdata = core.registered_entities["__builtin:item"].get_staticdata
 
 --taken from mobkit
 function timer(self,s) -- returns true approx every s seconds
@@ -13,13 +13,13 @@ function timer(self,s) -- returns true approx every s seconds
 	if t2>t1 and t2%s==0 then return true end
 end
 
-minetest.registered_entities["__builtin:item"].get_staticdata = function(self)
+core.registered_entities["__builtin:item"].get_staticdata = function(self)
     local data = {_memory = self._memory}
     data._old = get_staticdata(self)
     return core.serialize(data)
 end
 
-minetest.registered_entities["__builtin:item"].on_activate = function(self, staticdata, dtime_s)
+core.registered_entities["__builtin:item"].on_activate = function(self, staticdata, dtime_s)
     local data = core.deserialize(staticdata) or {}
     if data._memory then self._memory = data._memory else self._memory = {} end
 
@@ -29,12 +29,12 @@ minetest.registered_entities["__builtin:item"].on_activate = function(self, stat
     on_activate(self, data._old or "", dtime_s)
 end
 
-minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, moveresult)
+core.registered_entities["__builtin:item"].on_step = function(self, dtime, moveresult)
     self._dtime = min(dtime,0.2)
     self.age = self.age + dtime
     self._freeze = true
     local pos = self.object:get_pos()
-    local node = minetest.get_node_or_nil(pos) or {name = "*", param2 = 0}
+    local node = core.get_node_or_nil(pos) or {name = "*", param2 = 0}
 
     --kill if to old
     if lifespan > 0 and self.age > lifespan then
@@ -46,10 +46,10 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
     if moveresult.collides and self.conveyor then
         if moveresult.collisions[1] and moveresult.collisions[1].type == "node" then
             local cpos = moveresult.collisions[1].node_pos
-            local cnode = minetest.get_node(cpos)
-            local cdef = minetest.registered_nodes[cnode.name]
+            local cnode = core.get_node(cpos)
+            local cdef = core.registered_nodes[cnode.name]
 
-            if minetest.get_item_group(cnode.name, "item_input") >= 1
+            if core.get_item_group(cnode.name, "item_input") >= 1
             and cdef._allow_input(cnode.param2, node.param2) then
                 local istack = ItemStack(self.itemstring)
                 cdef._item_input(cpos, cnode, istack)
@@ -65,7 +65,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
     if not self._memory.thing then self._memory.thing = 1 end
     if timer(self, 1) and core.get_item_group(self.itemstring, "unburnable") == 0 then
         --local node = minetest.get_node_or_nil(pos) or {name = "*"}
-        local def = minetest.registered_nodes[node.name] or {}
+        local def = core.registered_nodes[node.name] or {}
         if def.damage_per_second then self._memory.health = self._memory.health - def.damage_per_second end
 
         if self._memory.health <= 0 then self.object:remove() return end
@@ -75,7 +75,7 @@ minetest.registered_entities["__builtin:item"].on_step = function(self, dtime, m
     self.isinliquid = false
     self.isinflowingliquid = false
     --local node = minetest.get_node_or_nil(pos) or {name = "*"}
-    local def = minetest.registered_nodes[node.name] or {}
+    local def = core.registered_nodes[node.name] or {}
     if def.drawtype == "liquid" then
         self.isinliquid = true
     elseif def.drawtype == "flowingliquid" then

@@ -1,4 +1,4 @@
-minetest.register_node("fl_fire:fire", {
+core.register_node("fl_fire:fire", {
     description = "fire",
     paramtype = "light",
     drawtype = "firelike",

@@ -54,7 +54,7 @@ end
     end
 end ]]
 
-minetest.register_entity("fl_trains:train_engine", {
+core.register_entity("fl_trains:train_engine", {
     --mte object properties
     initial_properties = {
         physical = true,
@@ -75,7 +75,7 @@ minetest.register_entity("fl_trains:train_engine", {
     --on_step = mobkit.stepfunc, --this is required
     on_activate = function(self, staticdata, dtime_s)
         --load memory
-        local sdata = minetest.deserialize(staticdata)
+        local sdata = core.deserialize(staticdata)
         if sdata then
             for k,v in pairs(sdata) do
                 self[k] = v
@@ -86,11 +86,11 @@ minetest.register_entity("fl_trains:train_engine", {
     end,
     get_staticdata = function(self)
         local tmp = {memory = self.memory}
-        return minetest.serialize(tmp)
+        return core.serialize(tmp)
     end,
     on_step = function(self, dtime, moveresult)
         local yaw = tonumber(string.format("%.2f", self.object:get_yaw()))
-        local dir = vector.round(minetest.yaw_to_dir(yaw))
+        local dir = vector.round(core.yaw_to_dir(yaw))
         local pos = self.object:get_pos()
         local ndir = dir
 
@@ -104,7 +104,7 @@ minetest.register_entity("fl_trains:train_engine", {
 
         local vel = self.object:get_velocity()
         local player
-        if self.memory.driver then player = minetest.get_player_by_name(self.memory.driver) end
+        if self.memory.driver then player = core.get_player_by_name(self.memory.driver) end
         if player then
             local pcontrols = player:get_player_control()
             if pcontrols.up and speed_check(vel, max_speed) then
@@ -120,17 +120,17 @@ minetest.register_entity("fl_trains:train_engine", {
             end
         end
 
-        local direction = vector.dot(self.object:get_velocity(), minetest.yaw_to_dir(self.object:get_yaw()))
+        local direction = vector.dot(self.object:get_velocity(), core.yaw_to_dir(self.object:get_yaw()))
         local reverse = false
         if direction <= 0 then
             reverse = true
         end
-        local node = minetest.get_node_or_nil(vector.add(ndir, pos))
+        local node = core.get_node_or_nil(vector.add(ndir, pos))
         --going backwards, flip direction
         if reverse then
-            node = minetest.get_node_or_nil(vector.add(vector.multiply(ndir, -1), pos))
+            node = core.get_node_or_nil(vector.add(vector.multiply(ndir, -1), pos))
         end
-        local currnode = minetest.get_node_or_nil(pos)
+        local currnode = core.get_node_or_nil(pos)
         if not node or not currnode then self.object:set_velocity(vector.new(0,0,0)) return end
 
         local continue_rail_nodes = {
@@ -181,7 +181,7 @@ minetest.register_entity("fl_trains:train_engine", {
                         self.object:set_velocity(
                             vector.multiply(
                                 vector.multiply(
-                                    minetest.yaw_to_dir(
+                                    core.yaw_to_dir(
                                         self.object:get_yaw()
                                     ),
                                     -1
@@ -194,7 +194,7 @@ minetest.register_entity("fl_trains:train_engine", {
                     else
                         self.object:set_velocity(
                             vector.multiply(
-                                minetest.yaw_to_dir(
+                                core.yaw_to_dir(
                                     self.object:get_yaw()
                                 ),
                                 vector.length( --speed
@@ -219,7 +219,7 @@ minetest.register_entity("fl_trains:train_engine", {
         self.object:remove()
         if not (puncher and puncher:is_player()) then return end
         local inv = puncher:get_inventory()
-        if minetest.is_creative_enabled(puncher:get_player_name())
+        if core.is_creative_enabled(puncher:get_player_name())
             and inv:contains_item("main", "fl_trains:train_engine")
         then return end
 
@@ -248,15 +248,15 @@ minetest.register_entity("fl_trains:train_engine", {
     end,
 })
 
-minetest.register_craftitem("fl_trains:train_engine", {
+core.register_craftitem("fl_trains:train_engine", {
     description = "train_engine",
     inventory_image = "farlands_cart_item.png",
     wield_image = "farlands_cart_item.png",
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
-        local node = minetest.get_node_or_nil(pointed_thing.under)
+        local node = core.get_node_or_nil(pointed_thing.under)
         if string.find(node.name, "fl_trains") then
-            local ent = minetest.add_entity(pointed_thing.under, "fl_trains:train_engine")
+            local ent = core.add_entity(pointed_thing.under, "fl_trains:train_engine")
             if node.name == "fl_trains:straight_track" and node.param2%2 ~= 0 then
                 ent:set_rotation(vector.new(0,deg_to_rad(90),0))
                 --minetest.chat_send_all(ent:get_yaw())
@@ -269,7 +269,7 @@ minetest.register_craftitem("fl_trains:train_engine", {
             end
 
             if not (placer and placer:is_player()
-                and minetest.is_creative_enabled(placer:get_player_name()))
+                and core.is_creative_enabled(placer:get_player_name()))
             then
                 itemstack:take_item()
             end

@@ -10,7 +10,7 @@ fl_wildlife.details = {
 
 fl_brains.details = fl_wildlife.details
 
-local modpath = minetest.get_modpath(minetest.get_current_modname())
+local modpath = core.get_modpath(core.get_current_modname())
 
 dofile(modpath .. "/api.lua")
 dofile(modpath .. "/node_items.lua")
@@ -40,7 +40,7 @@ end
 
 for _, mob in pairs(mob_list) do
     local setting = "fl_wildlife." .. mob .. ".enable"
-    if minetest.settings:get_bool(setting, true) == true then
+    if core.settings:get_bool(setting, true) == true then
         dofile(modpath .. "/fl_mobs/" .. mob .. ".lua")
     end
 end

@@ -1,4 +1,4 @@
-local modpath = minetest.get_modpath("fl_workshop")
+local modpath = core.get_modpath("fl_workshop")
 
 fl_workshop = {}
 

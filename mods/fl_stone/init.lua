@@ -6,7 +6,7 @@ fl_stone.details = {
     license = "MIT",
 }
 
-local modpath = minetest.get_modpath("fl_stone")
+local modpath = core.get_modpath("fl_stone")
 dofile(modpath .. "/sounds.lua")
 dofile(modpath .. "/stone.lua")
 dofile(modpath .. "/sand.lua")

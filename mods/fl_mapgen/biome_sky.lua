@@ -64,10 +64,10 @@ local function fill_data(default, input)
 end
 
 local function logic()
-    for _, player in pairs(minetest.get_connected_players()) do
+    for _, player in pairs(core.get_connected_players()) do
         local pname = player:get_player_name()
-        local bdata = minetest.get_biome_data(player:get_pos())
-        local bdef = minetest.registered_biomes[minetest.get_biome_name(bdata.biome)] or {}
+        local bdata = core.get_biome_data(player:get_pos())
+        local bdef = core.registered_biomes[core.get_biome_name(bdata.biome)] or {}
 
         if bs.players[pname] and bs.players[pname].id == bdata.biome then
             --do nothing
@@ -97,7 +97,7 @@ local function logic()
         end
     end
 
-    minetest.after(bs.update_sec, logic)
+    core.after(bs.update_sec, logic)
 end
 
-minetest.after(bs.update_sec, logic)
+core.after(bs.update_sec, logic)

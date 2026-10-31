@@ -1,1 +1,1 @@
-minetest.register_chatcommand("tp", minetest.chatcommands["teleport"])
+core.register_chatcommand("tp", core.chatcommands["teleport"])

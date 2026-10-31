@@ -1,4 +1,4 @@
-minetest.register_entity("fl_signs:text", {
+core.register_entity("fl_signs:text", {
     initial_properties = {
         visual = "upright_sprite",
         textures = {"[combine:16x16"},
@@ -8,10 +8,10 @@ minetest.register_entity("fl_signs:text", {
     },
     get_staticdata = function(self)
         local tmp = {memory = self.memory}
-        return minetest.serialize(tmp)
+        return core.serialize(tmp)
     end,
     on_activate = function(self, staticdata, dtime_s)
-        local sdata = minetest.deserialize(staticdata)
+        local sdata = core.deserialize(staticdata)
         if sdata then
             for k,v in pairs(sdata) do
                 self[k] = v
@@ -47,7 +47,7 @@ for i = 1, #Lalphabelt do
 end
 
 local function create_text_ent(pos, param, rot)
-    local ent = minetest.add_entity(pos, "fl_signs:text")
+    local ent = core.add_entity(pos, "fl_signs:text")
     local texture = "[combine:256x256"
     local text_table = param:split(" ")
     local max_length = 23 --defined to limit words to sign, max: 256x256 28 --128x128 is 14
@@ -93,7 +93,7 @@ local offsets = {
     },
 }
 
-minetest.register_node("fl_signs:sign_wood", {
+core.register_node("fl_signs:sign_wood", {
     description = "wood sign",
     inventory_image = "farlands_sign_wood_inv.png",
     wield_image = "farlands_sign_wood_inv.png",
@@ -110,7 +110,7 @@ minetest.register_node("fl_signs:sign_wood", {
         wall_bottom = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
     },
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-        local text = minetest.get_meta(pos):get("text") or ""
+        local text = core.get_meta(pos):get("text") or ""
         local formspec = {
             "formspec_version[4]",
             "size[10.4,5.25]",
@@ -120,19 +120,19 @@ minetest.register_node("fl_signs:sign_wood", {
             "listcolors[#0000;#ffffff20]",
             "bgcolor[black;neither]",
             "background9[0,0;10.4,5.25;i3_bg_full.png;false;10]",
-            "textarea[0.5,0.5;9.4,3;" .. "Pos: " .. minetest.pos_to_string(pos, 2) .. ";;" .. text .. "]",
-            "field_close_on_enter[" .. "Pos: " .. minetest.pos_to_string(pos, 2) .. ";false]",
+            "textarea[0.5,0.5;9.4,3;" .. "Pos: " .. core.pos_to_string(pos, 2) .. ";;" .. text .. "]",
+            "field_close_on_enter[" .. "Pos: " .. core.pos_to_string(pos, 2) .. ";false]",
             "button[4.2,4;2,0.75;enter;Write]",
         }
-        minetest.show_formspec(clicker:get_player_name(), "fl_signs:sign_wood", table.concat(formspec, ""))
+        core.show_formspec(clicker:get_player_name(), "fl_signs:sign_wood", table.concat(formspec, ""))
     end,
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return itemstack end
         if pointed_thing.under.y+1 == pointed_thing.above.y then return itemstack end
-        return minetest.item_place(itemstack, placer, pointed_thing)
+        return core.item_place(itemstack, placer, pointed_thing)
     end,
     on_dig = function(pos, node, digger)
-        local ents = minetest.get_objects_inside_radius(pos, 0.5)
+        local ents = core.get_objects_inside_radius(pos, 0.5)
 
         for _, ent in pairs(ents) do
             local entn = ent:get_luaentity().name
@@ -141,12 +141,12 @@ minetest.register_node("fl_signs:sign_wood", {
             end
         end
 
-        return minetest.node_dig(pos, node, digger)
+        return core.node_dig(pos, node, digger)
     end,
     groups = {sign = 1, dig_generic = 4}
 })
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
     if formname ~= "fl_signs:sign_wood" then return end
     local pname = player:get_player_name()
     --minetest.chat_send_all(dump(fields))
@@ -159,15 +159,15 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         end
     end
     if fields.enter and text then
-        minetest.close_formspec(pname, "fl_signs:sign_wood")
+        core.close_formspec(pname, "fl_signs:sign_wood")
         local split = text[1]:split(" ")
-        local pos = minetest.string_to_pos(split[2])
-        if minetest.is_protected(pos, pname) then return end
-        local node = minetest.get_node_or_nil(pos)
+        local pos = core.string_to_pos(split[2])
+        if core.is_protected(pos, pname) then return end
+        local node = core.get_node_or_nil(pos)
         if not node then return end
         if not offsets[node.param2] then return end
-        minetest.get_meta(pos):set_string("text", text[2])
-        local ents = minetest.get_objects_inside_radius(pos, 0.5)
+        core.get_meta(pos):set_string("text", text[2])
+        local ents = core.get_objects_inside_radius(pos, 0.5)
 
         for _, ent in pairs(ents) do
             local entn = ent:get_luaentity().name

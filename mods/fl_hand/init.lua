@@ -7,7 +7,7 @@ fl_hand.details = {
     license = "MIT",
 }
 
-minetest.register_item(":", {
+core.register_item(":", {
     type = "none",
     wield_image = "farlands_hand.png",
     wield_scale = {x = 1, y = 1, z = 2.5},
@@ -60,18 +60,18 @@ minetest.register_item(":", {
 --creative mode stuff
 local cdig = 0.15
 
-minetest.register_privilege("creative", {
+core.register_privilege("creative", {
     description = "creative mode",
     give_to_singleplayer = false,
     give_to_admin = false,
     on_revoke = function(name, revoker_name)
         --this is a hack to work around https://github.com/minetest-mods/i3/issues/61
-        i3.set_tab(minetest.get_player_by_name(name), "inventory")
+        i3.set_tab(core.get_player_by_name(name), "inventory")
     end
 })
 
-if minetest.settings:get_bool("creative_mode") then
-    minetest.override_item("", {
+if core.settings:get_bool("creative_mode") then
+    core.override_item("", {
         tool_capabilities = {
             full_punch_interval = 0.9,
             max_drop_level = 0,
@@ -122,15 +122,15 @@ end
 
 --minetest.is_creative_enabled is taken care of by i3
 
-minetest.register_on_placenode(function(_, _, placer)
+core.register_on_placenode(function(_, _, placer)
     if placer and placer:is_player() then
-        return minetest.is_creative_enabled(placer:get_player_name())
+        return core.is_creative_enabled(placer:get_player_name())
     end
 end)
 
-local old_drops = minetest.handle_node_drops
-function minetest.handle_node_drops(pos, drops, digger)
-	if not digger or not digger:is_player() or not minetest.is_creative_enabled(digger:get_player_name()) then
+local old_drops = core.handle_node_drops
+function core.handle_node_drops(pos, drops, digger)
+	if not digger or not digger:is_player() or not core.is_creative_enabled(digger:get_player_name()) then
 		return old_drops(pos, drops, digger)
 	end
 	local inv = digger:get_inventory()

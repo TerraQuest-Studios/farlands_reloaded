@@ -18,7 +18,7 @@ for name, data in pairs(biomes) do
     biomes[name] = table.copy(temp)
 end
 
-minetest.register_ore({
+core.register_ore({
     ore_type = "scatter",
     ore = "fl_ores:mithite_in_stone",
     wherein = "fl_stone:stone",
@@ -28,7 +28,7 @@ minetest.register_ore({
     y_max = 32,
     y_min = -32,
 })
-minetest.register_ore({
+core.register_ore({
     ore_type = "scatter",
     ore = "fl_ores:mithite_in_ors",
     wherein = "fl_stone:ors",
@@ -38,7 +38,7 @@ minetest.register_ore({
     y_max = -32,
     y_min = -150,
 })
-minetest.register_ore({
+core.register_ore({
     ore_type = "scatter",
     ore = "fl_ores:mithite_in_tuff",
     wherein = "fl_stone:tuff",
@@ -53,7 +53,7 @@ local function reg_ores(ore, clust)
     for name, data in pairs(biomes) do
         local scr = clust[name].scr
         local ost = clust[name].ost or {300,4,64,-31,3,-31}
-        minetest.register_ore({
+        core.register_ore({
             ore_type = "scatter",
             ore = "fl_ores:" .. ore .. "_in_" .. name,
             wherein = "fl_stone:" .. name,
@@ -65,7 +65,7 @@ local function reg_ores(ore, clust)
             y_min = ost[2], --4
         })
 
-        minetest.register_ore({
+        core.register_ore({
             ore_type = "scatter",
             ore = "fl_ores:" .. ore .. "_in_" .. name,
             wherein = "fl_stone:" .. name,
@@ -77,7 +77,7 @@ local function reg_ores(ore, clust)
             y_min = ost[4], -- -31
         })
 
-        minetest.register_ore({
+        core.register_ore({
             ore_type = "scatter",
             ore = "fl_ores:" .. ore .. "_in_" .. name,
             wherein = "fl_stone:" .. name,

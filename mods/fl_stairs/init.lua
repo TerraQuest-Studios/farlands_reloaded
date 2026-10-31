@@ -40,15 +40,15 @@ local stairtable = {
 local function slab_onplace(itemstack, placer, pointed_thing)
     if pointed_thing.type ~= "node" then return itemstack end
 
-    if minetest.get_node(pointed_thing.under).name == itemstack:get_name()
+    if core.get_node(pointed_thing.under).name == itemstack:get_name()
     and not placer:get_player_control().sneak then
-        minetest.set_node(pointed_thing.under, {name=string.sub(itemstack:get_name(), 1, -6)})
-        if minetest.is_creative_enabled(placer:get_player_name()) == false then
+        core.set_node(pointed_thing.under, {name=string.sub(itemstack:get_name(), 1, -6)})
+        if core.is_creative_enabled(placer:get_player_name()) == false then
             itemstack:take_item()
         end
         return itemstack
     end
-    minetest.rotate_and_place(itemstack, placer, pointed_thing, true, {force_facedir = true}, true)
+    core.rotate_and_place(itemstack, placer, pointed_thing, true, {force_facedir = true}, true)
 end
 
 local function sstiles(nodedef, dtype)
@@ -68,7 +68,7 @@ local function sstiles(nodedef, dtype)
 end
 
 function fl_stairs.register_stairslab(itemstring)
-    local nodedef = minetest.registered_nodes[itemstring]
+    local nodedef = core.registered_nodes[itemstring]
 
     local paramtype2 = "facedir"
     if nodedef.palette then paramtype2 = "colorfacedir" end
@@ -81,7 +81,7 @@ function fl_stairs.register_stairslab(itemstring)
         groups["all_nodes"] = 1
         groups.stairable, groups.wallable, groups.not_in_creative_inventory, groups.not_blocking_trains = nil, nil, 1, 1
 
-        minetest.register_node(":" .. regnode, {
+        core.register_node(":" .. regnode, {
             description = nodedef.description .. " " .. stairinfo[1],
             tiles = sstiles(nodedef, "_" .. stairinfo[1]),
             paramtype = "light",
@@ -97,7 +97,7 @@ function fl_stairs.register_stairslab(itemstring)
                 if stairinfo[1] == "slab" then
                     slab_onplace(itemstack, placer, pointed_thing)
                 else
-                    minetest.rotate_node(itemstack, placer, pointed_thing)
+                    core.rotate_node(itemstack, placer, pointed_thing)
                 end
             end,
             drop = nodedef.drop and nodedef.drop.stairs and nodedef.drop.stairs[stairinfo[1]],
@@ -107,12 +107,12 @@ function fl_stairs.register_stairslab(itemstring)
 end
 
 function fl_stairs.register_wall(itemstring)
-    local nodedef = minetest.registered_nodes[itemstring]
+    local nodedef = core.registered_nodes[itemstring]
     local groups = table.copy(nodedef.groups)
     groups.stairable, groups.wallable, groups.wall, groups.not_in_creative_inventory = nil, nil, 1, 1
     groups.all_nodes, groups.spawn_blacklist = 1, 1
 
-    minetest.register_node(":" .. itemstring .. "_wall", {
+    core.register_node(":" .. itemstring .. "_wall", {
         description = nodedef.description .. " wall",
         tiles = nodedef.tiles,
         paramtype = "light",
@@ -145,9 +145,9 @@ minetest.register_on_mods_loaded(function()
 end)
 --]]
 
-minetest.register_on_mods_loaded(function()
+core.register_on_mods_loaded(function()
     --minetest.after(0, function()
-        local registered_items_copy = table.copy(minetest.registered_items)
+        local registered_items_copy = table.copy(core.registered_items)
         for nodename, node in pairs(registered_items_copy) do
             if node.groups and node.groups.stairable == 1 then
                 fl_stairs.register_stairslab(node.name)

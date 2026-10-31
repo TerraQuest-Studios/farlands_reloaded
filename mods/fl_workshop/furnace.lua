@@ -4,11 +4,11 @@
 --viewing_furnace = {}
 
 local function _machine_input(pos, node, itemstack)
-    local inv = minetest.get_meta(pos):get_inventory()
-    if minetest.get_item_group(itemstack:get_name(), "fuel") >= 1 then
+    local inv = core.get_meta(pos):get_inventory()
+    if core.get_item_group(itemstack:get_name(), "fuel") >= 1 then
         return inv:add_item("fuel", itemstack)
     else
-        local output, _ = minetest.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
+        local output, _ = core.get_craft_result({method = "cooking", width = 1, items = {itemstack}})
         if output.time == 0 or output.item:is_empty() then return itemstack end
         return inv:add_item("input", itemstack)
     end
@@ -28,8 +28,8 @@ local function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
     elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
     else slotSize, formSize = 1, "10.4,10.3" end
 
-    if minetest.get_meta(pos):get_string("description") ~= "" then
-        chName = minetest.get_meta(pos):get_string("description")
+    if core.get_meta(pos):get_string("description") ~= "" then
+        chName = core.get_meta(pos):get_string("description")
         --minetest.get_meta(pos):set_string("infotext", minetest.get_meta(pos):get_string("description"))
     end
 
@@ -92,33 +92,33 @@ local function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
     else viewing_furnace[minetest.hash_node_position(pos)] = {clicker:get_player_name()} end
     viewing_furnace[clicker:get_player_name()] = pos
     --]]
-    minetest.show_formspec(clicker:get_player_name(), "fl_workshop:furnace_formspec", chest_formspec)
+    core.show_formspec(clicker:get_player_name(), "fl_workshop:furnace_formspec", chest_formspec)
 end
 
 local function swap_node(pos, node)
-    if minetest.get_node(pos).name == node.name then return end
-    minetest.swap_node(pos, node)
+    if core.get_node(pos).name == node.name then return end
+    core.swap_node(pos, node)
 end
 
 local function on_timer(pos, elapsed)
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local ifuel, iinput, ioutput = inv:get_list("fuel"), inv:get_list("input"), inv:get_list("output")
     local total_time = meta:get_float("total_time") or 0
     total_time = total_time + elapsed
     local burn_time = meta:get_float("burn_time") or 0
     burn_time = burn_time - elapsed
-    local coutput, _ = minetest.get_craft_result({method = "cooking", width = 1, items = iinput})
+    local coutput, _ = core.get_craft_result({method = "cooking", width = 1, items = iinput})
 
     if coutput.item:is_empty() or coutput.time == 0 then
-        return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
+        return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
     end
 
     if burn_time <= 0 and not ifuel[1]:is_empty() then
-        local foutput, _ = minetest.get_craft_result({method = "fuel", width = 1, items = ifuel})
+        local foutput, _ = core.get_craft_result({method = "fuel", width = 1, items = ifuel})
         if foutput.time == 0 then
             meta:set_float("burn_time", 0)
-            return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
+            return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
         end
         burn_time = foutput.time
         meta:set_float("burn_time", burn_time)
@@ -127,39 +127,39 @@ local function on_timer(pos, elapsed)
         --minetest.chat_send_all("fuel")
     elseif burn_time <= 0 then
         meta:set_float("burn_time", 0)
-        return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
+        return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
     else
         meta:set_float("burn_time", burn_time)
     end
 
     if coutput.time > total_time then
-        minetest.get_node_timer(pos):start(1.0)
+        core.get_node_timer(pos):start(1.0)
         meta:set_float("total_time", total_time)
         --minetest.chat_send_all("trigger1")
-        return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = minetest.get_node(pos).param2})
+        return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = core.get_node(pos).param2})
     else
         meta:set_float("total_time", 0)
         if iinput[1]:is_empty() then
-            return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
+            return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
         end
         if not ioutput[1]:is_empty() and coutput.item:get_name() ~= ioutput[1]:get_name() then
-            return swap_node(pos, {name = "fl_workshop:furnace", param2 = minetest.get_node(pos).param2})
+            return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
         end
         local remainder = inv:add_item("output", coutput.item)
         if remainder:is_empty() then iinput[1]:take_item() end
         inv:set_list("input", iinput)
 
-        if not iinput[1]:is_empty() then minetest.get_node_timer(pos):start(1.0) end
+        if not iinput[1]:is_empty() then core.get_node_timer(pos):start(1.0) end
         --minetest.chat_send_all("trigger2")
-        return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = minetest.get_node(pos).param2})
+        return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = core.get_node(pos).param2})
     end
 end
 
-minetest.register_node("fl_workshop:furnace", {
+core.register_node("fl_workshop:furnace", {
     description = "furnace",
     paramtype2 = "facedir",
     on_construct = function(pos)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         inv:set_size("input", 1)
         inv:set_size("fuel", 1)
         inv:set_size("output", 1)
@@ -174,22 +174,22 @@ minetest.register_node("fl_workshop:furnace", {
     },
     groups = {oddly_breakable_by_hand = 3},
     on_rightclick = on_rightclick,
-    on_metadata_inventory_put = function(pos) minetest.get_node_timer(pos):start(1.0) end,
-    on_metadata_inventory_take = function(pos) minetest.get_node_timer(pos):start(1.0) end,
-    on_metadata_inventory_move = function(pos) minetest.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_put = function(pos) core.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_take = function(pos) core.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_move = function(pos) core.get_node_timer(pos):start(1.0) end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         if listname == "output" then
             return 0
-        elseif listname == "fuel" and minetest.get_item_group(stack:get_name(), "fuel") <= 0 then
+        elseif listname == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
             return 0
         end
         return stack:get_count()
     end,
     allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        local stack = minetest.get_meta(pos):get_inventory():get_stack(from_list, from_index)
+        local stack = core.get_meta(pos):get_inventory():get_stack(from_list, from_index)
         if to_list == "output" then
             return 0
-        elseif to_list == "fuel" and minetest.get_item_group(stack:get_name(), "fuel") <= 0 then
+        elseif to_list == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
             return 0
         end
         return count
@@ -198,11 +198,11 @@ minetest.register_node("fl_workshop:furnace", {
     _machine_input = _machine_input,
 })
 
-minetest.register_node("fl_workshop:furnace_active", {
+core.register_node("fl_workshop:furnace_active", {
     description = "furnace",
     paramtype2 = "facedir",
     on_construct = function(pos)
-        local inv = minetest.get_meta(pos):get_inventory()
+        local inv = core.get_meta(pos):get_inventory()
         inv:set_size("input", 1)
         inv:set_size("fuel", 1)
         inv:set_size("output", 1)
@@ -226,22 +226,22 @@ minetest.register_node("fl_workshop:furnace_active", {
     },
     groups = {oddly_breakable_by_hand = 3, not_in_creative_inventory = 1},
     on_rightclick = on_rightclick,
-    on_metadata_inventory_put = function(pos) minetest.get_node_timer(pos):start(1.0) end,
-    on_metadata_inventory_take = function(pos) minetest.get_node_timer(pos):start(1.0) end,
-    on_metadata_inventory_move = function(pos) minetest.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_put = function(pos) core.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_take = function(pos) core.get_node_timer(pos):start(1.0) end,
+    on_metadata_inventory_move = function(pos) core.get_node_timer(pos):start(1.0) end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         if listname == "output" then
             return 0
-        elseif listname == "fuel" and minetest.get_item_group(stack:get_name(), "fuel") <= 0 then
+        elseif listname == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
             return 0
         end
         return stack:get_count()
     end,
     allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        local stack = minetest.get_meta(pos):get_inventory():get_stack(from_list, from_index)
+        local stack = core.get_meta(pos):get_inventory():get_stack(from_list, from_index)
         if to_list == "output" then
             return 0
-        elseif to_list == "fuel" and minetest.get_item_group(stack:get_name(), "fuel") <= 0 then
+        elseif to_list == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
             return 0
         end
         return count
@@ -270,7 +270,7 @@ minetest.register_node("fl_workshop:furnace_active", {
     --]]
 --end)
 
-minetest.register_craft({
+core.register_craft({
     output = "fl_workshop:furnace",
     recipe = {
         {"group:rubble", "group:rubble", "group:rubble"},

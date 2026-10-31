@@ -1,15 +1,15 @@
 --override this core command to allow killing mobs
-minetest.override_chatcommand("kill", {
+core.override_chatcommand("kill", {
     params = "<playername|mobname> [<radius>]",
     description = "Kill entity(mob), player, or yourself",
     func = function(name, param)
         local split_param = param:split(" ")
         local target = split_param[1]
         local radius = split_param[2] and tonumber(split_param[2]) or nil
-        local player = minetest.get_player_by_name(target)
+        local player = core.get_player_by_name(target)
 
         if player then
-            if minetest.settings:get_bool("enable_damage") == false then
+            if core.settings:get_bool("enable_damage") == false then
                 return false, "You can not kill players as damage is disabled"
             end
 
@@ -21,11 +21,11 @@ minetest.override_chatcommand("kill", {
             return true, "Player " .. target .. " killed"
         end
 
-        local entity = minetest.registered_entities[target]
+        local entity = core.registered_entities[target]
 
         if entity then
             local removed_ent_count = 0
-            local command_player = minetest.get_player_by_name(name)
+            local command_player = core.get_player_by_name(name)
 
             if radius and not command_player then
                 return false, "Only in game players can use the radius parameter"
@@ -35,7 +35,7 @@ minetest.override_chatcommand("kill", {
             --set this after the check for command player
             local cp_pos = command_player:get_pos()
 
-            for _, ent in pairs(minetest.luaentities) do
+            for _, ent in pairs(core.luaentities) do
                 if ent.name == target then
                     --maybe consider adding a check to see if the entity is a mob
                     --and setting its hp to 0 so it can run its death callback
@@ -55,15 +55,15 @@ minetest.override_chatcommand("kill", {
     end
 })
 
-minetest.register_chatcommand("clearents", {
+core.register_chatcommand("clearents", {
     description = "remove sepcified ents",
     params = "<ent_name><radius>",
     privs = {server = true},
     func = function(name, param)
-        minetest.chat_send_player(
+        core.chat_send_player(
             name,
-            minetest.colorize("red", "WARNING: this command is depreciated, use /kill in the future")
+            core.colorize("red", "WARNING: this command is depreciated, use /kill in the future")
         )
-        return minetest.registered_chatcommands.kill.func(name, param)
+        return core.registered_chatcommands.kill.func(name, param)
     end
 })

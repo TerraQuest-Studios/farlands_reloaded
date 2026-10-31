@@ -33,7 +33,7 @@ local names = {
 }
 
 for i = 1, 4 do
-	minetest.register_node("fl_industrial:conveyor" .. names[i][1], {
+	core.register_node("fl_industrial:conveyor" .. names[i][1], {
 		description = "Conveyor Belt",
 		groups = {oddly_breakable_by_hand = 3, cracky = 3, choppy = 3, conveyor = 1},
 		tiles = {

@@ -1,6 +1,6 @@
 fl_plantlife.decoration_flowers = {}
-local modpath = minetest.get_modpath("fl_plantlife")
-local dir = minetest.get_dir_list(modpath .. "/textures", false)
+local modpath = core.get_modpath("fl_plantlife")
+local dir = core.get_dir_list(modpath .. "/textures", false)
 
 for _, name in ipairs(dir) do
     if string.find(name, "ground") then
@@ -9,7 +9,7 @@ for _, name in ipairs(dir) do
         local j, _ = string.find(hold, ".png")
         local fname = string.sub(hold, 1, j-1)
         local split = string.split(fname, "_")
-        minetest.register_node("fl_plantlife:" .. fname, {
+        core.register_node("fl_plantlife:" .. fname, {
             description = table.concat(split, " "),
             drawtype = "nodebox",
             paramtype = "light",
@@ -34,7 +34,7 @@ for _, name in ipairs(dir) do
         local j, _ = string.find(hold, ".png")
         local fname = string.sub(hold, 1, j-1)
         local split = string.split(fname, "_")
-        minetest.register_node("fl_plantlife:" .. fname, {
+        core.register_node("fl_plantlife:" .. fname, {
             description = table.concat(split, " "),
             drawtype = "plantlike",
             paramtype = "light",
@@ -56,7 +56,7 @@ end
 --foxglove_pink/purple
 --flower to dyes need to be done
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local flowers = table.copy(fl_plantlife.decoration_flowers)
     local mainf = flowers[#flowers]
     flowers[#flowers] = nil

@@ -1,5 +1,5 @@
 fl_plantlife = {}
-local modpath = minetest.get_modpath("fl_plantlife")
+local modpath = core.get_modpath("fl_plantlife")
 
 dofile(modpath .. "/grass.lua")
 dofile(modpath .. "/cactus.lua")

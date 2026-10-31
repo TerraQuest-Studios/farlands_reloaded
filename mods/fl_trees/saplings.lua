@@ -1,7 +1,7 @@
-local modpath = minetest.get_modpath("fl_trees")
+local modpath = core.get_modpath("fl_trees")
 
 local function register_sapling(name, offset)
-    minetest.register_node("fl_trees:" .. name .. "_sapling", {
+    core.register_node("fl_trees:" .. name .. "_sapling", {
         description = name .. " sapling",
         drawtype = "plantlike",
         paramtype = "light",
@@ -10,8 +10,8 @@ local function register_sapling(name, offset)
         tiles = {"farlands_" .. name .. "_sapling.png"},
         groups = {oddly_breakable_by_hand = 3, plant = 1, spawn_blacklist = 1},
         on_timer = function(pos)
-            minetest.remove_node(pos)
-            minetest.place_schematic(
+            core.remove_node(pos)
+            core.place_schematic(
                 {x=pos.x-offset.x, y=pos.y, z=pos.z-offset.y},
                 modpath .. "/schems/" .. name .. "_tree_" .. math.random(5) .. ".mts",
                 "random",
@@ -20,20 +20,20 @@ local function register_sapling(name, offset)
             )
         end,
         on_costruct = function(pos)
-            minetest.remove_node(pos)
-            minetest.get_node_timer(pos):start(20)
+            core.remove_node(pos)
+            core.get_node_timer(pos):start(20)
         end,
         on_place = function(itemstack, placer, pointed_thing)
             if pointed_thing.type ~= "node" then return end
-            minetest.get_node_timer(pointed_thing.above):start(20)
-            return minetest.item_place(itemstack, placer, pointed_thing)
+            core.get_node_timer(pointed_thing.above):start(20)
+            return core.item_place(itemstack, placer, pointed_thing)
         end,
         _dungeon_loot = {chance = math.random(0.2, 0.6), count = {4, 12}},
         selection_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}},
         collision_box = {type = "fixed", fixed = {-0.2, -0.5, -0.2, 0.2, 0.5, 0.2}}
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_trees:" .. name .. "_sapling 2",
         recipe = {
             {"fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves","fl_trees:" .. name .. "_leaves",},

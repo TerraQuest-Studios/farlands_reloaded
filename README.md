@@ -24,7 +24,7 @@ Media: CC BY-SA 4.0.
 ## Links
 
 * [Github](https://github.com/terraquest-studios/farlands_reloaded)
-* [Contentdb](https://content.minetest.net/packages/wsor4035/farlands_reloaded/)
+* [Contentdb](https://content.luanti.org/packages/wsor4035/farlands_reloaded/)
 * [forums](not available yet)
 
 ## Setup

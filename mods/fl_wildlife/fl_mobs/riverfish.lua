@@ -2,7 +2,7 @@ function fish_brain(self)
     --stuff
 
     if self.hp <= 0 then --kill self if 0 hp
-        minetest.add_item(mobkit.get_stand_pos(self), "fl_wildlife:raw_riverfish")
+        core.add_item(mobkit.get_stand_pos(self), "fl_wildlife:raw_riverfish")
 
         mobkit.clear_queue_high(self)
         fl_wildlife.hq_die(self)
@@ -21,7 +21,7 @@ function fish_brain(self)
 end
 
 --very broken fish
-minetest.register_entity("fl_wildlife:riverfish", {
+core.register_entity("fl_wildlife:riverfish", {
     --mte object properties
     physical = true,
     stepheight = 1.1,
@@ -71,7 +71,7 @@ minetest.register_entity("fl_wildlife:riverfish", {
         if inv:room_for_item("main", {name = "fl_bucket:riverfish"}) then
             inv:add_item("main", "fl_bucket:riverfish")
         else
-            minetest.add_item(mobkit.get_stand_pos(self), "fl_bucket:riverfish")
+            core.add_item(mobkit.get_stand_pos(self), "fl_bucket:riverfish")
         end
 
         --needs creative check

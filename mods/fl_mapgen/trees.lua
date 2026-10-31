@@ -1,7 +1,7 @@
 --seed: me
 
 --258, 35, -742
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:acacia_tree",
     deco_type = "schematic",
     place_on = "fl_topsoil:savannah_dirt_with_grass",
@@ -18,13 +18,13 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/acacia_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/acacia_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
 --2015, 44, -258
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:baobab_tree",
     deco_type = "schematic",
     place_on = "fl_stone:sand",
@@ -34,13 +34,13 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/baobab_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/baobab_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
 --41, 36, -170
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:apple_tree_1",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -50,13 +50,13 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/apple_tree_1.mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/apple_tree_1.mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
 --41, 36, -170
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:apple_tree_4",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -66,12 +66,12 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/apple_tree_4.mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/apple_tree_4.mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:aspen_tree",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -81,12 +81,12 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/aspen_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/aspen_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:pine_tree_tiaga",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_snow",
@@ -96,12 +96,12 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:pine_tree_coniferousforest",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -111,12 +111,12 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/pine_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:palm_tree",
     deco_type = "schematic",
     place_on = "fl_stone:sand",
@@ -127,12 +127,12 @@ minetest.register_decoration({
     y_max = 1,
     y_min = 1,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/palm_tree_" .. math.random(5) .. ".mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/palm_tree_" .. math.random(5) .. ".mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:jungletree_tree_1",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -142,13 +142,13 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/jungletree_tree_1.mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/jungletree_tree_1.mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })
 
 --41, 36, -170
-minetest.register_decoration({
+core.register_decoration({
     name = "fl_trees:jungletree_tree_4",
     deco_type = "schematic",
     place_on = "fl_topsoil:dirt_with_grass",
@@ -158,7 +158,7 @@ minetest.register_decoration({
     y_max = 300,
     y_min = 4,
     place_offset_y = 1,
-    schematic = minetest.get_modpath("fl_trees") .. "/schems/jungletree_tree_5.mts",
+    schematic = core.get_modpath("fl_trees") .. "/schems/jungletree_tree_5.mts",
     flags = "place_center_x, place_center_z",
     rotation = "random",
 })

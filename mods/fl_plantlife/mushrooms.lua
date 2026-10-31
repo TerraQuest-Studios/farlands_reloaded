@@ -1,32 +1,32 @@
-local modpath = minetest.get_modpath("fl_plantlife")
+local modpath = core.get_modpath("fl_plantlife")
 
-minetest.register_node("fl_plantlife:raw_mushroom_leaves", {
+core.register_node("fl_plantlife:raw_mushroom_leaves", {
     description = "raw mushroom leaves",
     tiles = {"farlands_raw_mushroom_leaves.png"},
     groups = {oddly_breakable_by_hand = 3}
 })
 
-minetest.register_node("fl_plantlife:red_mushroom_leaves", {
+core.register_node("fl_plantlife:red_mushroom_leaves", {
     description = "red mushroom leaves",
     tiles = {"farlands_red_mushroom_leaves.png"},
     groups = {oddly_breakable_by_hand = 3}
 })
 
-minetest.register_node("fl_plantlife:brown_mushroom_leaves", {
+core.register_node("fl_plantlife:brown_mushroom_leaves", {
     description = "brown mushroom leaves",
     tiles = {"farlands_brown_mushroom_leaves.png"},
     groups = {oddly_breakable_by_hand = 3}
 })
 
-minetest.register_node("fl_plantlife:mushroom_trunk", {
+core.register_node("fl_plantlife:mushroom_trunk", {
     description = "mushroom trunk",
     tiles = {"farlands_mushroom_trunk_top.png", "farlands_mushroom_trunk_top.png", "farlands_mushroom_trunk.png"},
     paramtype2 = "facedir",
-    on_place = minetest.rotate_node,
+    on_place = core.rotate_node,
     groups = {oddly_breakable_by_hand = 3}
 })
 
-minetest.register_node("fl_plantlife:red_mushroom", {
+core.register_node("fl_plantlife:red_mushroom", {
     description = "red mushroom",
     drawtype = "plantlike",
     paramtype = "light",
@@ -39,8 +39,8 @@ minetest.register_node("fl_plantlife:red_mushroom", {
     },
     _on_bonemeal = function(pos)
         if math.random(20) < 16 then return end
-        minetest.remove_node(pos)
-        minetest.place_schematic(
+        core.remove_node(pos)
+        core.place_schematic(
             {x=pos.x-2, y=pos.y, z=pos.z-2},
             modpath .. "/schems/red_mushroom_large.mts",
             "random",
@@ -51,7 +51,7 @@ minetest.register_node("fl_plantlife:red_mushroom", {
     groups = {oddly_breakable_by_hand = 3, plant = 1, flower = 1, potable = 1}
 })
 
-minetest.register_node("fl_plantlife:brown_mushroom", {
+core.register_node("fl_plantlife:brown_mushroom", {
     description = "brown mushroom",
     drawtype = "plantlike",
     paramtype = "light",
@@ -64,8 +64,8 @@ minetest.register_node("fl_plantlife:brown_mushroom", {
     },
     _on_bonemeal = function(pos)
         if math.random(20) < 16 then return end
-        minetest.remove_node(pos)
-        minetest.place_schematic(
+        core.remove_node(pos)
+        core.place_schematic(
             {x=pos.x-2, y=pos.y, z=pos.z-2},
             modpath .. "/schems/brown_mushroom_large.mts",
             "random",

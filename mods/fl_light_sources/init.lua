@@ -1,4 +1,4 @@
-minetest.register_node('fl_light_sources:torch', {
+core.register_node('fl_light_sources:torch', {
 	description = 'Torch',
 	drawtype = 'nodebox',
 	tiles = {
@@ -30,13 +30,13 @@ minetest.register_node('fl_light_sources:torch', {
 	groups = {dig_generic = 4, flammable = 1, attached_node = 1},
 })
 
-minetest.register_craft({
+core.register_craft({
     output = "fl_light_sources:torch",
     type = "shapeless",
     recipe = {"fl_trees:stick", "fl_ores:coal_ore"}
 })
 
-minetest.register_node("fl_light_sources:lantern_c", {
+core.register_node("fl_light_sources:lantern_c", {
     description = "lantern",
     drawtype = "mesh",
     mesh = "farlands_lantern_c.obj",
@@ -60,7 +60,7 @@ minetest.register_node("fl_light_sources:lantern_c", {
     groups = {dig_stone = 2, lantern = 1, not_in_creative_inventory = 1}
 })
 
-minetest.register_node("fl_light_sources:lantern", {
+core.register_node("fl_light_sources:lantern", {
     description = "lantern",
     drawtype = "mesh",
     mesh = "farlands_lantern_f.obj",
@@ -86,12 +86,12 @@ minetest.register_node("fl_light_sources:lantern", {
             -- This does not mutate the original stack
             itemstack:set_name("fl_light_sources:lantern_c")
         end
-        minetest.item_place(itemstack, placer, pointed_thing)
+        core.item_place(itemstack, placer, pointed_thing)
     end,
     groups = {dig_stone = 2, lantern = 1}
 })
 
-minetest.register_craft({
+core.register_craft({
     output = "fl_light_sources:lantern",
     recipe = {
         {"fl_ores:iron_ingot", "fl_ores:iron_ingot", "fl_ores:iron_ingot"},
@@ -100,7 +100,7 @@ minetest.register_craft({
     }
 })
 
-minetest.register_node("fl_light_sources:chain", {
+core.register_node("fl_light_sources:chain", {
     description = "chain",
     drawtype = "mesh",
     mesh = "farlands_chain.obj",
@@ -125,7 +125,7 @@ minetest.register_node("fl_light_sources:chain", {
     groups = {dig_stone = 1}
 })
 
-minetest.register_craft({
+core.register_craft({
     output = "fl_light_sources:chain",
     recipe = {
         {"", "fl_ores:iron_ingot", ""},

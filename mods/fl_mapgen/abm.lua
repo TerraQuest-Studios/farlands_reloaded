@@ -1,4 +1,4 @@
-minetest.register_abm({
+core.register_abm({
     labal = "lava to stone",
     nodenames = {"fl_liquids:lava_source", "fl_liquids:lava_flowing"},
     neighbors = {"group:water"},
@@ -6,11 +6,11 @@ minetest.register_abm({
     chance = 1,
     catch_up = false;
     action = function(pos, node)
-        minetest.set_node(pos, {name = "fl_stone:stone"})
+        core.set_node(pos, {name = "fl_stone:stone"})
     end,
 })
 
-minetest.register_abm({
+core.register_abm({
     labal = "lava to basalt",
     nodenames = {"fl_liquids:lava_source", "fl_liquids:lava_flowing"},
     neighbors = {"fl_topsoil:condensed_ice"},
@@ -18,7 +18,7 @@ minetest.register_abm({
     chance = 1,
     catch_up = false;
     action = function(pos, node)
-        minetest.set_node(pos, {name = "fl_stone:basalt"})
+        core.set_node(pos, {name = "fl_stone:basalt"})
     end,
 })
 

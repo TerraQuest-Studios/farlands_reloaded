@@ -21,8 +21,8 @@ local box_data = {
     l = {{-0.5, -0.5, 0.4375, 1.5, 1.5, 0.5}, "farlands_2X2.obj"},
 }
 
-for _, img in pairs(minetest.get_dir_list(minetest.get_modpath("fl_paintings").."/textures")) do
-    local size = get_file_dimensions(minetest.get_modpath("fl_paintings").."/textures/"..img)
+for _, img in pairs(core.get_dir_list(core.get_modpath("fl_paintings").."/textures")) do
+    local size = get_file_dimensions(core.get_modpath("fl_paintings").."/textures/"..img)
     local fn = string.split(img, ".")[1]
     local name = string.split(fn, "_")[3]
     local data
@@ -39,7 +39,7 @@ for _, img in pairs(minetest.get_dir_list(minetest.get_modpath("fl_paintings")..
 
     if img == "farlands_ptg_cthulhu.png" then data = box_data.l end
 
-    minetest.register_node("fl_paintings:" .. name, {
+    core.register_node("fl_paintings:" .. name, {
         description = name .. " painting",
         drawtype = "mesh",
         mesh = data[2],

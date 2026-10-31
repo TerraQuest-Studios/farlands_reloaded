@@ -2,7 +2,7 @@ local function reg_grass(name)
     local desc = string.split(name, "_")
     local groups = {dig_generic = 4, plant = 1, not_in_creative_inventory = 1, attached_node=1}
     for i=1, 5 do
-        minetest.register_node("fl_plantlife:" .. name .. "_" .. i, {
+        core.register_node("fl_plantlife:" .. name .. "_" .. i, {
             description = table.concat(desc, " "),
             drawtype = "plantlike",
             paramtype = "light",
@@ -10,7 +10,7 @@ local function reg_grass(name)
             tiles = {"[combine:16x16:0," .. 10 - 2*i .. "=farlands_" .. name .. "_plant.png"},
             floodable = true,
             on_flood = function(pos, oldnode, newnode)
-                minetest.dig_node(pos)
+                core.dig_node(pos)
             end,
             selection_box = {
                 type = "fixed",
@@ -22,7 +22,7 @@ local function reg_grass(name)
             groups = groups,
         })
     end
-    minetest.override_item("fl_plantlife:" .. name .. "_5", {
+    core.override_item("fl_plantlife:" .. name .. "_5", {
         inventory_image = "[combine:16x16:0,4=farlands_" .. name .. "_plant.png",
         groups = {dig_generic = 4, plant = 1, attached_node=1, not_in_creative_inventory = 0}
     })

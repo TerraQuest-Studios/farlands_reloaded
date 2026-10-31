@@ -1,4 +1,4 @@
-minetest.register_entity("fl_trains:cart", {
+core.register_entity("fl_trains:cart", {
     --mte object properties
     initial_properties = {
         physical = true,
@@ -27,15 +27,15 @@ minetest.register_entity("fl_trains:cart", {
     end,
 })
 
-minetest.register_craftitem("fl_trains:cart", {
+core.register_craftitem("fl_trains:cart", {
     description = "cart",
     inventory_image = "farlands_cart_item.png",
     wield_image = "farlands_cart_item.png",
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
-        local node = minetest.get_node_or_nil(pointed_thing.under)
+        local node = core.get_node_or_nil(pointed_thing.under)
         if string.find(node.name, "fl_trains") then
-            minetest.add_entity(pointed_thing.under, "fl_trains:cart")
+            core.add_entity(pointed_thing.under, "fl_trains:cart")
         end
     end,
     groups = {not_in_creative_inventory = 1}

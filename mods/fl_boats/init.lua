@@ -1,4 +1,4 @@
-minetest.register_entity("fl_boats:boat", {
+core.register_entity("fl_boats:boat", {
     initial_properties = {
         visual = "mesh",
         mesh = "farlands_boat.obj",

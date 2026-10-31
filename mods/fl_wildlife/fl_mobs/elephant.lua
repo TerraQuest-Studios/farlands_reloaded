@@ -3,7 +3,7 @@ function elephant_brain(self)
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
-        minetest.add_item(mobkit.get_stand_pos(self), "fl_wildlife:leather " .. math.random(3))
+        core.add_item(mobkit.get_stand_pos(self), "fl_wildlife:leather " .. math.random(3))
 
         mobkit.clear_queue_high(self)
         fl_wildlife.hq_die(self)
@@ -28,7 +28,7 @@ function elephant_brain(self)
 
 end
 
-minetest.register_entity("fl_wildlife:elephant", {
+core.register_entity("fl_wildlife:elephant", {
     --mte object properties
     initial_properties = {
         physical = true,

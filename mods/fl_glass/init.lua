@@ -4,7 +4,7 @@ local cgroups = {"group:dig_generic","group:dig_sand","group:dig_stone",
                  "group:dig_dirt"}
 
 --glass nodes
-minetest.register_node("fl_glass:framed_glass", {
+core.register_node("fl_glass:framed_glass", {
     description = "framed glass",
     drawtype = "glasslike",
     tiles = {"farlands_glass.png", "farlands_glass_detail.png"},
@@ -15,7 +15,7 @@ minetest.register_node("fl_glass:framed_glass", {
 })
 
 --tinted colorable glass nodes
-minetest.register_node("fl_glass:tinted_connected_glass", {
+core.register_node("fl_glass:tinted_connected_glass", {
     description = "tinted connected glass",
     drawtype = "glasslike",
     tiles = {"farlands_glass_sheet.png^farlands_glass_detail.png"},
@@ -30,7 +30,7 @@ minetest.register_node("fl_glass:tinted_connected_glass", {
     end,
 })
 
-minetest.register_node("fl_glass:tinted_framed_glass", {
+core.register_node("fl_glass:tinted_framed_glass", {
     description = "tinted framed glass",
     drawtype = "glasslike",
     tiles = {"farlands_glass_sheet.png^farlands_glass.png", "farlands_glass_detail.png"},
@@ -46,9 +46,9 @@ minetest.register_node("fl_glass:tinted_framed_glass", {
 })
 
 for counter, dye in pairs(fl_dyes.dyes) do
-    local out_item = ItemStack(minetest.itemstring_with_palette("fl_glass:tinted_connected_glass", counter - 1))
+    local out_item = ItemStack(core.itemstring_with_palette("fl_glass:tinted_connected_glass", counter - 1))
     out_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " tinted connected glass")
-    minetest.register_craft({
+    core.register_craft({
         output = out_item:to_string(),
         type = "shapeless",
         recipe = {
@@ -59,9 +59,9 @@ for counter, dye in pairs(fl_dyes.dyes) do
 end
 
 for counter, dye in pairs(fl_dyes.dyes) do
-    local out_item = ItemStack(minetest.itemstring_with_palette("fl_glass:tinted_framed_glass", counter - 1))
+    local out_item = ItemStack(core.itemstring_with_palette("fl_glass:tinted_framed_glass", counter - 1))
     out_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " tinted framed glass")
-    minetest.register_craft({
+    core.register_craft({
         output = out_item:to_string(),
         type = "shapeless",
         recipe = {
@@ -72,7 +72,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
 end
 
 -- glass panes
-minetest.register_node("fl_glass:framed_glass_panes", {
+core.register_node("fl_glass:framed_glass_panes", {
     description = "framed glass pane",
     inventory_image = "farlands_pane_glass.png",
     wield_image = "farlands_pane_glass.png",
@@ -98,7 +98,7 @@ minetest.register_node("fl_glass:framed_glass_panes", {
     connects_to = cgroups--{"group:pane", "group:glass", "group:wood_related"},
 })
 
-minetest.register_node("fl_glass:tinted_framed_glass_panes", {
+core.register_node("fl_glass:tinted_framed_glass_panes", {
     description = "tinted framed glass pane",
     inventory_image = "farlands_glass_sheet.png^farlands_pane_glass.png",
     wield_image = "farlands_glass_sheet.png^farlands_pane_glass.png",
@@ -133,9 +133,9 @@ minetest.register_node("fl_glass:tinted_framed_glass_panes", {
 })
 
 for counter, dye in pairs(fl_dyes.dyes) do
-    local out_item = ItemStack(minetest.itemstring_with_palette("fl_glass:tinted_framed_glass_panes", counter - 1))
+    local out_item = ItemStack(core.itemstring_with_palette("fl_glass:tinted_framed_glass_panes", counter - 1))
     out_item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " tinted framed glass pane")
-    minetest.register_craft({
+    core.register_craft({
         output = out_item:to_string(),
         type = "shapeless",
         recipe = {
@@ -145,13 +145,13 @@ for counter, dye in pairs(fl_dyes.dyes) do
     })
 end
 
-minetest.register_craft({
+core.register_craft({
     type = "shapeless",
     output = "fl_glass:framed_glass_panes 16",
     recipe = {"fl_glass:framed_glass"}
 })
 
-minetest.register_craft({
+core.register_craft({
     type = "cooking",
     output = "fl_glass:framed_glass",
     recipe = "fl_stone:sand",

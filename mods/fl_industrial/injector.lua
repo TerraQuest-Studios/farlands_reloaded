@@ -1,4 +1,4 @@
-minetest.register_node("fl_industrial:injector", {
+core.register_node("fl_industrial:injector", {
     description = "injector",
     tiles = {
         "farlands_conveyor_base.png",
@@ -13,12 +13,12 @@ minetest.register_node("fl_industrial:injector", {
     paramtype2 = "facedir",
     on_punch = function(pos, node, puncher, pointed_thing)
         --handle register_on_punchnode stuff
-        minetest.node_punch(pos, node, puncher, pointed_thing)
+        core.node_punch(pos, node, puncher, pointed_thing)
 
         local dir = core.facedir_to_dir(node.param2)
-        local inv = minetest.get_inventory({type = "node", pos = vector.subtract(pos, dir)})
-        local inv_node = minetest.get_node(vector.subtract(pos, dir))
-        local drop_def = minetest.registered_items[minetest.get_node(vector.add(pos, dir)).name]
+        local inv = core.get_inventory({type = "node", pos = vector.subtract(pos, dir)})
+        local inv_node = core.get_node(vector.subtract(pos, dir))
+        local drop_def = core.registered_items[core.get_node(vector.add(pos, dir)).name]
 
         if inv and not inv:is_empty("main") then
             local list = inv:get_list("main")
@@ -29,9 +29,9 @@ minetest.register_node("fl_industrial:injector", {
                         return
                     end
                     if drop_def.drawtype == "airlike" and not drop_def._machine_input then
-                        minetest.add_item(vector.add(pos, dir), list[i])
+                        core.add_item(vector.add(pos, dir), list[i])
                     else
-                        minetest.registered_items[node.name]._item_input(pos, node, list[i])
+                        core.registered_items[node.name]._item_input(pos, node, list[i])
                     end
                     list[i]:clear()
                     inv:set_list("main", list)
@@ -43,20 +43,20 @@ minetest.register_node("fl_industrial:injector", {
     _item_input = function(pos, node, itemstack)
         --minetest.chat_send_all(minetest.pos_to_string(pos, 2))
         local dir = core.facedir_to_dir(node.param2)
-        local inv = minetest.get_inventory({type = "node", pos = vector.add(pos, dir)})
-        local inv_node = minetest.get_node(vector.add(pos, dir))
-        local def = minetest.registered_nodes[inv_node.name]
+        local inv = core.get_inventory({type = "node", pos = vector.add(pos, dir)})
+        local inv_node = core.get_node(vector.add(pos, dir))
+        local def = core.registered_nodes[inv_node.name]
 
         local dump
         if def._machine_input then
-            dump = def._machine_input(vector.add(pos, dir), minetest.get_node(vector.add(pos, dir)), itemstack)
+            dump = def._machine_input(vector.add(pos, dir), core.get_node(vector.add(pos, dir)), itemstack)
         elseif def.allow_metadata_inventory_put
             and def.allow_metadata_inventory_put(vector.add(pos, dir), "main", 1, itemstack, nil) == 0 or not inv then
             dump = itemstack
         else
             dump = inv:add_item("main", itemstack)
         end
-        if not dump:is_empty() then minetest.add_item(vector.new(pos.x, pos.y+1, pos.z), dump) end
+        if not dump:is_empty() then core.add_item(vector.new(pos.x, pos.y+1, pos.z), dump) end
 
     end,
     _allow_input = function(np2, op2)

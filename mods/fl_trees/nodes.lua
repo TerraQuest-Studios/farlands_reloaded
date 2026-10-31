@@ -1,4 +1,4 @@
-minetest.register_craftitem("fl_trees:stick", {
+core.register_craftitem("fl_trees:stick", {
     description = "stick",
     inventory_image = "farlands_stick.png",
     _dungeon_loot = {name = "fl_trees:stick", chance = 0.6, count = {3, 6}},
@@ -11,7 +11,7 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     local fgp = table.copy(pgp)
     fgp.stairable, fgp.fenceable, fgp.fence, fgp.not_in_creative_inventory, fgp.spawn_blacklist = nil, nil, 1, 1, 1
 
-    minetest.register_node("fl_trees:" .. name .. "_trunk", {
+    core.register_node("fl_trees:" .. name .. "_trunk", {
         --nodes
         description = name .. " tree trunk",
         tiles = {
@@ -22,25 +22,25 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
         paramtype2 = "facedir",
         sounds = fl_trees.sounds.wood(),
         groups = tgp,
-        on_place = minetest.rotate_node
+        on_place = core.rotate_node
     })
-    minetest.register_node("fl_trees:" .. name .. "_leaves", {
+    core.register_node("fl_trees:" .. name .. "_leaves", {
         description = name .. " leaves",
         drawtype = "allfaces_optional",
         paramtype = "light",
         tiles = {"farlands_" .. name .. "_leaves.png"},
         groups = lgp,
     })
-    minetest.register_node("fl_trees:" .. name .. "_plank", {
+    core.register_node("fl_trees:" .. name .. "_plank", {
         description = name .. " plank",
         paramtype2 = "facedir",
         place_param2 = 0,
         tiles = {"farlands_" .. name .. "_planks.png"},
         sounds = fl_trees.sounds.wood(),
         groups = pgp,
-        on_place = minetest.rotate_node
+        on_place = core.rotate_node
     })
-    minetest.register_node("fl_trees:" .. name .. "_plank_fence", {
+    core.register_node("fl_trees:" .. name .. "_plank_fence", {
         description = name .. " fence",
         paramtype = "light",
         drawtype = "nodebox",
@@ -59,18 +59,18 @@ local function tree_nodes(name, tgroup, lgroup, pgroup)
     })
 
     --crafts
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_trees:" .. name .. "_plank 4",
         recipe = {{"fl_trees:" .. name .. "_trunk",}}
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "fl_trees:stick 4",
         recipe = {{"fl_trees:" .. name .. "_plank"}},
     })
 end
 
-minetest.register_node("fl_trees:dead_aspen_leaves", {
+core.register_node("fl_trees:dead_aspen_leaves", {
     description = "dead aspen leaves",
     drawtype = "allfaces_optional",
     paramtype = "light",
@@ -82,7 +82,7 @@ for _, wood in pairs(fl_trees.types) do
     tree_nodes(wood)
 end
 
-if minetest.get_modpath("i3") then
+if core.get_modpath("i3") then
     local types = {"plank", "trunk", "leaves"}
     local wood_types = table.copy(fl_trees.types)
     wood_types[#wood_types] = nil

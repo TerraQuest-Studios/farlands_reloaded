@@ -23,7 +23,7 @@ local furnitures = {
 
 for name, nodebox in pairs(furnitures) do
     for _, wood_type in pairs(fl_trees.types) do
-        minetest.register_node("fl_furniture:" .. wood_type .. "_" .. name, {
+        core.register_node("fl_furniture:" .. wood_type .. "_" .. name, {
             description = wood_type .. " " .. name,
             drawtype = "nodebox",
             paramtype = "light",
@@ -43,7 +43,7 @@ for name, nodebox in pairs(furnitures) do
         })
     end
 
-    if minetest.get_modpath("i3") then
+    if core.get_modpath("i3") then
         local wood_types = table.copy(fl_trees.types)
         wood_types[#wood_types] = nil
             i3.compress("fl_furniture:apple_" .. name, {

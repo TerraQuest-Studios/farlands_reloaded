@@ -3,8 +3,8 @@ local v_dist, v_multiply, v_add = vector.distance, vector.multiply, vector.add
 local m_random, m_pi = math.random, math.pi
 
 --varibles
-local abr = minetest.get_mapgen_setting('active_block_range') or 4
-local mopb = minetest.settings:get("max_objects_per_block") or 64
+local abr = core.get_mapgen_setting('active_block_range') or 4
+local mopb = core.settings:get("max_objects_per_block") or 64
 
 --[[
     {
@@ -24,11 +24,11 @@ local mob_biomes = {}
 local mob_spawndata = {}
 
 --fill data cache. technically this currently doesnt account for dynamically registered mobs
-minetest.register_on_mods_loaded(function()
-    for biome, _ in pairs(minetest.registered_biomes) do
+core.register_on_mods_loaded(function()
+    for biome, _ in pairs(core.registered_biomes) do
         mob_biomes[biome] = {}
     end
-    for ename, edef in pairs(minetest.registered_entities) do
+    for ename, edef in pairs(core.registered_entities) do
         if edef._spawning and edef._spawning.biomes then
             mob_spawndata[ename] = table.copy(edef._spawning)
             for _, biome in pairs(edef._spawning.biomes) do
@@ -66,14 +66,14 @@ function find_nodes(p_min, p_max)
         end
     end
     ]]
-    local gcheck = minetest.get_item_group
-    local list = minetest.find_nodes_in_area_under_air(p_min, p_max, "group:all_nodes")
+    local gcheck = core.get_item_group
+    local list = core.find_nodes_in_area_under_air(p_min, p_max, "group:all_nodes")
     local pos_list = {}
 
     for _, pos in pairs(list) do
         --node under is checked for situations like snow on tree leaves, etc
-        local def = minetest.registered_items[minetest.get_node(pos).name]
-        local def2 = minetest.registered_items[minetest.get_node(vector.new(pos.x,pos.y-1,pos.z)).name]
+        local def = core.registered_items[core.get_node(pos).name]
+        local def2 = core.registered_items[core.get_node(vector.new(pos.x,pos.y-1,pos.z)).name]
         if def.walkable and gcheck(def.name, "spawn_blacklist") <= 0 and gcheck(def2.name, "spawn_blacklist") <= 0 then
             table.insert(pos_list, vector.new(pos.x, pos.y+1, pos.z))
         end
@@ -100,8 +100,8 @@ local function spawn_mob(stable, cmob, ccount)
     end
 
 
-    local light = minetest.get_natural_light(pos)
-    local biome = minetest.get_biome_name(minetest.get_biome_data(pos).biome)
+    local light = core.get_natural_light(pos)
+    local biome = core.get_biome_name(core.get_biome_data(pos).biome)
 
     --catches "default" biome aka no biome present
     if not mob_biomes[biome] then
@@ -111,7 +111,7 @@ local function spawn_mob(stable, cmob, ccount)
     local mob = cmob or mob_biomes[biome][m_random(#mob_biomes[biome])]
 
     if mob_spawndata.light_type and mob_spawndata.light_type == "total" then
-        light = minetest.get_node_light(pos)
+        light = core.get_node_light(pos)
     end
 
     --minetest.chat_send_all(mob)
@@ -125,9 +125,9 @@ local function spawn_mob(stable, cmob, ccount)
     end
 
     --minetest.chat_send_all("sucess: " .. (ccount or 0))
-    local ent = minetest.add_entity(pos, mob)
-    if minetest.registered_entities[mob]._on_spawn then
-        minetest.registered_entities[mob]._on_spawn(ent)
+    local ent = core.add_entity(pos, mob)
+    if core.registered_entities[mob]._on_spawn then
+        core.registered_entities[mob]._on_spawn(ent)
     end
 
     --minetest.chat_send_all("spawn time: " .. minetest.get_us_time()-time)
@@ -147,27 +147,27 @@ local function spawn_step()
     --slow down mobs spawning overall, save calc time
     if m_random() > 0.5 then
         --minetest.chat_send_all("nuked")
-        minetest.after(11, spawn_step)
+        core.after(11, spawn_step)
         return
     end
     --local time = minetest.get_us_time()
 
     --minetest.chat_send_all("fired")
 
-    for _, player in pairs(minetest.get_connected_players()) do
+    for _, player in pairs(core.get_connected_players()) do
         local p_pos = player:get_pos()
         local m_count, e_count = 0, 0
         local y_mod = p_pos.y < -4 and 0.5 or 1
         local yaw = (m_random(0, 360) - 180) / 180 * m_pi
         local l_dist = abr*16*y_mod*(m_random(0,0.5)+0.5)
-        local dist = v_multiply(minetest.yaw_to_dir(yaw),l_dist)
+        local dist = v_multiply(core.yaw_to_dir(yaw),l_dist)
         local s_pos = v_add(p_pos, dist)
         local s_table = find_nodes(
             vector.new(s_pos.x-10, s_pos.y-20, s_pos.z-10),
             vector.new(s_pos.x+10, s_pos.y+20, s_pos.z+10)
         )
 
-        for _, ent in pairs(minetest.luaentities) do
+        for _, ent in pairs(core.luaentities) do
             --check for pos to prevent crash
             if ent.object:get_pos() and v_dist(ent.object:get_pos(), p_pos) <= (abr*16*2)+5 then
                 e_count = e_count + 1
@@ -185,7 +185,7 @@ local function spawn_step()
 
     --minetest.chat_send_all("step time: " .. minetest.get_us_time()-time)
 
-    minetest.after(11, spawn_step)
+    core.after(11, spawn_step)
 end
 
-minetest.after(11, spawn_step)
+core.after(11, spawn_step)

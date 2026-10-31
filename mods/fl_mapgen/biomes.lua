@@ -1,7 +1,7 @@
 --vertical blend (broken), also need to limit ocean depth to -25
 --main biomes
 --grassland
-minetest.register_biome({
+core.register_biome({
     name = "grassland",
     node_top = "fl_topsoil:dirt_with_grass",
     depth_top = 1,
@@ -28,7 +28,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "grassland_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -57,7 +57,7 @@ minetest.register_biome({
 })
 
 --sand
-minetest.register_biome({
+core.register_biome({
     name = "sand",
     node_top = "fl_stone:sand",
     depth_top = 3,
@@ -87,7 +87,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "sand_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -119,7 +119,7 @@ minetest.register_biome({
 })
 
 --desert
-minetest.register_biome({
+core.register_biome({
     name = "desert",
     node_top = "fl_stone:desert_sand",
     depth_top = 3,
@@ -149,7 +149,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "desert_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -181,7 +181,7 @@ minetest.register_biome({
 })
 
 --silver sand
-minetest.register_biome({
+core.register_biome({
     name = "silversand",
     node_top = "fl_stone:silver_sand",
     depth_top = 3,
@@ -211,7 +211,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "silversand_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -243,7 +243,7 @@ minetest.register_biome({
 })
 
 --savannah
-minetest.register_biome({
+core.register_biome({
     name = "savannah",
     node_top = "fl_topsoil:savannah_dirt_with_grass",
     depth_top = 1,
@@ -273,7 +273,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "savannah_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -305,7 +305,7 @@ minetest.register_biome({
 })
 
 --taiga
-minetest.register_biome({
+core.register_biome({
     name = "taiga",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_topsoil:dirt_with_snow",
@@ -327,7 +327,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "taiga_ocean",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_stone:sand",
@@ -351,7 +351,7 @@ minetest.register_biome({
 })
 
 --snowy grasland
-minetest.register_biome({
+core.register_biome({
     name = "snowygrassland",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_topsoil:dirt_with_snow",
@@ -370,7 +370,7 @@ minetest.register_biome({
     humidity_point = 35,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "snowygrassland_ocean",
     node_dust = "fl_topsoil:snow",
     node_top = "fl_stone:sand",
@@ -390,7 +390,7 @@ minetest.register_biome({
     humidity_point = 35,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "icy",
     node_dust = "fl_topsoil:snow_block",
     node_top = "fl_topsoil:ice",
@@ -422,7 +422,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "icy_ocean",
     node_dust = "fl_topsoil:snow_block",
     node_top = "fl_stone:sand",
@@ -455,7 +455,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "tundra",
     node_top = "fl_topsoil:permafrost_with_stones",
     depth_top = 1,
@@ -486,7 +486,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "tundra_ocean",
     node_top = "fl_topsoil:sand",
     depth_top = 1,
@@ -518,7 +518,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "rainforest",
     node_top = "fl_topsoil:dirt_with_grass",
     depth_top = 1,
@@ -536,7 +536,7 @@ minetest.register_biome({
     humidity_point = 65,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "rainforest_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -555,7 +555,7 @@ minetest.register_biome({
     humidity_point = 65,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "deciduousforest",
     node_top = "fl_topsoil:dirt_with_grass",
     depth_top = 1,
@@ -573,7 +573,7 @@ minetest.register_biome({
     humidity_point = 68,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "deciduousforest_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -592,7 +592,7 @@ minetest.register_biome({
     humidity_point = 68,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "coniferousforest",
     node_top = "fl_topsoil:dirt_with_grass",
     depth_top = 1,
@@ -610,7 +610,7 @@ minetest.register_biome({
     humidity_point = 70,
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "coniferousforest_ocean",
     node_top = "fl_stone:sand",
     depth_top = 1,
@@ -631,7 +631,7 @@ minetest.register_biome({
 --rainforest, deciduous, coniferous
 
 --underground biome layers
-minetest.register_biome({
+core.register_biome({
     name = "ors",
     node_filler = "fl_stone:ors",
     node_stone = "fl_stone:ors",
@@ -642,7 +642,7 @@ minetest.register_biome({
     y_min = -150,
     --[[
         this should be ranges -50 to -150, however this in reality ends up being -113 to -150,
-        -32 was chosen based off https://forum.minetest.net/viewtopic.php?p=293354#p293354
+        -32 was chosen based off https://forum.luanti.org/viewtopic.php?p=293354#p293354
         -34 works, but -40 does not. ironically the tuff biome of -150 to -300 works as defined
     --]]
     y_max = -32,
@@ -676,7 +676,7 @@ minetest.register_biome({
     }
 })
 
-minetest.register_biome({
+core.register_biome({
     name = "tuff",
     node_filler = "fl_stone:tuff",
     node_stone = "fl_stone:tuff",

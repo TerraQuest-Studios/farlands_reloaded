@@ -1,0 +1,5 @@
+[files]
+includes = ["**", "!mods/fl_others/i3/**", "!mods/fl_others/mobkit/behaviors2override.lua"]
+
+[linter]
+globals = ["dungeon_loot", "fl_brains", "armor", "sfinv", "unified_inventory"]

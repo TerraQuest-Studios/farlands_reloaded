@@ -1,16 +1,16 @@
 --drop settings
 function fl_wildlife.drops(setting_name)
-    local input = minetest.settings:get(setting_name)
+    local input = core.settings:get(setting_name)
     --local input = "default:wood, default:wood,default:wood"
     if not input then return nil end
 
     local drops_table = {}
     for i in string.gmatch(input, "([^,]+)") do
         i = i:gsub("%s+", "")
-        if minetest.registered_nodes[i] then
+        if core.registered_nodes[i] then
             table.insert(drops_table, i)
         else
-            minetest.log("error", "[farlands_npc] '" .. i .. "' is not a registered node")
+            core.log("error", "[farlands_npc] '" .. i .. "' is not a registered node")
         end
     end
 
@@ -19,16 +19,16 @@ end
 
 --dirty dev egg registration
 function fl_wildlife.egg_it(t_name, d_name, color)
-    minetest.register_craftitem(":fl_wildlife:" .. d_name .. "_egg", {
+    core.register_craftitem(":fl_wildlife:" .. d_name .. "_egg", {
         description = "spawn egg for " .. d_name,
         inventory_image = "farlands_egg.png^(farlands_egg_overlay.png^[colorize:" .. color .. ")", --"404.png",
         stack_max = 99,
         on_place = function(itemstack, placer, pointed_thing)
             if pointed_thing.type ~= "node" then return itemstack end
-            if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then return itemstack end
+            if core.is_protected(pointed_thing.under, placer:get_player_name()) then return itemstack end
             local pos = pointed_thing.under
             pos.y = pos.y+1
-            local ent = minetest.add_entity(pos, t_name)
+            local ent = core.add_entity(pos, t_name)
             if itemstack:get_meta():get_string("description") ~= "" then
                 local self = ent:get_luaentity()
                 self.object:set_properties({nametag = itemstack:get_meta():get_string("description"),})
@@ -39,8 +39,8 @@ function fl_wildlife.egg_it(t_name, d_name, color)
     })
 end
 
-minetest.register_on_mods_loaded(function()
-    for mob, def in pairs(minetest.registered_entities) do
+core.register_on_mods_loaded(function()
+    for mob, def in pairs(core.registered_entities) do
         if def._egg_it then
             fl_wildlife.egg_it(mob, def._egg_it[1], def._egg_it[2])
         end
@@ -72,7 +72,7 @@ end
 function fl_wildlife.flash_color(self, cvalue, duration)
     local color = cvalue or "#FF000040"
     self.object:settexturemod("^[colorize:" .. color)
-    minetest.after(duration or 0.2, function()
+    core.after(duration or 0.2, function()
         if mobkit.exists(self) then
             self.object:settexturemod("")
         end
@@ -127,7 +127,7 @@ function fl_wildlife.rclick_name(self, clicker)
 
         fl_wildlife.set_nametag(self, mName)
 
-        if not minetest.settings:get_bool("creative_mode") then
+        if not core.settings:get_bool("creative_mode") then
             itemstack:take_item(1)
             clicker:set_wielded_item(itemstack)
         end
@@ -166,8 +166,8 @@ function fl_wildlife.drop_handler(self)
 
 		if drop.chance and math.random(1, drop.chance) ~= drop.chance then return end
 
-        if minetest.registered_items[drop.name] then
-            minetest.add_item(mobkit.get_stand_pos(self), drop.name .. " " .. count)
+        if core.registered_items[drop.name] then
+            core.add_item(mobkit.get_stand_pos(self), drop.name .. " " .. count)
             item_count = item_count+count
         end
 	end

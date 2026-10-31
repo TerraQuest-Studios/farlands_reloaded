@@ -36,7 +36,7 @@ local function villager_brain(self)
 end
 --]]
 
-minetest.register_entity("fl_wildlife:villager", {
+core.register_entity("fl_wildlife:villager", {
     --mte object properties
     physical = true,
     stepheight = 1.1,

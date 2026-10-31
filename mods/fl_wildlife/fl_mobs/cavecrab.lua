@@ -1,4 +1,4 @@
-local abr = minetest.get_mapgen_setting('active_block_range')
+local abr = core.get_mapgen_setting('active_block_range')
 
 -- custom behaviour
 -- makes them move in stimulus' general direction for limited time
@@ -19,7 +19,7 @@ local function hq_attracted(self,prty,tpos)
 end
 
 local function alert(pos)
-	local objs = minetest.get_objects_inside_radius(pos,abr*16)
+	local objs = core.get_objects_inside_radius(pos,abr*16)
 	for _,obj in ipairs(objs) do
 		if not obj:is_player() then
 			local luaent = obj:get_luaentity()
@@ -35,7 +35,7 @@ function cc_brain(self)
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
-        minetest.add_item(mobkit.get_stand_pos(self), "fl_bones:bone " .. math.random(3))
+        core.add_item(mobkit.get_stand_pos(self), "fl_bones:bone " .. math.random(3))
 
         mobkit.clear_queue_high(self)
         fl_wildlife.hq_die(self)
@@ -58,7 +58,7 @@ function cc_brain(self)
 				local pos2 = plyr:get_pos()
 				if prty < 10 then	-- zombie not alert
 					if vector.distance(pos,pos2) < self.view_range/3 and
-					(not mobkit.is_there_yet2d(pos,minetest.yaw_to_dir(self.object:get_yaw()),pos2) or
+					(not mobkit.is_there_yet2d(pos,core.yaw_to_dir(self.object:get_yaw()),pos2) or
 					vector.length(plyr:get_player_velocity()) > 3) then
 						mobkit.make_sound(self,'misc')
 						mobkit.hq_hunt(self,20,plyr)
@@ -84,13 +84,13 @@ function cc_brain(self)
 
 end
 
-minetest.register_on_punchnode(function(pos, node, puncher, pointed_thing)
+core.register_on_punchnode(function(pos, node, puncher, pointed_thing)
 	if math.random()<=0.1 then
 		alert(pos)
 	end
 end)
 
-minetest.register_entity("fl_wildlife:cavecrab", {
+core.register_entity("fl_wildlife:cavecrab", {
     --mte object properties
     initial_properties = {
         physical = true,

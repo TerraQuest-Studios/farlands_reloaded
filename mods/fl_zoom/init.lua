@@ -1,11 +1,11 @@
 local zoom = {}
 
-minetest.register_on_joinplayer(function(player, last_login)
+core.register_on_joinplayer(function(player, last_login)
     player:set_properties({zoom_fov = 0})
     --by disabling the zoom key, we allow it to be used fo other functions
 end)
 
-minetest.register_craftitem("fl_zoom:binoculars", {
+core.register_craftitem("fl_zoom:binoculars", {
     inventory_image = "farlands_zoom.png",
     description = "binoculars",
     stack_max = 1,
@@ -44,7 +44,7 @@ minetest.register_craftitem("fl_zoom:binoculars", {
     end,
 })
 
-minetest.register_on_dieplayer(function(player)
+core.register_on_dieplayer(function(player)
     if zoom[player:get_player_name()] then
         player:set_fov(0)
         player:hud_set_flags({
@@ -60,7 +60,7 @@ minetest.register_on_dieplayer(function(player)
     end
 end)
 
-minetest.register_on_leaveplayer(function(player)
+core.register_on_leaveplayer(function(player)
     zoom[player:get_player_name()] = nil
 end)
 --fixme:player can place nodes, probably revoke interact to fix this

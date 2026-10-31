@@ -1,13 +1,13 @@
 local random = math.random
-local get_node_light = minetest.get_node_light
+local get_node_light = core.get_node_light
 
 local sz = 2 --(sz*2+1, 3, sz*2*1)
 local max_obj = 16--tonumber(minetest.settings:get("max_objects_per_block") or 64)
 local spawner_mobs = {}
 local sm_keys = {}
 
-minetest.register_on_mods_loaded(function()
-    for mob, def in pairs(minetest.registered_entities) do
+core.register_on_mods_loaded(function()
+    for mob, def in pairs(core.registered_entities) do
         if def._spawner then
             spawner_mobs[mob] = def._spawner
             table.insert(sm_keys, mob)
@@ -20,15 +20,15 @@ local function timer(pos, elapsed)
 
     local active = false
 
-    local obj_in_rad = minetest.get_objects_inside_radius(pos, 16)
+    local obj_in_rad = core.get_objects_inside_radius(pos, 16)
     for _, obj in pairs(obj_in_rad) do
         if obj:is_player() then
             active = true
         end
     end
 
-    local c_air = minetest.get_content_id("air")
-    local vm = minetest.get_voxel_manip()
+    local c_air = core.get_content_id("air")
+    local vm = core.get_voxel_manip()
     local emin, emax = vm:read_from_map({x=pos.x-sz, y=pos.y-1, z=pos.z-sz}, {x=pos.x+sz, y=pos.y+1, z=pos.z+sz})
     local a = VoxelArea:new{MinEdge = emin, MaxEdge = emax}
     local data = vm:get_data()
@@ -41,7 +41,7 @@ local function timer(pos, elapsed)
         [10]={}, [11]={}, [12]={},
         [13]={}, [14]={}, [15]={},
     }
-    local tod = minetest.get_timeofday()
+    local tod = core.get_timeofday()
 
     for z = pos.z-sz, pos.z+sz do
         for y = pos.y-1, pos.y+1 do
@@ -59,9 +59,9 @@ local function timer(pos, elapsed)
 
     --minetest.chat_send_all(counter)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local spawn_mob = meta:get("mob_spawn") or sm_keys[random(#sm_keys)]
-    if not minetest.registered_entities[spawn_mob] then
+    if not core.registered_entities[spawn_mob] then
         --when biome support added, factor it in here
         spawn_mob = sm_keys[random(#sm_keys)]
         meta:set_string("mob_spawn", spawn_mob)
@@ -74,13 +74,13 @@ local function timer(pos, elapsed)
             local rand = random(spawner_mobs[spawn_mob].min_light or 1, spawner_mobs[spawn_mob].max_light or 15)
             if #light_table[rand] >= 1 then
                 --maybe spawned in entities have particles for 2 seconds?
-                minetest.add_entity(light_table[rand][random(#light_table[rand])], spawn_mob)
+                core.add_entity(light_table[rand][random(#light_table[rand])], spawn_mob)
                 --minetest.chat_send_all("light: " .. rand)
                 j=j+1
             end
         end
 
-        minetest.add_particlespawner({
+        core.add_particlespawner({
             amount = 5*10,
             time = 5,
             minpos = pos,
@@ -105,19 +105,19 @@ local function timer(pos, elapsed)
     --minetest.chat_send_all(minetest.pos_to_string({x=pos.x-10, y=pos.y-1, z=pos.z-10}))
     --minetest.chat_send_all(minetest.pos_to_string({x=pos.x+10, y=pos.y+1, z=pos.z+10}))
 
-    minetest.get_node_timer(pos):start(random(11, 30))
+    core.get_node_timer(pos):start(random(11, 30))
 	return false
 end
 
-minetest.register_node("fl_wildlife:spawner", {
+core.register_node("fl_wildlife:spawner", {
     description = "wildlife spawner",
     paramtype = "light",
     drawtype = "glasslike",
     tiles = {"farlands_spawner.png"},
     on_construct = function(pos)
-        minetest.get_node_timer(pos):start(random(11, 30))
+        core.get_node_timer(pos):start(random(11, 30))
         --need to check pos for biome against def
-        local meta = minetest.get_meta(pos)
+        local meta = core.get_meta(pos)
         meta:set_string("mob_spawn", sm_keys[random(#sm_keys)])
     end,
     on_timer = timer,

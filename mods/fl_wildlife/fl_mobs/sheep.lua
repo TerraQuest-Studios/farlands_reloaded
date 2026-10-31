@@ -8,7 +8,7 @@ function sheep_actfunc(self, staticdata, dtime_s)
             --minetest.chat_send_all("sheep_time: " .. tonumber(self.sheep_time) .. ", dtime_s: " .. dtime_s)
             self.object:set_properties({textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_shaved.png"}})
 
-            minetest.after(tonumber(self.sheep_time), function()
+            core.after(tonumber(self.sheep_time), function()
                 if mobkit.is_alive(self) then
                     self.object:set_properties(
                         {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. self.sheep_color .. ".png"}}
@@ -33,10 +33,10 @@ function sheep_brain(self)
 
         for counter, dyes in pairs(fl_dyes.dyes) do
             if dyes[1] == string.sub(self.object:get_properties().textures[1], 48, -5) then
-                local item = ItemStack(minetest.itemstring_with_palette("fl_wool:wool", counter - 1))
+                local item = ItemStack(core.itemstring_with_palette("fl_wool:wool", counter - 1))
                 item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " wool")
                 item:set_count(math.random(3))
-                minetest.add_item(mobkit.get_stand_pos(self), item:to_string())
+                core.add_item(mobkit.get_stand_pos(self), item:to_string())
             end
         end
 
@@ -72,7 +72,7 @@ for counter, dyes in pairs(fl_dyes.dyes) do
     )
 end
 
-minetest.register_entity("fl_wildlife:sheep", {
+core.register_entity("fl_wildlife:sheep", {
     --mte object properties
     initial_properties = {
         physical = true,
@@ -162,7 +162,7 @@ minetest.register_entity("fl_wildlife:sheep", {
 
             fl_wildlife.set_nametag(self, mName)
 
-            if not minetest.settings:get_bool("creative_mode") then
+            if not core.settings:get_bool("creative_mode") then
                 itemstack:take_item(1)
                 clicker:set_wielded_item(itemstack)
             end
@@ -176,9 +176,9 @@ minetest.register_entity("fl_wildlife:sheep", {
             local sc = string.sub(self.object:get_properties().textures[1], 48, -5)
             for counter, dyes in pairs(fl_dyes.dyes) do
                 if dyes[1] == sc then
-                    local item = ItemStack(minetest.itemstring_with_palette("fl_wool:wool", counter - 1))
+                    local item = ItemStack(core.itemstring_with_palette("fl_wool:wool", counter - 1))
                     item:get_meta():set_string("description", fl_dyes.dyes[counter][2] .. " wool")
-                    minetest.add_item(mobkit.get_stand_pos(self), item:to_string())
+                    core.add_item(mobkit.get_stand_pos(self), item:to_string())
                     self.object:set_properties({textures = {shaved_sheep}})
                     mobkit.remember(self,"sheep_color",sc)
                     self.sheep_color = sc
@@ -188,7 +188,7 @@ minetest.register_entity("fl_wildlife:sheep", {
             local after_time = math.random(15,45)
             --minetest.chat_send_all(after_time)
             mobkit.remember(self,"sheep_time",after_time)
-            minetest.after(after_time, function()
+            core.after(after_time, function()
                 if mobkit.is_alive(self) then
                     self.object:set_properties(
                         {textures = {"farlands_mob_sheep_base.png^farlands_mob_sheep_" .. sc .. ".png"}}
@@ -202,7 +202,7 @@ minetest.register_entity("fl_wildlife:sheep", {
             if self.object:get_properties().textures[1] == shaved_sheep then return end
 
             --minetest.chat_send_all(string.sub(itemstack:get_name(), 9, -1))
-            if minetest.get_item_group(itemstack:get_name(), "dye") == 1 then
+            if core.get_item_group(itemstack:get_name(), "dye") == 1 then
                 --minetest.chat_send_all("in group")
                 local sc = string.sub(itemstack:get_name(), 9, -5)
 

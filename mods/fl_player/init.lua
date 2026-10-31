@@ -28,7 +28,7 @@ fl_player.ignore = {}
 local data_table = {}
 local key_table = {}
 
-for _, sn in pairs(minetest.get_dir_list(minetest.get_modpath("fl_player").."/textures")) do
+for _, sn in pairs(core.get_dir_list(core.get_modpath("fl_player").."/textures")) do
     local nn = string.split(string.split(sn, "_")[2],".")
     table.insert(data_table, {_texture = sn, name = nn[1], get_preview = function() return "" end})
     key_table[sn] = 1
@@ -41,7 +41,7 @@ local function get_player_skin(player)
     return "character_Jonathon.png"
 end
 
-minetest.register_on_joinplayer(function(player)
+core.register_on_joinplayer(function(player)
     player:get_meta():set_int("vanish", 0)
     player:set_properties({
         mesh = "fl_character.b3d",
@@ -62,8 +62,8 @@ minetest.register_on_joinplayer(function(player)
     )
 end)
 
-minetest.register_globalstep(function(dtime)
-    for _, player in pairs(minetest.get_connected_players()) do
+core.register_globalstep(function(dtime)
+    for _, player in pairs(core.get_connected_players()) do
         local pcontrols = player:get_player_control()
 
         player:set_bone_position(

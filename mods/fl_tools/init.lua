@@ -7,7 +7,7 @@ fl_tools.details = {
     license = "MIT",
 }
 
-local modpath = minetest.get_modpath("fl_tools")
+local modpath = core.get_modpath("fl_tools")
 dofile(modpath .. "/api.lua")
 dofile(modpath .. "/tool_sets.lua")
 dofile(modpath .. "/other_tools.lua")
