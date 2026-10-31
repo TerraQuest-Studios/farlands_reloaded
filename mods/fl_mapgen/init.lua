@@ -13,3 +13,5 @@ dofile(modpath .. "/dungeon/init.lua")
 
 --at the end as this contains register_on_generateds
 dofile(modpath .. "/other.lua")
+
+core.register_mapgen_script(modpath .. "/mapgen_async.lua")
