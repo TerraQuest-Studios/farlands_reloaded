@@ -44,7 +44,7 @@ local viewing_anvil = {}
 core.register_node("fl_workshop:anvil", {
     description = "anvil",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     use_texture_alpha = "clip",
     drawtype = "mesh",
     mesh = "farlands_anvil.obj",
@@ -245,7 +245,6 @@ core.register_node("fl_workshop:anvil", {
         end
         core.node_dig(pos, node, digger)
     end,
-    on_place = core.rotate_node,
     groups = {oddly_breakable_by_hand = 1},
 })
 

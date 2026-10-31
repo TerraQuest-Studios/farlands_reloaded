@@ -156,8 +156,8 @@ core.register_on_generated(function(vm, _, _, blockseed)
 
 		if vm:get_node_at(chestpos).name == "air" then
 			-- make it face inwards to the room
-			local facedir = core.dir_to_facedir(vector.multiply(wall.facing, -1))
-			vm:set_node_at(chestpos, {name = chest_id, param2 = facedir})
+			local fourdir = core.dir_to_fourdir(vector.multiply(wall.facing, -1))
+			vm:set_node_at(chestpos, {name = chest_id, param2 = fourdir})
 			--need to add in a way of placing spawners here
 		end
 	end

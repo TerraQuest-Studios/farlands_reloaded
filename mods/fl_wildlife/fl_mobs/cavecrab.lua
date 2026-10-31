@@ -101,6 +101,7 @@ core.register_entity("fl_wildlife:cavecrab", {
     initial_properties = {
         physical = true,
         stepheight = 1.2,
+        step_up_mode = "floaty",
         collide_with_objects = true,
         collisionbox = {-0.5, 0, -0.5, 0.5, 1.5, 0.5},
         visual = "mesh",

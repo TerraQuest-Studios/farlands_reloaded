@@ -1,6 +1,7 @@
 core.register_entity("fl_wildlife:trader", {
     physical = true,
     stepheight = 1.1,
+    step_up_mode = "floaty",
     collide_with_objects = true,
     collisionbox = {-0.35, 0, -0.35, 0.35, 1.9, 0.35},
     visual = "mesh",

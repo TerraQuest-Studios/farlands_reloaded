@@ -35,6 +35,7 @@ core.register_entity("fl_wildlife:elephant", {
     initial_properties = {
         physical = true,
         stepheight = 1.2,
+        step_up_mode = "floaty",
         collide_with_objects = true,
         collisionbox = {-1.1, 0, -1.1, 1.1, 2.1, 1.1},
         visual = "mesh",

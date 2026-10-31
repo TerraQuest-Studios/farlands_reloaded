@@ -59,7 +59,7 @@ for i = 1, 4 do
 			type = "fixed",
 			fixed = nb_table[i]
 		},
-		paramtype2 = "facedir",
+		paramtype2 = "4dir",
         collision_box = {
 			type = "fixed",
 			fixed = {{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}},

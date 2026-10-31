@@ -163,7 +163,7 @@ end
 
 core.register_node("fl_workshop:furnace", {
     description = "furnace",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     on_construct = function(pos)
         local inv = core.get_meta(pos):get_inventory()
         inv:set_size("input", 1)
@@ -206,7 +206,7 @@ core.register_node("fl_workshop:furnace", {
 
 core.register_node("fl_workshop:furnace_active", {
     description = "furnace",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     on_construct = function(pos)
         local inv = core.get_meta(pos):get_inventory()
         inv:set_size("input", 1)

@@ -47,7 +47,7 @@ for _, img in pairs(core.get_dir_list(core.get_modpath("fl_paintings").."/textur
         mesh = data[2],
         tiles = {img},
         paramtype = "light",
-        paramtype2 = "facedir",
+        paramtype2 = "4dir",
         use_texture_alpha = "clip",
         visual_scale = 0.5,
         wield_scale = {x=0.25, y=0.25, z=0.25},

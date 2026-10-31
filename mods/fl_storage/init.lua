@@ -1,7 +1,7 @@
 core.register_node("fl_storage:wood_chest", {
     description = "wood chest",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     on_construct = function(pos)
         local inv = core.get_meta(pos):get_inventory()
         inv:set_size("main", 9*4)

@@ -52,6 +52,7 @@ core.register_on_joinplayer(function(player)
         visual_size = {x = 1, y = 1, z = 1},
         collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
         stepheight = 0.6,
+        step_up_mode = "floaty",
         eye_height = 1.47,
     })
     --patch this

@@ -116,7 +116,7 @@ core.registered_entities["__builtin:item"].on_step = function(self, dtime, mover
 
     --conveyor code
     if string.find(node.name, "fl_industrial:conveyor") then
-        local dir = core.facedir_to_dir(node.param2)
+        local dir = core.fourdir_to_dir(node.param2)
 
         --center on conveyor
         if dir.x == 0 and pos.x ~= math.floor(pos.x+0.5) then

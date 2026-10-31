@@ -25,7 +25,7 @@ local function make_door(file, modname, append)
         description = name:gsub("_", " "),
         drawtype = "mesh",
         paramtype = "light",
-        paramtype2 = "facedir",
+        paramtype2 = "4dir",
         mesh = "farlands_door_a.glb",
         visual_scale = 10,
         use_texture_alpha = "clip",
@@ -57,7 +57,7 @@ local function make_door(file, modname, append)
                 or core.is_protected(vector.new(dpos.x, dpos.y+1, dpos.z), placer:get_player_name()) then return end
 
             if adef and adef.drawtype == "airlike" then
-                local dir = placer and core.dir_to_facedir(placer:get_look_dir()) or 0
+                local dir = placer and core.dir_to_fourdir(placer:get_look_dir()) or 0
 
                 local ref = {
                     {x = -1, y = 0, z = 0},
@@ -92,7 +92,7 @@ local function make_door(file, modname, append)
         description = name:gsub("_", " "),
         drawtype = "mesh",
         paramtype = "light",
-        paramtype2 = "facedir",
+        paramtype2 = "4dir",
         mesh = "farlands_door_b.glb",
         visual_scale = 10,
         use_texture_alpha = "clip",

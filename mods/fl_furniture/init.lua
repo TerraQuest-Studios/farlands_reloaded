@@ -27,7 +27,7 @@ for name, nodebox in pairs(furnitures) do
             description = wood_type .. " " .. name,
             drawtype = "nodebox",
             paramtype = "light",
-            paramtype2 = "facedir",
+            paramtype2 = "4dir",
             tiles = {
                 {
                     name = "farlands_" .. wood_type .. "_planks.png",

@@ -38,6 +38,7 @@ core.register_entity("fl_wildlife:chicken", {
     initial_properties = {
         physical = true,
         stepheight = 0.4,
+        step_up_mode = "floaty",
         collide_with_objects = true,
         collisionbox = {-0.2, 0, -0.2, 0.2, 0.45, 0.2},
         visual = "mesh",

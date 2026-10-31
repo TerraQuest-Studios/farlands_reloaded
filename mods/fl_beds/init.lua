@@ -9,7 +9,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
         inventory_image = "farlands_beds_" .. fl_dyes.dyes[counter][1] .. ".png",
         wield_image = "farlands_beds_" .. fl_dyes.dyes[counter][1] .. ".png",
         paramtype = "light",
-        paramtype2 = "facedir",
+        paramtype2 = "4dir",
         use_texture_alpha = "clip",
         drawtype = "mesh",
         mesh = "farlands_bed.obj",
@@ -30,7 +30,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
                 core.remove_node(pos)
                 return true
             end
-            local dir = core.facedir_to_dir(base.param2)
+            local dir = core.fourdir_to_dir(base.param2)
             local head_pos = {x=pos.x+dir.x,y=pos.y,z=pos.z+dir.z}
             local head = core.get_node_or_nil(head_pos)
             local def = core.registered_items[head.name] or nil
@@ -45,7 +45,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
         -- non complete bed sleep function that needs to be completed
         on_rightclick = function(pos, _node, clicker)
             local cname = clicker:get_player_name()
-            local dir = core.facedir_to_dir(core.get_node(pos).param2)
+            local dir = core.fourdir_to_dir(core.get_node(pos).param2)
             local mpos = {x = pos.x + dir.x/2, y = pos.y+.07, z = pos.z+dir.z/2}
             local pos_hash = core.hash_node_position(pos)
             local time = core.get_timeofday()

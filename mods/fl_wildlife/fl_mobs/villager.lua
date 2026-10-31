@@ -40,6 +40,7 @@ core.register_entity("fl_wildlife:villager", {
     --mte object properties
     physical = true,
     stepheight = 1.1,
+    step_up_mode = "floaty",
     collide_with_objects = true,
     collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3}, --top y set to 1.99 to walk under 2 nodes
     visual = "mesh",

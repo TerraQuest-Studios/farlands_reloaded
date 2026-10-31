@@ -79,6 +79,7 @@ core.register_entity("fl_wildlife:sheep", {
     initial_properties = {
         physical = true,
         stepheight = 1.1,
+        step_up_mode = "floaty",
         collide_with_objects = true,
         collisionbox = {-0.4, 0, -0.4, 0.4, 1.3, 0.4},
         visual = "mesh",

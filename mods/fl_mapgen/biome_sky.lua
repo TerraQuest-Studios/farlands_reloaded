@@ -42,6 +42,11 @@ bs.defaults = {
         height = 120,
         thickness = 16,
         speed = {x = 0, z = -2},
+    },
+    lighting = {
+        shadows = {intensity = 0.33},
+        bloom = {intensity = 0.05, strength_factor = 1, radius = 1},
+        volumetric_light = {strength = 0.2},
     }
 }
 bs.players = {}
@@ -88,6 +93,7 @@ local function logic()
             player:set_moon(fill_data(bs.defaults.moon, bdef._sky_data.moon))
             player:set_stars(fill_data(bs.defaults.stars, bdef._sky_data.stars))
             player:set_clouds(fill_data(bs.defaults.clouds, bdef._sky_data.clouds))
+            player:set_lighting(fill_data(bs.defaults.lighting, bdef._sky_data.lighting))
             bs.players[pname] = {
                 id = bdata.biome
             }
@@ -97,6 +103,7 @@ local function logic()
             player:set_moon(bs.defaults.moon)
             player:set_stars(bs.defaults.stars)
             player:set_clouds(bs.defaults.clouds)
+            player:set_lighting(bs.defaults.lighting)
             bs.players[pname] = {
                 id = bdata.biome
             }
@@ -107,3 +114,7 @@ local function logic()
 end
 
 core.after(bs.update_sec, logic)
+
+core.register_on_leaveplayer(function(player)
+    bs.players[player:get_player_name()] = nil
+end)

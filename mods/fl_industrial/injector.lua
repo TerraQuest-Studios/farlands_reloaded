@@ -10,12 +10,12 @@ core.register_node("fl_industrial:injector", {
         "farlands_conveyor_base.png",
         "farlands_conveyor_base.png",
     },
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     on_punch = function(pos, node, puncher, pointed_thing)
         --handle register_on_punchnode stuff
         core.node_punch(pos, node, puncher, pointed_thing)
 
-        local dir = core.facedir_to_dir(node.param2)
+        local dir = core.fourdir_to_dir(node.param2)
         local inv = core.get_inventory({type = "node", pos = vector.subtract(pos, dir)})
         local inv_node = core.get_node(vector.subtract(pos, dir))
         local drop_def = core.registered_items[core.get_node(vector.add(pos, dir)).name]
@@ -42,7 +42,7 @@ core.register_node("fl_industrial:injector", {
     end,
     _item_input = function(pos, node, itemstack)
         --minetest.chat_send_all(minetest.pos_to_string(pos, 2))
-        local dir = core.facedir_to_dir(node.param2)
+        local dir = core.fourdir_to_dir(node.param2)
         local inv = core.get_inventory({type = "node", pos = vector.add(pos, dir)})
         local inv_node = core.get_node(vector.add(pos, dir))
         local def = core.registered_nodes[inv_node.name]

@@ -1,7 +1,7 @@
 core.register_node("fl_trains:straight_track", {
     description = "straight track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_straight.obj",
     tiles = {"farlands_rail.png", "farlands_ties.png"},
@@ -19,7 +19,7 @@ core.register_node("fl_trains:straight_track", {
 core.register_node("fl_trains:curve_right_track", {
     description = "right curve track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_curved_right.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -37,7 +37,7 @@ core.register_node("fl_trains:curve_right_track", {
 core.register_node("fl_trains:curve_left_track", {
     description = "left curve track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_curved_left.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -55,7 +55,7 @@ core.register_node("fl_trains:curve_left_track", {
 core.register_node("fl_trains:straight_45_track", {
     description = "45 degree straight track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_straight_45.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -73,7 +73,7 @@ core.register_node("fl_trains:straight_45_track", {
 core.register_node("fl_trains:crossing_track", {
     description = "corssing track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_crossing.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -91,7 +91,7 @@ core.register_node("fl_trains:crossing_track", {
 core.register_node("fl_trains:switch_right_track", {
     description = "switch right track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_switch_right.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -109,7 +109,7 @@ core.register_node("fl_trains:switch_right_track", {
 core.register_node("fl_trains:switch_left_track", {
     description = "switch left track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_switch_left.obj",
     tiles = {"farlands_ties.png", "farlands_rail.png", },
@@ -127,7 +127,7 @@ core.register_node("fl_trains:switch_left_track", {
 core.register_node("fl_trains:straight_rise_track", {
     description = "straight rise track",
     paramtype = "light",
-    paramtype2 = "facedir",
+    paramtype2 = "4dir",
     drawtype = "mesh",
     mesh = "farlands_straight_rise.obj",
     tiles = {"farlands_rail.png", "farlands_ties.png", },
