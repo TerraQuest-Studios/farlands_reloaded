@@ -44,7 +44,7 @@ end
 core.register_on_joinplayer(function(player)
     player:get_meta():set_int("vanish", 0)
     player:set_properties({
-        mesh = "fl_character.b3d",
+        mesh = "fl_character.glb",
         textures = {get_player_skin(player), "[combine:16x16", "[combine:16x16"},
         visual = "mesh",
         visual_size = {x = 1, y = 1, z = 1},

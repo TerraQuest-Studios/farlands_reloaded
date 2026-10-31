@@ -36,7 +36,7 @@ core.register_entity("fl_wildlife:elephant", {
         collide_with_objects = true,
         collisionbox = {-1.1, 0, -1.1, 1.1, 2.1, 1.1},
         visual = "mesh",
-        mesh = "farlands_mob_elephant.b3d",
+        mesh = "farlands_mob_elephant.glb",
         textures = {"farlands_mob_elephant.png"},
         --visual_size = {x=1.6, y=1.6},
         static_save = true,

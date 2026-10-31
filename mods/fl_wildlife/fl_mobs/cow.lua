@@ -36,7 +36,7 @@ core.register_entity("fl_wildlife:cow", {
         collide_with_objects = true,
         collisionbox = {-0.5, 0, -0.5, 0.5, 1.5, 0.5},
         visual = "mesh",
-        mesh = "farlands_mob_cow.b3d",
+        mesh = "farlands_mob_cow.glb",
         textures = {"farlands_mob_cow.png"},
         --visual_size = {x=1.6, y=1.6},
         static_save = true,

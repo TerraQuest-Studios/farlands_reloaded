@@ -145,7 +145,7 @@ core.register_on_generated(function(minp, maxp, blockseed)
 	end
 	if #poslist == 0 then return end
 
-	local noise = core.get_perlin(10115, 4, 0.5, 1)
+	local noise = core.get_value_noise(10115, 4, 0.5, 1)
 	local rand = PcgRandom(noise3d_integer(noise, poslist[1]))
 
 	local candidates = {}

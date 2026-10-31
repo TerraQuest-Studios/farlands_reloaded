@@ -7,7 +7,7 @@ local speed_limit = 10
 core.register_entity("fl_avation:airballoon", {
     initial_properties = {
         visual = "mesh",
-        mesh = "farlands_airballoon.b3d",
+        mesh = "farlands_airballoon.glb",
         textures = {"farlands_airballoon.png"},
         physical = true,
         collide_with_objects = true,

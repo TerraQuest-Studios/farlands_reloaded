@@ -80,7 +80,7 @@ core.register_entity("fl_wildlife:sheep", {
         collide_with_objects = true,
         collisionbox = {-0.4, 0, -0.4, 0.4, 1.3, 0.4},
         visual = "mesh",
-        mesh = "farlands_mob_sheep.b3d",
+        mesh = "farlands_mob_sheep.glb",
         --[[
         textures = {
             "farlands_mob_sheep_base.png^farlands_mob_sheep_white.png",

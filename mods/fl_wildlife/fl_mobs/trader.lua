@@ -4,7 +4,7 @@ core.register_entity("fl_wildlife:trader", {
     collide_with_objects = true,
     collisionbox = {-0.35, 0, -0.35, 0.35, 1.9, 0.35},
     visual = "mesh",
-    mesh = "farlands_npc_trader.b3d",
+    mesh = "farlands_npc_trader.glb",
     textures = {"farlands_npc_trader.png"},
     visual_size = {x = 0.9, y = 0.9, z = 0.9},
     static_save = true,

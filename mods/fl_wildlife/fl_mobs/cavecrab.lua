@@ -59,7 +59,7 @@ function cc_brain(self)
 				if prty < 10 then	-- zombie not alert
 					if vector.distance(pos,pos2) < self.view_range/3 and
 					(not mobkit.is_there_yet2d(pos,core.yaw_to_dir(self.object:get_yaw()),pos2) or
-					vector.length(plyr:get_player_velocity()) > 3) then
+					vector.length(plyr:get_velocity()) > 3) then
 						mobkit.make_sound(self,'misc')
 						mobkit.hq_hunt(self,20,plyr)
 						if math.random()<=0.5 then alert(pos) end
@@ -98,7 +98,7 @@ core.register_entity("fl_wildlife:cavecrab", {
         collide_with_objects = true,
         collisionbox = {-0.5, 0, -0.5, 0.5, 1.5, 0.5},
         visual = "mesh",
-        mesh = "farlands_mob_cavecrab.b3d",
+        mesh = "farlands_mob_cavecrab.glb",
         textures = {"farlands_mob_cavecrab.png"},
         --visual_size = {x=1.6, y=1.6},
         static_save = true,

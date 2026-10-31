@@ -43,7 +43,7 @@ core.register_entity("fl_wildlife:villager", {
     collide_with_objects = true,
     collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3}, --top y set to 1.99 to walk under 2 nodes
     visual = "mesh",
-    mesh = "farlands_npc_villager.b3d",
+    mesh = "farlands_npc_villager.glb",
     textures = {"farlands_npc_villager1.png", "farlands_npc_villager2.png"},
     visual_size = {x = 0.9, y = 0.9, z = 0.9},
     static_save = true,

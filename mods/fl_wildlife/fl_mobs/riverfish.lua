@@ -28,7 +28,7 @@ core.register_entity("fl_wildlife:riverfish", {
     collide_with_objects = false,
     collisionbox = {-0.2, -0.2, -0.2, 0.2, 0.2, 0.2}, --fix this
     visual = "mesh",
-    mesh = "farlands_mob_fish.b3d",
+    mesh = "farlands_mob_fish.glb",
     textures = {"farlands_mob_riverfish.png"},
     visual_size = {x=1.6, y=1.6},
     static_save = true,

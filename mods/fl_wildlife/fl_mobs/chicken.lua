@@ -39,7 +39,7 @@ core.register_entity("fl_wildlife:chicken", {
         collide_with_objects = true,
         collisionbox = {-0.2, 0, -0.2, 0.2, 0.45, 0.2},
         visual = "mesh",
-        mesh = "farlands_mob_chicken.b3d",
+        mesh = "farlands_mob_chicken.glb",
         textures = {
             "farlands_mob_chicken.png",
         },
