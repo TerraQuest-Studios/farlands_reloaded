@@ -477,19 +477,21 @@ core.register_entity("fl_tnt:tnt_entity", {
         },
         --damage_texture_modifier = "^[brighten"
     },
-    on_activate = function(self, staticdata, dtime_s)
+    on_activate = function(self)
         --self.object:setvelocity({x=0, y=4, z=0})
 		self.object:set_acceleration({x=0, y=-10, z=0})
 		self.object:set_texture_mod("^[brighten")
         self.object:set_armor_groups({immortal = 1})
     end,
-    on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
-        if puncher:is_player() then self.object:remove() end
+    on_punch = function(self, puncher)
+        if puncher:is_player() then
+            self.object:remove()
+        end
     end,
     timer = 0,
     blinktimer = 0,
 	blinkstatus = true,
-    on_step = function(self, dtime, moveresult)
+    on_step = function(self, dtime)
 		self.timer = self.timer + dtime
 		local mult = 1
 		if self.timer > 5 * 0.8 then -- blink faster before explosion
@@ -516,7 +518,7 @@ core.register_entity("fl_tnt:tnt_entity", {
 core.register_node("fl_tnt:tnt", {
     description = "tnt",
     tiles = {"farlands_tnt_top.png", "farlands_tnt_bottom.png", "farlands_tnt_side.png"},
-    on_punch = function(pos, node, puncher)
+    on_punch = function(pos, _node, puncher)
 		if core.is_protected(pos, puncher:get_player_name()) then return end
         core.remove_node(pos)
         local entity = core.add_entity(pos, "fl_tnt:tnt_entity")

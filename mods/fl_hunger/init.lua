@@ -54,7 +54,7 @@ core.hud_replace_builtin("health", health_bar_def)
 
 
 --init data
-core.register_on_joinplayer(function(player, last_login)
+core.register_on_joinplayer(function(player)
     local hv = player:get_meta():get("hunger_value") or 20
     hunger_data[player:get_player_name()] = {hunger_value = hv, node_interact = 0}
 
@@ -78,7 +78,7 @@ local function save_hunger(player)
     if not data then return end
     player:get_meta():set_string("hunger_value", data["hunger_value"])
 end
-core.register_on_leaveplayer(function(player, timed_out)
+core.register_on_leaveplayer(function(player)
     save_hunger(player)
 end)
 core.register_on_shutdown(function()

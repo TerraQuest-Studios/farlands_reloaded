@@ -15,7 +15,7 @@ core.register_on_mods_loaded(function()
     end
 end)
 
-local function timer(pos, elapsed)
+local function timer(pos)
     --minetest.chat_send_all("timmer activated, elapsed: " .. elapsed)
 
     local active = false

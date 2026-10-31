@@ -5,7 +5,9 @@ local function speed_check(vec, limit)
     local l = limit
     if v.x >= l then return false
     elseif v.y >= l then return false
-    elseif v.z >= l then return false end
+    elseif v.z >= l then
+        return false
+    end
     return true
 end
 
@@ -73,7 +75,7 @@ core.register_entity("fl_trains:train_engine", {
     },
 
     --on_step = mobkit.stepfunc, --this is required
-    on_activate = function(self, staticdata, dtime_s)
+    on_activate = function(self, staticdata)
         --load memory
         local sdata = core.deserialize(staticdata)
         if sdata then
@@ -81,14 +83,16 @@ core.register_entity("fl_trains:train_engine", {
                 self[k] = v
             end
         end
-        if not self.memory then self.memory = {} end
+        if not self.memory then
+            self.memory = {}
+        end
         --other stuff
     end,
     get_staticdata = function(self)
         local tmp = {memory = self.memory}
         return core.serialize(tmp)
     end,
-    on_step = function(self, dtime, moveresult)
+    on_step = function(self, _dtime, moveresult)
         local yaw = tonumber(string.format("%.2f", self.object:get_yaw()))
         local dir = vector.round(core.yaw_to_dir(yaw))
         local pos = self.object:get_pos()
@@ -96,7 +100,7 @@ core.register_entity("fl_trains:train_engine", {
 
         if moveresult and moveresult.collides then
             --minetest.chat_send_all(dump(moveresult.collisions))
-            for k,v in pairs(moveresult.collisions) do
+            for _, v in pairs(moveresult.collisions) do
                 v.object:set_hp(0, "die")
                 self.object:set_velocity(v.old_velocity)
             end
@@ -104,7 +108,9 @@ core.register_entity("fl_trains:train_engine", {
 
         local vel = self.object:get_velocity()
         local player
-        if self.memory.driver then player = core.get_player_by_name(self.memory.driver) end
+        if self.memory.driver then
+            player = core.get_player_by_name(self.memory.driver)
+        end
         if player then
             local pcontrols = player:get_player_control()
             if pcontrols.up and speed_check(vel, max_speed) then
@@ -131,7 +137,10 @@ core.register_entity("fl_trains:train_engine", {
             node = core.get_node_or_nil(vector.add(vector.multiply(ndir, -1), pos))
         end
         local currnode = core.get_node_or_nil(pos)
-        if not node or not currnode then self.object:set_velocity(vector.new(0,0,0)) return end
+        if not node or not currnode then
+            self.object:set_velocity(vector.new(0,0,0))
+            return
+        end
 
         local continue_rail_nodes = {
             ["fl_trains:straight_track"] = true,
@@ -170,8 +179,14 @@ core.register_entity("fl_trains:train_engine", {
                     self.object:set_pos(vector.apply(pos, math.round))
 
                     local rotation_degrees = 0
-                    if rotation%90==0 then rotation_degrees = 45 elseif rotation%45==0 then rotation_degrees = -45 end
-                    if curvetype=="right" then rotation_degrees = rotation_degrees*-1 end
+                    if rotation%90==0 then
+                        rotation_degrees = 45
+                    elseif rotation%45==0 then
+                        rotation_degrees = -45
+                    end
+                    if curvetype=="right" then
+                        rotation_degrees = rotation_degrees*-1
+                    end
 
                     self.object:set_rotation(
                         vector.new(currrotation.x, currrotation.y + deg_to_rad(rotation_degrees), currrotation.z)
@@ -215,7 +230,7 @@ core.register_entity("fl_trains:train_engine", {
         end
     end,
 
-    on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch = function(self, puncher)
         self.object:remove()
         if not (puncher and puncher:is_player()) then return end
         local inv = puncher:get_inventory()

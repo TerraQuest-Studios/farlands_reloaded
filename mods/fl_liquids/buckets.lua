@@ -19,7 +19,9 @@ local function bucket_on_place(itemstack, user, pointed_thing, liquid_source)
         end
     elseif pointed_thing.type == "object" then
         pos = pointed_thing.ref:get_pos()
-    else return end
+    else
+        return
+    end
 
     core.set_node(pos, {name = liquid_source})
     return ItemStack("fl_bucket:bucket")

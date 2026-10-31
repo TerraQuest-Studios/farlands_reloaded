@@ -31,7 +31,9 @@ local function alert(pos)
 end
 
 function cc_brain(self)
-    if mobkit.timer(self,1) then fl_wildlife.node_dps_dmg(self) end --if in nodes with damage take damage
+    if mobkit.timer(self,1) then
+        fl_wildlife.node_dps_dmg(self)
+    end --if in nodes with damage take damage
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
@@ -62,13 +64,17 @@ function cc_brain(self)
 					vector.length(plyr:get_velocity()) > 3) then
 						mobkit.make_sound(self,'misc')
 						mobkit.hq_hunt(self,20,plyr)
-						if math.random()<=0.5 then alert(pos) end
+						if math.random()<=0.5 then
+							alert(pos)
+						end
 					end
 				else
 					if vector.distance(pos,pos2) < self.view_range then
 						mobkit.make_sound(self,'misc')
 						mobkit.hq_hunt(self,20,plyr)
-						if math.random()<=0.5 then alert(pos) end
+						if math.random()<=0.5 then
+							alert(pos)
+						end
 					end
 				end
 			end
@@ -84,7 +90,7 @@ function cc_brain(self)
 
 end
 
-core.register_on_punchnode(function(pos, node, puncher, pointed_thing)
+core.register_on_punchnode(function(pos)
 	if math.random()<=0.1 then
 		alert(pos)
 	end
@@ -134,7 +140,7 @@ core.register_entity("fl_wildlife:cavecrab", {
     _spawner = {},
 
     --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
         fl_wildlife.flash_color(self)
         self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})

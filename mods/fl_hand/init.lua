@@ -64,7 +64,7 @@ core.register_privilege("creative", {
     description = "creative mode",
     give_to_singleplayer = false,
     give_to_admin = false,
-    on_revoke = function(name, revoker_name)
+    on_revoke = function(name)
         --this is a hack to work around https://github.com/minetest-mods/i3/issues/61
         i3.set_tab(core.get_player_by_name(name), "inventory")
     end

@@ -71,7 +71,9 @@ function fl_stairs.register_stairslab(itemstring)
     local nodedef = core.registered_nodes[itemstring]
 
     local paramtype2 = "facedir"
-    if nodedef.palette then paramtype2 = "colorfacedir" end
+    if nodedef.palette then
+        paramtype2 = "colorfacedir"
+    end
 
     for _, stairinfo in pairs(stairtable) do
 
@@ -148,7 +150,7 @@ end)
 core.register_on_mods_loaded(function()
     --minetest.after(0, function()
         local registered_items_copy = table.copy(core.registered_items)
-        for nodename, node in pairs(registered_items_copy) do
+        for _, node in pairs(registered_items_copy) do
             if node.groups and node.groups.stairable == 1 then
                 fl_stairs.register_stairslab(node.name)
             end

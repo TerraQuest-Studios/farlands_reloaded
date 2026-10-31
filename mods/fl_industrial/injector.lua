@@ -56,7 +56,9 @@ core.register_node("fl_industrial:injector", {
         else
             dump = inv:add_item("main", itemstack)
         end
-        if not dump:is_empty() then core.add_item(vector.new(pos.x, pos.y+1, pos.z), dump) end
+        if not dump:is_empty() then
+            core.add_item(vector.new(pos.x, pos.y+1, pos.z), dump)
+        end
 
     end,
     _allow_input = function(np2, op2)

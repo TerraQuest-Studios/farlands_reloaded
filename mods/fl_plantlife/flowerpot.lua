@@ -14,19 +14,23 @@ core.register_entity("fl_plantlife:flowerpot_ent", {
         local tmp = {memory = self.memory}
         return core.serialize(tmp)
     end,
-    on_activate = function(self, staticdata, dtime_s)
+    on_activate = function(self, staticdata)
         local sdata = core.deserialize(staticdata)
         if sdata then
             for k,v in pairs(sdata) do
                 self[k] = v
             end
         end
-        if not self.memory then self.memory = {} end
-        if self.memory.textures then self.object:set_properties({textures = self.memory.textures}) end
+        if not self.memory then
+            self.memory = {}
+        end
+        if self.memory.textures then
+            self.object:set_properties({textures = self.memory.textures})
+        end
         self.name = "fl_plantlife:flower_ent"
     end,
 
-    on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch = function(self)
         --minetest.chat_send_all("punch")
         if not self.memory.item_name then return end
         core.add_item(self.object:get_pos(), ItemStack(self.memory.item_name))
@@ -41,7 +45,9 @@ core.register_entity("fl_plantlife:flowerpot_ent", {
         --self.object:set_properties({textures = self.memory.textures})
         local stack = clicker:get_wielded_item()
         if core.get_item_group(stack:get_name(), "potable") ~= 1 then return end
-        if self.memory.item_name then core.add_item(self.object:get_pos(), ItemStack(self.memory.item_name)) end
+        if self.memory.item_name then
+            core.add_item(self.object:get_pos(), ItemStack(self.memory.item_name))
+        end
         self.memory.item_name = stack:get_name()
         local node_def = core.registered_nodes[stack:get_name()]
         self.memory.textures = {node_def.tiles[1] .. "^[transformR180", node_def.tiles[1] .. "^[transformR180"}
@@ -69,8 +75,11 @@ core.register_node("fl_plantlife:flowerpot", {
         for _, objref in pairs(obj) do
             local ent = objref:get_luaentity()
             if objref and ent and ent.name == "fl_plantlife:flower_ent" then
-                if ent.memory.item_name then core.add_item(objref:get_pos(), ItemStack(ent.memory.item_name)) end
-                objref:remove() break
+                if ent.memory.item_name then
+                    core.add_item(objref:get_pos(), ItemStack(ent.memory.item_name))
+                end
+                objref:remove()
+                break
             end
         end
     end,

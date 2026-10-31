@@ -15,7 +15,7 @@ core.register_node("fl_storage:wood_chest", {
 		"farlands_chest_front.png",
     },
     groups = {dig_tree = 1},
-    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+    on_rightclick = function(pos, _node, clicker)
 
         --vars for stuff
         local chName = "chest name"
@@ -27,7 +27,9 @@ core.register_node("fl_storage:wood_chest", {
         if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
         elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
         elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
-        else slotSize, formSize = 1, "10.4,10.3" end
+        else
+            slotSize, formSize = 1, "10.4,10.3"
+        end
 
         if core.get_meta(pos):get_string("description") ~= "" then
             chName = core.get_meta(pos):get_string("description")
@@ -98,7 +100,7 @@ core.register_node("fl_storage:wood_chest", {
         end
         core.node_dig(pos, node, digger)
     end,
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(pos, _oldnode, _oldmeta, drops)
         if core.get_meta(pos):get_string("description") ~= "" then
             drops[1]:get_meta():set_string("description", core.get_meta(pos):get_string("description"))
         end
@@ -128,7 +130,7 @@ local function shelf_nodes(name)
                 local inv = core.get_meta(pos):get_inventory()
                 inv:set_size("main", 9*2)
             end,
-            on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+            on_rightclick = function(pos, _node, clicker)
                 --vars
                 local iPos = pos.x .. "," .. pos.y .. "," .. pos.z
                 local cname = overlay .. " shelf"
@@ -139,7 +141,9 @@ local function shelf_nodes(name)
                 if rLength == 12 then slotSize, formSize = 0.725, "10.4,7.275"
                 elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,7.5"
                 elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,7.77"
-                else slotSize, formSize = 1, "10.4,8.1" end
+                else
+                    slotSize, formSize = 1, "10.4,8.1"
+                end
 
                 if core.get_meta(pos):get_string("description") ~= "" then
                     cname = core.get_meta(pos):get_string("description")
@@ -206,7 +210,7 @@ local function shelf_nodes(name)
                 local shelf_formspec = table.concat(formspec, "")
                 core.show_formspec(clicker:get_player_name(), "fl_storage:shelf_formspec", shelf_formspec)
             end,
-            allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+            allow_metadata_inventory_put = function(_pos, _listname, _index, stack)
                 if overlay == "vessel" or overlay == "book" then
                     if core.get_item_group(stack:get_name(), overlay) ~= 0 then
                         return stack:get_count()
@@ -227,7 +231,7 @@ local function shelf_nodes(name)
                 end
                 core.node_dig(pos, node, digger)
             end,
-            preserve_metadata = function(pos, oldnode, oldmeta, drops)
+            preserve_metadata = function(pos, _oldnode, _oldmeta, drops)
                 if core.get_meta(pos):get_string("description") ~= "" then
                     drops[1]:get_meta():set_string("description", core.get_meta(pos):get_string("description"))
                 end

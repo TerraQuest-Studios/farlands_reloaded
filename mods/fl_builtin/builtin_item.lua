@@ -21,7 +21,11 @@ end
 
 core.registered_entities["__builtin:item"].on_activate = function(self, staticdata, dtime_s)
     local data = core.deserialize(staticdata) or {}
-    if data._memory then self._memory = data._memory else self._memory = {} end
+    if data._memory then
+        self._memory = data._memory
+    else
+        self._memory = {}
+    end
 
     self._time_total = 0
     self._memory.health = self._memory.health or item_health
@@ -62,13 +66,20 @@ core.registered_entities["__builtin:item"].on_step = function(self, dtime, mover
     end
 
     --burning code
-    if not self._memory.thing then self._memory.thing = 1 end
+    if not self._memory.thing then
+        self._memory.thing = 1
+    end
     if timer(self, 1) and core.get_item_group(self.itemstring, "unburnable") == 0 then
         --local node = minetest.get_node_or_nil(pos) or {name = "*"}
         local def = core.registered_nodes[node.name] or {}
-        if def.damage_per_second then self._memory.health = self._memory.health - def.damage_per_second end
+        if def.damage_per_second then
+            self._memory.health = self._memory.health - def.damage_per_second
+        end
 
-        if self._memory.health <= 0 then self.object:remove() return end
+        if self._memory.health <= 0 then
+            self.object:remove()
+            return
+        end
     end
 
     --floating code

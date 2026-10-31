@@ -27,7 +27,7 @@ if core.get_modpath("fl_fire") then
     core.register_tool("fl_tools:flint_steel", {
         description = "flint and steel",
         inventory_image = "farlands_flint_steel.png",
-        on_use = function(itemstack, user, pointed_thing)
+        on_use = function(_itemstack, user, pointed_thing)
             if pointed_thing.type ~= "node" then return end
             local node = core.get_node_or_nil(pointed_thing.under)
             if not node then return end

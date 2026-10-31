@@ -8,7 +8,7 @@ core.register_on_joinplayer(function(player)
     end
 end)
 
-core.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+core.register_on_placenode(function(pos, _newnode, _placer, _oldnode, itemstack)
     if itemstack:get_meta():get_string("description") ~= "" then
         local meta = core.get_meta(pos)
         meta:set_string("description", itemstack:get_meta():get_string("description"))

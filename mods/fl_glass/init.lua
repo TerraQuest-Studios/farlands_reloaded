@@ -25,7 +25,7 @@ core.register_node("fl_glass:tinted_connected_glass", {
     use_texture_alpha = "blend",
     palette = "farlands_palette.png",
     groups = {dig_glass = 1, glass = 1, glass_block = 1},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted connected glass")
     end,
 })
@@ -40,7 +40,7 @@ core.register_node("fl_glass:tinted_framed_glass", {
     use_texture_alpha = "blend",
     palette = "farlands_palette.png",
     groups = {dig_glass = 1, glass = 1, glass_block = 1},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted framed glass")
     end,
 })
@@ -124,7 +124,7 @@ core.register_node("fl_glass:tinted_framed_glass_panes", {
     },
     groups = {dig_glass = 2, pane = 1, glass = 1, glass_pane = 1},
     connects_to = cgroups,--{"group:pane", "group:glass", "group:wood_related",},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string(
             "description",
             fl_dyes.dyes[oldnode.param2 + 1][2] .. " tinted framed glass pane"

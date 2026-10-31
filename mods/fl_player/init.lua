@@ -30,7 +30,9 @@ local key_table = {}
 
 for _, sn in pairs(core.get_dir_list(core.get_modpath("fl_player").."/textures")) do
     local nn = string.split(string.split(sn, "_")[2],".")
-    table.insert(data_table, {_texture = sn, name = nn[1], get_preview = function() return "" end})
+    table.insert(data_table, {_texture = sn, name = nn[1], get_preview = function()
+        return ""
+    end})
     key_table[sn] = 1
 end
 
@@ -62,7 +64,7 @@ core.register_on_joinplayer(function(player)
     )
 end)
 
-core.register_globalstep(function(dtime)
+core.register_globalstep(function()
     for _, player in pairs(core.get_connected_players()) do
         local pcontrols = player:get_player_control()
 
@@ -194,7 +196,7 @@ data structure dump of skins.get_skinlist_for_player(name) seems to be
 
 skins = {}
 
-function skins.get_skinlist_for_player(name)
+function skins.get_skinlist_for_player()
     return data_table
 end
 

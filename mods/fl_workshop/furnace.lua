@@ -3,7 +3,7 @@
 
 --viewing_furnace = {}
 
-local function _machine_input(pos, node, itemstack)
+local function _machine_input(pos, _node, itemstack)
     local inv = core.get_meta(pos):get_inventory()
     if core.get_item_group(itemstack:get_name(), "fuel") >= 1 then
         return inv:add_item("fuel", itemstack)
@@ -14,7 +14,7 @@ local function _machine_input(pos, node, itemstack)
     end
 end
 
-local function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+local function on_rightclick(pos, _node, clicker)
 
     --vars for stuff
     local chName = "furnace"
@@ -26,7 +26,9 @@ local function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
     if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
     elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
     elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
-    else slotSize, formSize = 1, "10.4,10.3" end
+    else
+        slotSize, formSize = 1, "10.4,10.3"
+    end
 
     if core.get_meta(pos):get_string("description") ~= "" then
         chName = core.get_meta(pos):get_string("description")
@@ -146,10 +148,14 @@ local function on_timer(pos, elapsed)
             return swap_node(pos, {name = "fl_workshop:furnace", param2 = core.get_node(pos).param2})
         end
         local remainder = inv:add_item("output", coutput.item)
-        if remainder:is_empty() then iinput[1]:take_item() end
+        if remainder:is_empty() then
+            iinput[1]:take_item()
+        end
         inv:set_list("input", iinput)
 
-        if not iinput[1]:is_empty() then core.get_node_timer(pos):start(1.0) end
+        if not iinput[1]:is_empty() then
+            core.get_node_timer(pos):start(1.0)
+        end
         --minetest.chat_send_all("trigger2")
         return swap_node(pos, {name = "fl_workshop:furnace_active", param2 = core.get_node(pos).param2})
     end
@@ -177,7 +183,7 @@ core.register_node("fl_workshop:furnace", {
     on_metadata_inventory_put = function(pos) core.get_node_timer(pos):start(1.0) end,
     on_metadata_inventory_take = function(pos) core.get_node_timer(pos):start(1.0) end,
     on_metadata_inventory_move = function(pos) core.get_node_timer(pos):start(1.0) end,
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+    allow_metadata_inventory_put = function(_pos, listname, _index, stack)
         if listname == "output" then
             return 0
         elseif listname == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
@@ -185,7 +191,7 @@ core.register_node("fl_workshop:furnace", {
         end
         return stack:get_count()
     end,
-    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _to_index, count)
         local stack = core.get_meta(pos):get_inventory():get_stack(from_list, from_index)
         if to_list == "output" then
             return 0
@@ -229,7 +235,7 @@ core.register_node("fl_workshop:furnace_active", {
     on_metadata_inventory_put = function(pos) core.get_node_timer(pos):start(1.0) end,
     on_metadata_inventory_take = function(pos) core.get_node_timer(pos):start(1.0) end,
     on_metadata_inventory_move = function(pos) core.get_node_timer(pos):start(1.0) end,
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+    allow_metadata_inventory_put = function(_pos, listname, _index, stack)
         if listname == "output" then
             return 0
         elseif listname == "fuel" and core.get_item_group(stack:get_name(), "fuel") <= 0 then
@@ -237,7 +243,7 @@ core.register_node("fl_workshop:furnace_active", {
         end
         return stack:get_count()
     end,
-    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _to_index, count)
         local stack = core.get_meta(pos):get_inventory():get_stack(from_list, from_index)
         if to_list == "output" then
             return 0

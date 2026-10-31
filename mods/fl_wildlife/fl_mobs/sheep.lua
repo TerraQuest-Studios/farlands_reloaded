@@ -26,7 +26,9 @@ function sheep_actfunc(self, staticdata, dtime_s)
 end
 
 function sheep_brain(self)
-    if mobkit.timer(self,1) then fl_wildlife.node_dps_dmg(self) end --if in nodes with damage take damage
+    if mobkit.timer(self,1) then
+        fl_wildlife.node_dps_dmg(self)
+    end --if in nodes with damage take damage
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
@@ -65,7 +67,7 @@ end
 
 local sheep_textures = {}
 
-for counter, dyes in pairs(fl_dyes.dyes) do
+for counter in pairs(fl_dyes.dyes) do
     table.insert(
         sheep_textures,
         "farlands_mob_sheep_base.png^farlands_mob_sheep_" .. fl_dyes.dyes[counter][1] .. ".png"
@@ -128,7 +130,9 @@ core.register_entity("fl_wildlife:sheep", {
     _on_spawn=function(ent)
         local self = ent:get_luaentity()
         self.sheep_color = "white"
-        if math.random() < 0.1 then self.sheep_color = "black" end
+        if math.random() < 0.1 then
+            self.sheep_color = "black"
+        end
 
         mobkit.remember(self,"sheep_color", self.sheep_color)
         ent:set_properties(
@@ -137,7 +141,7 @@ core.register_entity("fl_wildlife:sheep", {
     end,
 
     --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
         fl_wildlife.flash_color(self)
         self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})

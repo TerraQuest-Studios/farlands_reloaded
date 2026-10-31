@@ -18,7 +18,9 @@ local material_list = {
 }
 
 local function make_pickaxe(name, factor)
-    if not factor then factor = {} end
+    if not factor then
+        factor = {}
+    end
     core.register_tool("fl_tools:" .. name .. "_pick", {
         description = name .. " pick",
         inventory_image = "farlands_" .. name .. "_pick.png",
@@ -76,7 +78,9 @@ make_pickaxe("gold", {3.5, 6.2, 3.5, 4.5})
 make_pickaxe("diamond", {4, 7.5, 4, 5.4})
 
 local function make_axe(name, factor)
-    if not factor then factor = {} end
+    if not factor then
+        factor = {}
+    end
     core.register_tool("fl_tools:" .. name .. "_axe", {
         description = name .. " axe",
         inventory_image = "farlands_" .. name .. "_axe.png",
@@ -124,7 +128,9 @@ make_axe("gold", {6})
 make_axe("diamond", {7.2})
 
 local function make_shovel(name, factor)
-    if not factor then factor = {} end
+    if not factor then
+        factor = {}
+    end
     core.register_tool("fl_tools:" .. name .. "_shovel", {
         description = name .. " shovel",
         inventory_image = "farlands_" .. name .. "_shovel.png",
@@ -177,7 +183,9 @@ make_shovel("diamond", {4.2, 4.8, 6})
 
 --adress damage groups for mobs
 local function make_sword(name, factor)
-    if not factor then factor = {} end
+    if not factor then
+        factor = {}
+    end
     core.register_tool("fl_tools:" .. name .. "_sword", {
         description = name .. " sword",
         inventory_image = "farlands_" .. name .. "_sword.png",
@@ -216,7 +224,9 @@ make_sword("diamond")
 
 --need to add in tool wear
 local function make_hoe(name, factor)
-    if not factor then factor = {} end
+    if not factor then
+        factor = {}
+    end
     core.register_tool("fl_tools:" .. name .. "_hoe", {
         description = name .. " hoe",
         inventory_image = "farlands_" .. name .. "_hoe.png",
@@ -231,7 +241,7 @@ local function make_hoe(name, factor)
             },
             damage_groups = {fleshy=2},
         },
-        on_use = function(itemstack, user, pointed_thing)
+        on_use = function(_itemstack, user, pointed_thing)
             if pointed_thing.type ~= "node" then return end
             local node = core.get_node_or_nil(pointed_thing.under)
             if not node then return end

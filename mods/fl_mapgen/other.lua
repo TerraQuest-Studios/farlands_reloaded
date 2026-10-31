@@ -34,7 +34,7 @@ core.register_on_generated(function(minp, maxp)
 end)
 
 --vary snow layers
-core.register_on_generated(function(minp, maxp)
+core.register_on_generated(function()
     local vm, mine, maxe = core.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new({MinEdge=mine, MaxEdge=maxe})
 	local data = vm:get_data()
@@ -62,7 +62,7 @@ end)
 local cactus_did = core.get_decoration_id("fl_plantlife:cactus")
 core.set_gen_notify("decoration", {cactus_did})
 
-core.register_on_generated(function(minp, maxp, blockseed)
+core.register_on_generated(function()
     local g = core.get_mapgen_object("gennotify")
     local locations = g["decoration#" .. cactus_did] or {}
     if #locations == 0 then return end

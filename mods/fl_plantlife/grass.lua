@@ -9,7 +9,7 @@ local function reg_grass(name)
             paramtype2 = "degrotate",
             tiles = {"[combine:16x16:0," .. 10 - 2*i .. "=farlands_" .. name .. "_plant.png"},
             floodable = true,
-            on_flood = function(pos, oldnode, newnode)
+            on_flood = function(pos)
                 core.dig_node(pos)
             end,
             selection_box = {

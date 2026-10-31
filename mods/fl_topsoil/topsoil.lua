@@ -214,14 +214,14 @@ for i=1, 3 do
         wield_image = "[combine:16x16:0," .. 10 - 3*i .. "=farlands_sea_grass.png",
         node_dig_prediction = "fl_stone:sand",
         node_placement_prediction = "",
-        on_place = function(itemstack, placer, pointed_thing)
+        on_place = function(_itemstack, _placer, pointed_thing)
             if pointed_thing.type ~= "node" then return end
             if core.get_node_or_nil(pointed_thing.under)
             and core.get_node_or_nil(pointed_thing.under).name == "fl_stone:sand" then
                 core.set_node(pointed_thing.under, {name = "fl_topsoil:sea_grass_" .. i})
             end
         end,
-        after_destruct  = function(pos, oldnode)
+        after_destruct  = function(pos)
             core.set_node(pos, {name = "fl_stone:sand"})
         end,
         groups = {not_in_creative_inventory = 1, dig_sand = 3},

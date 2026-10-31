@@ -2,7 +2,7 @@ core.register_craftitem("fl_books:book_raw", {
     description = "raw book",
     inventory_image = "farlands_book_raw.png",
     stack_max = 1,
-    on_use = function(itemstack, user, pointed_thing)
+    on_use = function(_itemstack, user)
         --minetest.chat_send_all("test")
         local formspec = {
             "formspec_version[4]",

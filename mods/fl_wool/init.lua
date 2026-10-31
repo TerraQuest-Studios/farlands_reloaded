@@ -6,7 +6,7 @@ core.register_node("fl_wool:wool", {
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
     groups = {dig_generic = 3, wool = 1},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " wool")
     end,
 })
@@ -25,7 +25,7 @@ core.register_node("fl_wool:wool_carpet", {
         fixed = {-0.5, -0.5, -0.5, 0.5, -7/16, 0.5}
     },
     groups = {dig_generic = 4},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " wool carpet")
     end,
 })

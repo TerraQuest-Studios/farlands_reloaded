@@ -82,7 +82,7 @@ core.register_entity("fl_avation:airballoon", {
     on_activate = mobkit.actfunc,
     get_staticdata = mobkit.statfunc,
 
-    on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch = function(self)
         --self.object:set_rotation({x=5,y=0,z=0})
         --self.object:set_velocity(vector.new(0,-1,0))
         self.object:set_animation({x=2,y=20})

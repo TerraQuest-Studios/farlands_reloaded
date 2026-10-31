@@ -63,7 +63,7 @@ core.register_craftitem("fl_bottles:invisibility", {
     description = "bottle of invisibilty",
     inventory_image = "farlands_bottle_darkpurple.png",
     --on_use throw, particles, anyone nearby gets invisibility
-    on_place = function(itemstack, placer, pointed_thing)
+    on_place = function(itemstack, placer)
         if placer:get_meta():get_int("in_vanish") > 0 then return itemstack end
         local pname = placer:get_player_name()
         placer:get_meta():set_int("vanish", 1)

@@ -24,9 +24,12 @@ for counter, dye in pairs(fl_dyes.dyes) do
             "0,9=" .. cwool .. ":0,25=" .. cwool .. ":0,9=farlands_bed_top.png:" .. --top
             "16,9=farlands_apple_planks.png:16,25=farlands_apple_planks.png" --bottom
         },
-        after_place_node = function(pos, placer, itemstack)
+        after_place_node = function(pos, placer)
             local base = core.get_node_or_nil(pos)
-            if not base or not base.param2 then core.remove_node(pos) return true end
+            if not base or not base.param2 then
+                core.remove_node(pos)
+                return true
+            end
             local dir = core.facedir_to_dir(base.param2)
             local head_pos = {x=pos.x+dir.x,y=pos.y,z=pos.z+dir.z}
             local head = core.get_node_or_nil(head_pos)
@@ -40,7 +43,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
             return false
         end,
         -- non complete bed sleep function that needs to be completed
-        on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        on_rightclick = function(pos, _node, clicker)
             local cname = clicker:get_player_name()
             local dir = core.facedir_to_dir(core.get_node(pos).param2)
             local mpos = {x = pos.x + dir.x/2, y = pos.y+.07, z = pos.z+dir.z/2}
@@ -116,7 +119,7 @@ for counter, dye in pairs(fl_dyes.dyes) do
 end
 
 --i3 currently does not support showing this correctly
-local function craft_hacks(itemstack, player, old_craft_grid, craft_inv)
+local function craft_hacks(itemstack, _player, old_craft_grid)
     if string.sub(itemstack:get_name(), 1, 7) ~= "fl_beds" then return end
     local indexs = {}
     --for _, stack in pairs(craft_inv:get_list("craft")) do
@@ -139,8 +142,10 @@ core.register_on_craft(craft_hacks)
 
 if core.get_modpath("i3") then
     local colors = {}
-    for counter, dye in pairs(fl_dyes.dyes) do
-        if dye[1] ~= "red" then table.insert(colors, dye[1]) end
+    for _, dye in pairs(fl_dyes.dyes) do
+        if dye[1] ~= "red" then
+            table.insert(colors, dye[1])
+        end
     end
 
     i3.compress("fl_beds:bed_red", {

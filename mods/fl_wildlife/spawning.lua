@@ -32,7 +32,9 @@ core.register_on_mods_loaded(function()
         if edef._spawning and edef._spawning.biomes then
             mob_spawndata[ename] = table.copy(edef._spawning)
             for _, biome in pairs(edef._spawning.biomes) do
-                if mob_biomes[biome] then table.insert(mob_biomes[biome], ename) end
+                if mob_biomes[biome] then
+                    table.insert(mob_biomes[biome], ename)
+                end
             end
         elseif edef._spawning then
             mob_spawndata[ename] = table.copy(edef._spawning)

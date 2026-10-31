@@ -31,7 +31,7 @@ local function create_stone_types(name, rgroups, sgroups, blgroups, brgroups)
         },
         _dungeon_loot = {chance = math.random(0.1, 0.3), count = {4, 64}},
         --this is to make tnt happy while this is used as a dummy flammable
-        on_construct = function(pos) end,
+        on_construct = function() end,
         sounds = fl_stone.sounds.stone(),
         groups = sgp,
     })

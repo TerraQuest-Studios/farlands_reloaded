@@ -51,9 +51,13 @@ local function fill_data(default, input)
 
     for k, v in pairs(default) do
         if type(v) == "table" then
-            if i[k] == nil then i[k] = {} end
+            if i[k] == nil then
+                i[k] = {}
+            end
             for k2, v2 in pairs(v) do
-                if i[k][k2] == nil then i[k][k2] = v2 end
+                if i[k][k2] == nil then
+                    i[k][k2] = v2
+                end
             end
         elseif i[k] == nil then
             i[k] = v
@@ -74,7 +78,9 @@ local function logic()
             bs.players[pname].id = bdata.biome
         elseif bdef._sky_data then
             for k, _ in pairs(bs.defaults) do
-                if bdef._sky_data[k] == nil then bdef._sky_data[k] = {} end
+                if bdef._sky_data[k] == nil then
+                    bdef._sky_data[k] = {}
+                end
             end
 
             player:set_sky(fill_data(bs.defaults.sky, bdef._sky_data.sky))

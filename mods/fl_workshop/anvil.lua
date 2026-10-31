@@ -9,11 +9,17 @@ end)
 --this could have more protections
 function fl_workshop.register_anvil_craft(craft_table)
     assert(craft_table, "[fl_workshop:anvil] failure to provide craft table!")
-    if type(craft_table) ~= "table" then error("[fl_workshop:anvil] value passed is not a table!") end
+    if type(craft_table) ~= "table" then
+        error("[fl_workshop:anvil] value passed is not a table!")
+    end
     assert(craft_table.output, "[fl_workshop:anvil] failure to provide craft output!")
-    if type(craft_table.output) ~= "string" then error("[fl_workshop:anvil] output is not a string!") end
+    if type(craft_table.output) ~= "string" then
+        error("[fl_workshop:anvil] output is not a string!")
+    end
     assert(craft_table.recipe, "[fl_workshop:anvil] failure to provide craft recipe!")
-    if type(craft_table.recipe) ~= "table" then error("[fl_workshop:anvil] recipe is not a table!") end
+    if type(craft_table.recipe) ~= "table" then
+        error("[fl_workshop:anvil] recipe is not a table!")
+    end
 
     table.insert(registered_anvil_crafts, craft_table)
 end
@@ -33,7 +39,7 @@ fl_workshop.register_anvil_craft({
 --]]
 
 --table containing players currently shown anvil formspec
-viewing_anvil = {}
+local viewing_anvil = {}
 
 core.register_node("fl_workshop:anvil", {
     description = "anvil",
@@ -66,7 +72,7 @@ core.register_node("fl_workshop:anvil", {
         inv:set_size("input", 2)
         inv:set_size("output", 1)
     end,
-    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+    on_rightclick = function(pos, _node, clicker)
 
         --vars for stuff
         --local chName = "chest name"
@@ -78,7 +84,9 @@ core.register_node("fl_workshop:anvil", {
         if rLength == 12 then slotSize, formSize = 0.725, "10.4,9.475"
         elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,9.7"
         elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,9.97"
-        else slotSize, formSize = 1, "10.4,10.3" end
+        else
+            slotSize, formSize = 1, "10.4,10.3"
+        end
 
         --header of formspec
         local formspec = {
@@ -144,17 +152,27 @@ core.register_node("fl_workshop:anvil", {
         core.show_formspec(clicker:get_player_name(), "fl_workshop:anvil_formspec", chest_formspec)
         viewing_anvil[clicker:get_player_name()] = pos
     end,
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        if listname == "output" then return 0 else return stack:get_count() end
+    allow_metadata_inventory_put = function(_pos, listname, _index, stack)
+        if listname == "output" then
+            return 0
+        else
+            return stack:get_count()
+        end
     end,
-    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+    allow_metadata_inventory_move = function(pos, from_list, _from_index, to_list, to_index, count)
         if to_list == "output" then return 0
         elseif from_list == "output" and to_list == "input" then
             local inv = core.get_meta(pos):get_inventory()
-            if inv:get_stack(to_list, to_index):is_empty() then return count else return 0 end
-        else return 0 end
+            if inv:get_stack(to_list, to_index):is_empty() then
+                return count
+            else
+                return 0
+            end
+        else
+            return 0
+        end
     end,
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
+    on_metadata_inventory_put = function(pos, listname, index)
         local inv = core.get_meta(pos):get_inventory()
         if listname == "input" and inv:get_stack(listname, 1):get_name() == inv:get_stack(listname, 2):get_name() then
             if core.get_item_group(inv:get_stack(listname, index):get_name(), "tool")  ~= 0 then
@@ -203,7 +221,7 @@ core.register_node("fl_workshop:anvil", {
             end
         end
     end,
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
+    on_metadata_inventory_take = function(pos, listname)
         local inv = core.get_meta(pos):get_inventory()
         if listname == "input" then inv:set_stack("output", 1, ItemStack(""))
         elseif listname == "output" then

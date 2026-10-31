@@ -16,7 +16,7 @@ end
 
 local function random_sample(rand, list, count)
 	local ret = {}
-	for n = 1, count do
+	for _ = 1, count do
 		local idx = rand:next(1, #list)
 		table.insert(ret, list[idx])
 		table.remove(list, idx)
@@ -34,7 +34,9 @@ local function find_walls(cpos)
 
 	local ret = {}
 	local mindist = {x=0, z=0}
-	local min = function(a, b) return a ~= 0 and math.min(a, b) or b end
+	local min = function(a, b)
+		return a ~= 0 and math.min(a, b) or b
+	end
 	for _, dir in ipairs(dirs) do
 		for i = 1, 9 do -- 9 = max room size / 2
 			local pos = vector.add(cpos, {x=dir.x*i, y=0, z=dir.z*i})
@@ -75,7 +77,9 @@ local function find_walls(cpos)
 	end
 	--]]
 	for bname, _ in pairs(dungeon_loot.biomes) do
-		if biome:find(bname) then type = bname end
+		if biome:find(bname) then
+			type = bname
+		end
 	end
 
 	return {
@@ -107,13 +111,13 @@ local function populate_chest(pos, rand, dungeontype)
 			if not itemdef then
 				core.log("warning", "Registered loot item " .. loot.name .. " does not exist")
 			elseif itemdef.tool_capabilities then
-				for n = 1, amount do
+				for _ = 1, amount do
 					local wear = rand:next(0.20 * 65535, 0.75 * 65535) -- 20% to 75% wear
 					table.insert(items, ItemStack({name = loot.name, wear = wear}))
 				end
 			elseif itemdef.stack_max == 1 then
 				-- not stackable, add separately
-				for n = 1, amount do
+				for _ = 1, amount do
 					table.insert(items, loot.name)
 				end
 			else
@@ -137,7 +141,7 @@ local function populate_chest(pos, rand, dungeontype)
 end
 
 
-core.register_on_generated(function(minp, maxp, blockseed)
+core.register_on_generated(function()
 	local gennotify = core.get_mapgen_object("gennotify")
 	local poslist = gennotify["dungeon"] or {}
 	for _, entry in ipairs(gennotify["temple"] or {}) do
@@ -145,7 +149,14 @@ core.register_on_generated(function(minp, maxp, blockseed)
 	end
 	if #poslist == 0 then return end
 
-	local noise = core.get_value_noise(10115, 4, 0.5, 1)
+	local noise = core.get_value_noise({
+		offset = 0,
+		scale = 1,
+		spread = {x = 1, y = 1, z = 1},
+		seed = 10115,
+		octaves = 4,
+		persistence = 0.5,
+	})
 	local rand = PcgRandom(noise3d_integer(noise, poslist[1]))
 
 	local candidates = {}

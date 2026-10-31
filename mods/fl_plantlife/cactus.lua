@@ -15,7 +15,7 @@ core.register_node("fl_plantlife:cactus", {
     on_construct = function(pos)
         core.get_node_timer(pos):start(math.random(600, 1200))
     end,
-    on_timer = function(pos, elapsed)
+    on_timer = function(pos)
         --minetest.chat_send_all("triggered")
         local above = core.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
         if not above then return end

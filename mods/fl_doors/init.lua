@@ -34,9 +34,11 @@ local function make_door(file, modname, append)
         inventory_image = file:gsub("door", "door_item"),
         selection_box = {type = "fixed", fixed = {-1/2,-1/2,-1/2,1/2,3/2,-6/16}},
         collision_box = {type = "fixed", fixed = {-1/2,-1/2,-1/2,1/2,3/2,-6/16}},
-        on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        on_rightclick = function(pos, node)
             local p2 = node.param2+1
-            if p2 == 4 then p2 = 0 end
+            if p2 == 4 then
+                p2 = 0
+            end
             core.set_node(pos, {name = "fl_doors:" .. name .. "_b", param2 = p2})
         end,
         on_place = function(itemstack, placer, pointed_thing)
@@ -79,7 +81,7 @@ local function make_door(file, modname, append)
                 end
             end
         end,
-        after_dig_node = function(pos, node, meta, digger)
+        after_dig_node = function(pos)
             core.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
             core.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
         end,
@@ -99,12 +101,14 @@ local function make_door(file, modname, append)
         collision_box = {type = "fixed", fixed = {-1/2,-1/2,-1/2,1/2,3/2,-6/16}},
         wield_image = file:gsub("door", "door_item"),
         inventory_image = file:gsub("door", "door_item"),
-        on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        on_rightclick = function(pos, node)
             local p2 = node.param2-1
-            if p2 == -1 then p2 = 3 end
+            if p2 == -1 then
+                p2 = 3
+            end
             core.set_node(pos, {name = "fl_doors:" .. name .. "_a", param2 = p2})
         end,
-        after_dig_node = function(pos, node, meta, digger)
+        after_dig_node = function(pos)
             core.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
             core.check_for_falling({x = pos.x, y = pos.y + 1, z = pos.z})
         end,
@@ -112,7 +116,9 @@ local function make_door(file, modname, append)
         groups = {dig_tree = 2, door = 1, not_in_creative_inventory = 1},
     })
 
-    if material == "steel" then material = "iron" end
+    if material == "steel" then
+        material = "iron"
+    end
     local cm = modname .. ":" .. material .. append
     core.register_craft({
         output = "fl_doors:" .. name .. "_a",
@@ -131,11 +137,15 @@ local pdir = core.get_dir_list(core.get_modpath("fl_doors") .. "/textures/planks
 local mdir = core.get_dir_list(core.get_modpath("fl_doors") .. "/textures/metal", false)
 
 for _, file in pairs(pdir) do
-    if not file:find("item") then table.insert(door_list, make_door(file, "fl_trees", "_plank")) end
+    if not file:find("item") then
+        table.insert(door_list, make_door(file, "fl_trees", "_plank"))
+    end
 end
 
 for _, file in pairs(mdir) do
-    if not file:find("item") then table.insert(door_list, make_door(file, "fl_ores", "_ingot")) end
+    if not file:find("item") then
+        table.insert(door_list, make_door(file, "fl_ores", "_ingot"))
+    end
 end
 
 if core.get_modpath("i3") then
@@ -146,7 +156,9 @@ if core.get_modpath("i3") then
     for _, door in pairs(door_list) do
         local split = door:split(":")
         local split2 = split[2]:split("_")
-        if split2[1] == "yellow" then split2[1] = "yellow_ipe" end
+        if split2[1] == "yellow" then
+            split2[1] = "yellow_ipe"
+        end
         table.insert(material, split2[1])
     end
 

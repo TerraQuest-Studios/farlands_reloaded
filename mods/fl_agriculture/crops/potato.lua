@@ -49,14 +49,14 @@ for i = 1, 4 do
         },
         buildable_to = true,
         floodable = true,
-        on_flood = function(pos, oldnode, newnode)
+        on_flood = function(pos)
             core.dig_node(pos)
         end,
         on_construct = function(pos)
             if i == 4 then return end
             core.get_node_timer(pos):start(math.random(150, 450))
         end,
-        on_timer = function(pos, elapsed)
+        on_timer = function(pos)
             local old = core.get_node(pos)
             local dirt = core.get_node({x = pos.x, y = pos.y-1, z = pos.z})
             if dirt.name=="fl_topsoil:wet_farmland" and core.get_node_light(pos, core.get_timeofday())>9 then

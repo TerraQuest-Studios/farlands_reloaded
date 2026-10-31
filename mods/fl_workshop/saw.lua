@@ -1,5 +1,5 @@
 --table containing players currently shown saw formspec
-viewing_saw = {}
+local viewing_saw = {}
 
 --for some reason saw requires double click
 local function updateformspec(pos, clicker)
@@ -14,7 +14,9 @@ local function updateformspec(pos, clicker)
     if rLength == 12 then slotSize, formSize = 0.725, "10.4,7.475"
     elseif rLength == 11 then slotSize, formSize = 0.8, "10.4,7.7"
     elseif rLength == 10 then slotSize, formSize = 0.89, "10.4,7.97"
-    else slotSize, formSize = 1, "10.4,8.3" end
+    else
+        slotSize, formSize = 1, "10.4,8.3"
+    end
 
     --header of formspec
     local formspec = {
@@ -64,7 +66,10 @@ local function updateformspec(pos, clicker)
         local x = 0
         local y = 0
         for i = 1, #node_table do
-            if x==4 then x=0 y=1 end
+            if x==4 then
+                x=0
+                y=1
+            end
             local nm = ItemStack(node_table[i][1] .. "_" .. node_table[i][2])
             nm:set_count(node_table[i][3])
             nm = nm:to_string()
@@ -171,10 +176,10 @@ core.register_node(":fl_stairs:tablesaw", {
         local inv = core.get_meta(pos):get_inventory()
         inv:set_size("main", 1)
     end,
-    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+    on_rightclick = function(pos, _node, clicker)
         updateformspec(pos, clicker)
     end,
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+    allow_metadata_inventory_put = function(_pos, _listname, _index, stack)
         local get_group = core.get_item_group
         if get_group(stack:get_name(), "stairable") ~= 0
         or get_group(stack:get_name(), "fenceable") ~= 0
@@ -183,7 +188,7 @@ core.register_node(":fl_stairs:tablesaw", {
         end
         return 0
     end,
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
+    on_metadata_inventory_put = function(pos)
         for sname, spos in pairs(viewing_saw) do
             --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
             if vector.equals(spos, pos) then
@@ -191,7 +196,7 @@ core.register_node(":fl_stairs:tablesaw", {
             end
         end
     end,
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
+    on_metadata_inventory_take = function(pos)
         for sname, spos in pairs(viewing_saw) do
             --if minetest.hash_node_position(spos) == minetest.hash_node_position(pos) then
             if vector.equals(spos, pos) then
@@ -227,12 +232,12 @@ core.register_node(":fl_stairs:tablesaw", {
 i3.new_tab("inv_saw", {
 	description = "Inv Saw",
 
-	access = function(player, data)
+	access = function(player)
 		local name = player:get_player_name()
 		return core.is_creative_enabled(name)
 	end,
 
-	formspec = function(player, data, fs)
+	formspec = function(player, _data, fs)
         --variables
         local rLength = 9
         local slotSize = 1
@@ -281,7 +286,10 @@ i3.new_tab("inv_saw", {
             local x = 0
             local y = 0
             for i = 1, #node_table do
-                if x==4 then x=0 y=1 end
+                if x==4 then
+                    x=0
+                    y=1
+                end
                 local nm = ItemStack(node_table[i][1] .. "_" .. node_table[i][2])
                 nm:set_count(node_table[i][3])
                 nm = nm:to_string()
@@ -316,7 +324,7 @@ i3.new_tab("inv_saw", {
 	end,
 
 	-- Events handling happens here
-	fields = function(player, data, fields)
+	fields = function(player, _data, fields)
         local valid_bits = {
             inner_stair = true,
             outer_stair = true,
@@ -339,6 +347,8 @@ i3.new_tab("inv_saw", {
     end,
 })
 
-core.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
-    if inventory_info.from_list == "creative_saw" or inventory_info.to_list == "creative_saw" then i3.set_fs(player) end
+core.register_on_player_inventory_action(function(player, _action, _inventory, inventory_info)
+    if inventory_info.from_list == "creative_saw" or inventory_info.to_list == "creative_saw" then
+        i3.set_fs(player)
+    end
 end)

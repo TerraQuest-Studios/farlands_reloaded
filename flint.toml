@@ -2,4 +2,4 @@
 includes = ["**", "!mods/fl_others/i3/**", "!mods/fl_others/mobkit/**"]
 
 [linter]
-globals = ["dungeon_loot", "fl_brains", "armor", "sfinv", "unified_inventory"]
+globals = ["dungeon_loot", "fl_brains", "armor", "sfinv", "unified_inventory", "skins"]

@@ -3,7 +3,7 @@ core.register_node("fl_stone:bedrock", {
     tiles = {"farlands_bedrock.png"},
     is_ground_content = false,
     drop = "",
-    on_blast = function(pos, intensity) end,
+    on_blast = function() end,
     on_destruct = function() end,
     can_dig = function() return false end,
     diggable = false,

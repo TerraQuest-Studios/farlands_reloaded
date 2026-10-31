@@ -144,7 +144,9 @@ function fl_wildlife.hq_die(self)
 			start=false
 		end
 		timer = timer-self.dtime
-		if timer < 0 then self.object:remove() end
+		if timer < 0 then
+			self.object:remove()
+		end
 	end
 	mobkit.queue_high(self,func,100)
 end

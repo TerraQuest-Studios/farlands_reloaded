@@ -39,7 +39,7 @@ core.register_entity("fl_wildlife:trader", {
     _egg_it = {"trader", "#3c521d"},
 
     --experiments
-    on_rightclick = function(self, clicker)
+    on_rightclick = function(_self, clicker)
         --fl_wildlife.rclick_name(self, clicker)
 
         --vars for stuff
@@ -49,7 +49,9 @@ core.register_entity("fl_wildlife:trader", {
         if rLength == 12 then slotSize = 0.725
         elseif rLength == 11 then slotSize = 0.8
         elseif rLength == 10 then slotSize = 0.89
-        else slotSize = 1 end
+        else
+            slotSize = 1
+        end
 
         --header of formspec
         local formspec = {
@@ -112,7 +114,7 @@ core.register_entity("fl_wildlife:trader", {
     end,
 
    --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
         fl_wildlife.flash_color(self)
         self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})

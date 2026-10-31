@@ -1,5 +1,7 @@
 function fl_brains.villager_brain(self)
-    if mobkit.timer(self,1) then fl_wildlife.node_dps_dmg(self) end --if in nodes with damage take damage
+    if mobkit.timer(self,1) then
+        fl_wildlife.node_dps_dmg(self)
+    end --if in nodes with damage take damage
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp

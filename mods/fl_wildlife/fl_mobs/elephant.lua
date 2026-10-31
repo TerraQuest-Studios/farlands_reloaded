@@ -1,5 +1,7 @@
 function elephant_brain(self)
-    if mobkit.timer(self,1) then fl_wildlife.node_dps_dmg(self) end --if in nodes with damage take damage
+    if mobkit.timer(self,1) then
+        fl_wildlife.node_dps_dmg(self)
+    end --if in nodes with damage take damage
     mobkit.vitals(self)
 
     if self.hp <= 0 then --kill self if 0 hp
@@ -75,7 +77,7 @@ core.register_entity("fl_wildlife:elephant", {
     }, ]]
 
     --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
         fl_wildlife.flash_color(self)
         self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})

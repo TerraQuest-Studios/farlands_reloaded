@@ -21,7 +21,7 @@ core.register_entity("fl_trains:cart", {
     --get_staticdata = mobkit.statfunc, --who knows, no documentation (probably save entity data)
 
     --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self)
         --minetest.chat_send_all("punched")
         self.object:remove()
     end,
@@ -31,7 +31,7 @@ core.register_craftitem("fl_trains:cart", {
     description = "cart",
     inventory_image = "farlands_cart_item.png",
     wield_image = "farlands_cart_item.png",
-    on_place = function(itemstack, placer, pointed_thing)
+    on_place = function(_itemstack, _placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         local node = core.get_node_or_nil(pointed_thing.under)
         if string.find(node.name, "fl_trains") then

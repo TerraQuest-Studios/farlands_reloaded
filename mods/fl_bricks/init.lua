@@ -10,7 +10,7 @@ core.register_node("fl_bricks:brick", {
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
     groups = {dig_stone = 2},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " brick")
         if fl_dyes.dyes[oldnode.param2 + 1][2] == "White" then
             drops[1]:get_meta():set_string("description", "brick")
@@ -43,7 +43,7 @@ core.register_node("fl_bricks:terracotta", {
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
     groups = {dig_sand = 1},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " terracotta")
     end,
 })

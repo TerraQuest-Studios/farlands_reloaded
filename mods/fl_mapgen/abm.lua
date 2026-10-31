@@ -5,7 +5,7 @@ core.register_abm({
     interval = 2,
     chance = 1,
     catch_up = false;
-    action = function(pos, node)
+    action = function(pos)
         core.set_node(pos, {name = "fl_stone:stone"})
     end,
 })
@@ -17,7 +17,7 @@ core.register_abm({
     interval = 2,
     chance = 1,
     catch_up = false;
-    action = function(pos, node)
+    action = function(pos)
         core.set_node(pos, {name = "fl_stone:basalt"})
     end,
 })

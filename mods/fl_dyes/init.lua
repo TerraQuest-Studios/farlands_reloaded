@@ -35,7 +35,7 @@ core.register_node("fl_dyes:demo_node", {
     --sunlight_propagates = true,
     palette = "farlands_palette.png",
     groups = {dig_generic = 4, not_in_creative_inventory = 1},
-    preserve_metadata = function(pos, oldnode, oldmeta, drops)
+    preserve_metadata = function(_pos, oldnode, _oldmeta, drops)
         drops[1]:get_meta():set_string("description", fl_dyes.dyes[oldnode.param2 + 1][2] .. " test_node")
     end,
 })
@@ -64,7 +64,9 @@ end
 if core.get_modpath("i3") then
     local colors = {}
     for _, dye in pairs(fl_dyes.dyes) do
-        if dye[1] ~= "red" then table.insert(colors, dye[1]) end
+        if dye[1] ~= "red" then
+            table.insert(colors, dye[1])
+        end
     end
 
     i3.compress("fl_dyes:red_dye", {

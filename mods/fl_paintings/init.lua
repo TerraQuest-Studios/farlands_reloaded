@@ -37,7 +37,9 @@ for _, img in pairs(core.get_dir_list(core.get_modpath("fl_paintings").."/textur
         data = box_data.s
     end
 
-    if img == "farlands_ptg_cthulhu.png" then data = box_data.l end
+    if img == "farlands_ptg_cthulhu.png" then
+        data = box_data.l
+    end
 
     core.register_node("fl_paintings:" .. name, {
         description = name .. " painting",

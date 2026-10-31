@@ -25,7 +25,9 @@ core.register_on_chat_message(function(name, msg)
         end
         return true
     --messages sent from the terminal are exicuted as the name value, so they are considered admin
-    else return false end
+    else
+        return false
+    end
 end)
 
 core.override_chatcommand("msg", {

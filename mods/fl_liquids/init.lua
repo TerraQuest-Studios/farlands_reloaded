@@ -20,13 +20,17 @@ local function bucket_func(itemstack, user, pos, bucket, liquid)
             core.add_item(ppos, bucket)
         end
         local renew = core.find_node_near(pos, 1, liquid)
-        if not renew then core.add_node(pos, {name = "air"}) end
+        if not renew then
+            core.add_node(pos, {name = "air"})
+        end
         itemstack:take_item()
         return itemstack
     end
 
         local renew = core.find_node_near(pos, 1, liquid)
-        if not renew then core.add_node(pos, {name = "air"}) end
+        if not renew then
+            core.add_node(pos, {name = "air"})
+        end
         return ItemStack(bucket)
 end
 

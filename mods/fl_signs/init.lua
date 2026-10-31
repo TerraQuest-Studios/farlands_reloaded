@@ -10,15 +10,19 @@ core.register_entity("fl_signs:text", {
         local tmp = {memory = self.memory}
         return core.serialize(tmp)
     end,
-    on_activate = function(self, staticdata, dtime_s)
+    on_activate = function(self, staticdata)
         local sdata = core.deserialize(staticdata)
         if sdata then
             for k,v in pairs(sdata) do
                 self[k] = v
             end
         end
-        if not self.memory then self.memory = {} end
-        if self.memory.textures then self.object:set_properties({textures = {self.memory.textures}}) end
+        if not self.memory then
+            self.memory = {}
+        end
+        if self.memory.textures then
+            self.object:set_properties({textures = {self.memory.textures}})
+        end
     end,
 })
 
@@ -62,7 +66,9 @@ local function create_text_ent(pos, param, rot)
         for i = 1, #word do
             local c = word:sub(i,i)
             local loc = location[c]
-            if not loc then loc = location[" "] end
+            if not loc then
+                loc = location[" "]
+            end
             texture = texture .. ":".. line_length*9 ..","..line_number.."=font_1.png\\^[sheet\\:28x3\\:" .. loc
             line_length = line_length+1
         end
@@ -109,7 +115,7 @@ core.register_node("fl_signs:sign_wood", {
         wall_top = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
         wall_bottom = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
     },
-    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+    on_rightclick = function(pos, _node, clicker)
         local text = core.get_meta(pos):get("text") or ""
         local formspec = {
             "formspec_version[4]",

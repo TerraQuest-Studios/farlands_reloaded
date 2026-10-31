@@ -81,7 +81,7 @@ core.register_entity("fl_wildlife:riverfish", {
     end,
 
     --more mte properties
-    on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
+    on_punch=function(self, puncher, _time_from_last_punch, tool_capabilities, dir)
         local hvel = vector.multiply(vector.normalize({x=dir.x,y=0,z=dir.z}),4)
         fl_wildlife.flash_color(self)
         self.object:set_velocity({x=hvel.x,y=2,z=hvel.z})

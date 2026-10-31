@@ -1,7 +1,7 @@
 --this code is a mess
 -- -150 to -190 seems no ores other than mithite?
 
-biomes = {
+local biomes = {
     savannah = {"savannah"},
     stone = {"grassland", "taiga", "snowygrassland", "tundra", "rainforest", "deciduousforest", "coniferousforest"},
     desert_stone = {"sand", "desert", "silversand"},
@@ -50,7 +50,7 @@ core.register_ore({
 })
 
 local function reg_ores(ore, clust)
-    for name, data in pairs(biomes) do
+    for name in pairs(biomes) do
         local scr = clust[name].scr
         local ost = clust[name].ost or {300,4,64,-31,3,-31}
         core.register_ore({

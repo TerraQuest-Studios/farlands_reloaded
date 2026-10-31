@@ -24,7 +24,9 @@ core.register_entity("fl_wildlife:chicken_egg_entity", {
     end,
     --]]
     on_step = function(self, dtime, moveresult)
-        if not self.active_time then self.active_time = 0 end
+        if not self.active_time then
+            self.active_time = 0
+        end
         self.active_time = self.active_time + dtime
         if self.active_time >= 10 then
             self.object:remove() --edge case prevention
@@ -127,7 +129,9 @@ core.register_craftitem(":fl_bucket:riverfish", {
             end
         elseif pointed_thing.type == "object" then
             pos = pointed_thing.ref:get_pos()
-        else return end
+        else
+            return
+        end
 
         core.add_entity(pos, "fl_wildlife:riverfish")
         core.set_node(pos, {name = "fl_liquids:water_source"})

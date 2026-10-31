@@ -1,6 +1,6 @@
 local zoom = {}
 
-core.register_on_joinplayer(function(player, last_login)
+core.register_on_joinplayer(function(player)
     player:set_properties({zoom_fov = 0})
     --by disabling the zoom key, we allow it to be used fo other functions
 end)
@@ -9,7 +9,7 @@ core.register_craftitem("fl_zoom:binoculars", {
     inventory_image = "farlands_zoom.png",
     description = "binoculars",
     stack_max = 1,
-    on_use = function(itemstack, user, pointed_thing)
+    on_use = function(_itemstack, user)
         if user:get_fov() == 0 then
             user:set_fov(10)
             local hud = user:hud_add({

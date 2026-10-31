@@ -65,7 +65,9 @@ end
 core.register_on_mods_loaded(function()
     for name, item in pairs(core.registered_items) do
         if item._dungeon_loot then
-			if not item._dungeon_loot.name then item._dungeon_loot.name = name end
+			if not item._dungeon_loot.name then
+				item._dungeon_loot.name = name
+			end
             dungeon_loot.register(item._dungeon_loot)
         end
     end

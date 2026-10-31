@@ -13,7 +13,7 @@ see the roadmap.md file for proposed direction.
 ## Test Server
 
 A test server running this game can be found at  
-Address: cw.edgy1.net  
+Address: creativeworks.terraqueststudios.net
 Port: 30016
 
 ## License
